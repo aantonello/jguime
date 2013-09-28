@@ -1,0 +1,320 @@
+2013-09-13  Alessandro <aantonello@paralaxe.com.br>
+
+	* thread_t.java: Algumas saídas de depuração removidas.
+
+	* CXmlFile.java (CXmlFile::log()): Grava os dados do arquivo na saída de
+	depuração.
+
+	* CXmlNode.java (CXmlNode::log()): Grava os dados do elemento na saída de
+	depuração.
+
+	* strings.java (strings::repeat()): Nova função que cria uma string a
+	partir da repetição de um caractere.
+
+2013-09-11  Alessandro <aantonello@paralaxe.com.br>
+
+	* arrays.java (arrays::join()): Nova função para "juntar" os elementos de
+	uma matriz utilizando um separador predefinido.
+
+2013-06-27  Alessandro <aantonello@paralaxe.com.br>
+
+	* CXmlFile.java (Load(stream_t)): Nova função para ler um arquivo XML a
+	partir dos dados em um objet 'stream_t'.
+
+	* CXmlTok.java (LoadStream(stream_t)): Duas novas funções para ler um
+	arquivo XML a partir de um objeto 'stream_t'.
+
+	* CXmlFile.java (write(stream_t,String,boolean)): Nova função que grava o
+	conteúdo de um arquivo XML em um objeto 'stream_t'.
+
+	* CXmlNode.java (write(stream_t,String)): Nova função que grava o conteúdo
+	de um elemento em um objeto 'stream_t'.
+
+	* stream_t.java (write(String s, String enc)): Nova função para converter
+	e gravar uma string no conjunto de caracteres especificado. Diferente da
+	função stream_t::write(String s, String enc, int maxLen), esta
+	implementação não acrescenta nenhum caractere terminador no final da
+	gravação.
+
+2013-06-23  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidApp.java (Format()): Nova função que formata uma string
+	carregada do recurso.
+
+	* CAndroidProgressDialog.java: Agora permite a configuração de barra de
+	progresso normal, em adição ao estilo indeterminado.
+
+	* CAndroidProgressDialog.java: O diálogo agora permite que seja
+	configurado para não fechar automaticamente quando a tecla BACK do
+	aparelho é pressionada. Ainda assim a notificação é enviada pela classe.
+
+2013-06-22  Alessandro <aantonello@paralaxe.com.br>
+
+	* socket_t.java (open()): Novas constantes de erro. Novo método de saída
+	de mensagens de exceções.
+
+	* ERROR.java (ERROR.HOST): Nova constante de erro.
+
+	* debug.java (e()): Novo conjunto de funções para a saída de exceções.
+	Mais próximo das usuais macros 'trace()' de C.
+
+2013-06-20  Alessandro <aantonello@paralaxe.com.br>
+
+	* x/android/io/socket_t.java: Alteração nas funções
+	'queryDataAvailable()', 'read()' e 'send()'.
+
+	* x/android/nms/subscribers.java: Saídas de depuração removidas. Mantidas
+	apenas as que ocorrem durante exeções.
+
+2013-06-18  Alessandro <aantonello@paralaxe.com.br>
+
+	* issuer.java: Several functions implemented to support the broadcast
+	message system.
+	
+	* x/android/nms/subscribers.java: Nova classe que gerencia a lista de
+	notificações em broadcast e seus clientes.
+
+	* ChangeLog: Adicionado ao controle de versão.
+
+2013-06-03  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidPasswordDialog.java: Diálogo personalizado que exibe um campo
+	para a entrada de uma senha.
+
+2012-12-01  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidListView.java: Implementação de ListView genérica.
+
+	* CAndroidAdapter.java: Implementação de ListAdapter genérica.
+
+	* IAndroidListAdapter.java: Interface que define as operações mínimas para
+	um objeto ListAdapter utilizado na class CAndroidListView.
+
+	* IAndroidListDelegate.java: Interface definindo as funções mínimas para a
+	implementação de uma ListView.
+
+2012-11-29  Alessandro <aantonello@paralaxe.com.br>
+	
+	* CAndroidView.java: Remoção das funções para envio de mensagens.
+
+	* CAndroidApp.java: Remoção das funções para envio de mensagens. Somente a
+	classe "sender" deve ser utilizada agora.
+
+	* IAndroidView.java: Interface alterada removendo as funções para o envio
+	de mensagens.
+
+	* CMessageStack.java: Classe removida.
+
+	* INotifyHandler.java: Interface removida.
+
+	* sender.java: Classe estática que implementa o sistema de mensagens. As
+	interface INotifyHandler e a classe CMessageStack não são mais
+	necessárias.
+
+	* INHandler.java: Nova interface de interceptação de mensagens.
+
+2012-11-21  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidViewGroup.java: Extende ViewGroup implementando IAndroidView e
+	IMSG.
+
+2012-11-04  Alessandro <aantonello@paralaxe.com.br>
+
+	* CStreamWriter.java: Agora implementa a interface DataOutput.
+
+	* stream_t.java (write(DataInput,int)): Nova função que grava diretamente
+	de um objeto que implementa DataInput.
+
+	* stream_t.java (read(DataOutput,int)): Nova função para efetuar a leitura
+	diretamente em um objeto que implementa DataOutput.
+
+2012-11-02  Alessandro <aantonello@paralaxe.com.br>
+
+	* io/stream_t.java: Nova classe para leitura e gravação de streams em
+	memória.
+
+2012-10-30  Alessandro <aantonello@paralaxe.com.br>
+
+	* xml/CXmlFile.java (write()): Função que permite gravar o conteúdo de um
+	elemento em um stream.
+
+	* xml/CXmlNode.java (write()): Função que permite gravar o conteúdo de um
+	elemento em um stream.
+
+	* xml/CXmlFile.ava (toString()): Nova função para facilitar o dump de
+	conteúdo do objeto.
+
+	* xml/CXmlNode.java (equals(), toString()): Novas funções para facilitar o
+	dump de conteúdo do objeto.
+
+	* xml/CXmlAttr.java (equals(), toString()): Novas funções para facilitar o
+	dump de conteúdo do objeto.
+
+2012-10-27  Alessandro <aantonello@paralaxe.com.br>
+
+	* IMSG.java: Interface que declara as constantes comuns de códigos de
+	mensagens de notificação.
+
+	* INotifyHandler.java: Interface que define a função callback para
+	interceptação de mensagens.
+
+	* view_t.java: Classe que implementa a abstração AbstractView definindo um
+	ponto comum de utilização.
+
+	* AbstractView.java: Classe que abstrai classes que estendem a class View
+	do Android.
+
+2012-10-25  Alessandro <aantonello@paralaxe.com.br>
+
+	* IAndroidView.java: Interface que declara as funções principais para os
+	elementos da interface.
+
+2012-10-23  Alessandro <aantonello@paralaxe.com.br>
+
+	* CRect.java: Novas funções de alinhamento e dimensionamento.
+	
+	* SIZE.java: Nova classe de constantes.
+
+	* ALIGN.java: Modificações nas constantes e adição de valores.
+
+	* ChangeLog: Novo projeto criado.
+
+2012-07-05  Alessandro <aantonello@paralaxe.com.br>
+
+	* strings.java (decode()): Method to decode a byte array into a string
+	using a specific character encoding.
+
+	* strings.java (encode()): Method to encode a string in a byte array using
+	a specific character encoding.
+
+	* arrays.java: A bunch of methods removed.
+
+2011-08-23  Alessandro <aantonello@paralaxe.com.br>
+
+	* ERROR.java (REFUSED): New error constant.
+
+2011-08-19  Alessandro <aantonello@paralaxe.com.br>
+
+	* arrays.java (charInBytes[LE,BE]()): Functions to convert Java char
+	values into byte arrays. Versions for Little-Endian order and Big-Endian
+	order.
+
+	* arrays.java (shortInBytes[LE,BE]()): Functions to convert Java short
+	values into byte arrays. Versions for Little-Endian order and Big-Endian
+	order.
+
+	* arrays.java (intInBytes[LE,BE]()): Functions to convert Java int
+	values into byte arrays. Versions for Little-Endian order and Big-Endian
+	order.
+
+	* arrays.java (longInBytes[LE,BE]()): Functions to convert Java long
+	values into byte arrays. Versions for Little-Endian order and Big-Endian
+	order.
+
+2011-08-16  Alessandro <aantonello@paralaxe.com.br>
+
+	* debug.java (dump()): New function to output a binary buffer directly to
+	the system output stream.
+
+	* debug.java (out(), err()): New set of debugging output functions. Will
+	be used for directly output.
+
+2011-08-08  Alessandro <aantonello@paralaxe.com.br>
+
+	* ERROR.java (ERROR.FORMAT): New constant value.
+
+2011-08-05  Alessandro <aantonello@paralaxe.com.br>
+
+	* CStringTable.java: New class representing a string table resource.
+
+	* strings.java (format()): Function to format a string without exceptions.
+
+	* res.java: A resource class. Give access to resources and string tables.
+
+2011-08-04  Alessandro <aantonello@paralaxe.com.br>
+
+	* calendar.xml: A resource with days and months names.
+
+	* gui.xml: A resource with strings used in the user interface.
+
+	* errors.xml: A resource with errors messages and descriptions.
+
+	* RES.java: Class with string resource constants.
+
+2011-07-27  Alessandro <aantonello@paralaxe.com.br>
+
+	* MSG.java: Some constants added.
+
+	* CAndroidWnd.java (attachContextMenu()): Function to attach a context
+	menu to a View.
+
+	* CAndroidWnd.java (handle_onFocus()): Function to add a handler to the
+	OnFocusChangeListener() of a View.
+
+	* CAndroidWnd.java (handle_onClick()): Function to add a handler to the
+	OnClickListener() of a View.
+
+	* CAndroidWnd.java: imported.
+
+	* CAndroidApp.java (getDroidApp()): Changed to CAndroidApp.currentApp() to
+	be more portable.
+
+	* CAndroidApp.java: imported.
+
+	* ALERT.java: imported.
+
+	* MSG.java: imported.
+
+	* CXmlFile.java (Load()): Removed.
+
+	* CXmlFile.java: imported.
+
+	* CXmlNode.java: imported.
+
+	* CXmlTok.java (LoadResource()): Removed.
+
+	* CXmlTok.java: imported.
+
+	* CXmlAttr.java (floatValue()): Function to return the value of the
+	attribute converted to a float number.
+
+	* CXmlAttr.java (longValue()): Function to return the value of the
+	attribute converted to a long number.
+
+	* CXmlAttr.java (intValue()): Function to return the value of the
+	attribute converted to an integer number.
+
+	* CXmlAttr.java (getNumericValue()): Removed.
+
+	* CXmlAttr.java: imported.
+
+	* strings.java (toFloat()): Added function to convert String in float
+	value.
+
+	* socket_t.java: imported.
+
+	* CStreamWriter.java: imported.
+
+	* CStreamReader.java: imported.
+
+	* CBinaryWriter.java: imported.
+
+	* CBinaryReader.java: imported.
+
+	* time_t.java: imported.
+
+	* thread_t.java: imported.
+
+	* arrays.java: imported.
+
+	* strings.java: imported.
+
+	* debug.java: imported.
+
+	* ALIGN.java: imported.
+
+	* ENC.java: imported.
+
+	* ERROR.java: imported.
+
+	* ChangeLog: Starting the log of things.

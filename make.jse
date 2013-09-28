@@ -1,0 +1,121 @@
+# ============================================================================
+# @FILE jguime.jse
+# @DESC makefile script
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# DEFAULT EXECUTABLES
+# ----------------------------------------------------------------------------
+JC = javac.exe
+JL = jar.exe
+RC = jar.exe
+
+# ----------------------------------------------------------------------------
+# SOURCE AND TARGET directories
+# ----------------------------------------------------------------------------
+SRCDIR = src/x/android
+TMPDIR = bin\tmp
+BINDIR = bin\apk
+RESDIR = res
+
+# ----------------------------------------------------------------------------
+# BOOTCLASSPATH & CLASSPATH
+# ----------------------------------------------------------------------------
+ANDROID = "C:\others\android\platforms\android-17\android.jar"
+BOOTCP = -bootclasspath $(ANDROID)
+JAVACP = -classpath $(ANDROID);$(TMPDIR)
+
+# ----------------------------------------------------------------------------
+# DEFAULT JAVA OPTIONS
+# ----------------------------------------------------------------------------
+JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
+
+# ----------------------------------------------------------------------------
+# FINAL OUTPUT
+# ----------------------------------------------------------------------------
+TARGET = jguime
+OUTDIR = $(BINDIR)\rel
+OUTPUT = $(OUTDIR)\$(TARGET).jar
+
+# -----------------------------------------------------------------------------
+# COMPILER AND LINKER FLAGS
+# -----------------------------------------------------------------------------
+COMPILE = $(BOOTCP) $(JCOPTS) -d $(TMPDIR) -cp $(TMPDIR)
+LINK = cMf $(OUTPUT) -C $(TMPDIR) .
+MAKERES = uf $(OUTPUT) -C $(RESDIR) .
+
+# -----------------------------------------------------------------------------
+# FILE LIST
+# -----------------------------------------------------------------------------
+JGUIME_DEFS=$(SRCDIR)/defs/ERROR.java\
+			$(SRCDIR)/defs/ENC.java\
+			$(SRCDIR)/defs/ALIGN.java\
+			$(SRCDIR)/defs/SIZE.java\
+			$(SRCDIR)/defs/RES.java
+
+JGUIME_UTILS=$(SRCDIR)/utils/debug.java\
+			 $(SRCDIR)/utils/strings.java\
+			 $(SRCDIR)/utils/arrays.java\
+			 $(SRCDIR)/utils/numbers.java\
+			 $(SRCDIR)/utils/thread_t.java\
+			 $(SRCDIR)/utils/time_t.java\
+			 $(SRCDIR)/utils/res.java\
+			 $(SRCDIR)/utils/CStringTable.java
+
+JGUIME_IO=$(SRCDIR)/io/CBinaryReader.java\
+		  $(SRCDIR)/io/CBinaryWriter.java\
+		  $(SRCDIR)/io/CStreamReader.java\
+		  $(SRCDIR)/io/CStreamWriter.java\
+		  $(SRCDIR)/io/socket_t.java\
+		  $(SRCDIR)/io/stream_t.java
+
+JGUIME_XML=$(SRCDIR)/xml/CXmlTok.java\
+		   $(SRCDIR)/xml/CXmlAttr.java\
+		   $(SRCDIR)/xml/CXmlNode.java\
+		   $(SRCDIR)/xml/CXmlFile.java
+
+JGUIME_NMS=$(SRCDIR)/nms/INHandler.java\
+		   $(SRCDIR)/nms/msg_t.java\
+		   $(SRCDIR)/nms/cache_t.java\
+		   $(SRCDIR)/nms/subscribers.java\
+		   $(SRCDIR)/nms/issuer.java
+
+JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
+		  $(SRCDIR)/ui/IMSG.java\
+		  $(SRCDIR)/ui/IAndroidView.java\
+		  $(SRCDIR)/ui/IAndroidListDelegate.java\
+		  $(SRCDIR)/ui/IAndroidListAdapter.java\
+		  $(SRCDIR)/ui/AbstractView.java\
+		  $(SRCDIR)/ui/CAndroidAdapter.java\
+		  $(SRCDIR)/ui/CRect.java\
+		  $(SRCDIR)/ui/CAndroidApp.java\
+		  $(SRCDIR)/ui/CAndroidView.java\
+		  $(SRCDIR)/ui/CAndroidListView.java\
+		  $(SRCDIR)/ui/CAndroidProgressDialog.java\
+		  $(SRCDIR)/ui/CAndroidPasswordDialog.java\
+		  $(SRCDIR)/ui/view_t.java
+
+_FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_XML)\
+			$(JGUIME_NMS) $(JGUIME_UI)
+# -----------------------------------------------------------------------------
+# MAKEFILE TARGETS
+# -----------------------------------------------------------------------------
+default : all
+
+all : clean $(OUTPUT)
+
+clean:
+	-@erase $(OUTDIR)\*.* /q
+	-@if exist $(TMPDIR)\ rd $(TMPDIR) /s /q
+
+$(OUTDIR) :
+	-@if not exist $(OUTDIR)/ md $(OUTDIR)
+
+$(TMPDIR) :
+	-@if not exist $(TMPDIR)\ md $(TMPDIR)
+	$(JC) $(COMPILE) $(_FILE_LIST_)
+
+$(OUTPUT) : $(OUTDIR) $(TMPDIR)
+	$(JL) $(LINK)
+#	$(RC) $(MAKERES)
+

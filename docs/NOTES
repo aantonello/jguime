@@ -1,0 +1,12 @@
+SYSTEM PROPERTIES
+    persist.sys.timezone: America/Sao_Paulo
+    persist.sys.language: en
+    persist.sys.country: US
+
+JAVA PROPERTIES
+    user.region: US
+    user.language: en
+
+OBS.: Quando um outro local é definido nas ferramentas de desenvolvimento do
+emulador as propriedades alteradas foram "persist.sys.language" e
+"persist.sys.country". As propriedades do Java não foram alteradas.

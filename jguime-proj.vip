@@ -1,0 +1,95 @@
+jguime="$HOME/src/bb/plx/jguime" CD=. in=onload.vim {
+# VERSION: 2.4.50.0
+ docs=docs enc="latin1" {
+  NOTES
+ }
+ res=res/x/android enc="utf-8" {
+  pt_BR=pt_BR {
+   errors.xml
+   gui.xml
+   calendar.xml
+  }
+  en_US=en_US {
+   errors.xml
+   gui.xml
+   calendar.xml
+  }
+ }
+ source=src/x/android enc="utf8" fmt="unix" {
+  defs=defs {
+   _package.java
+   ERROR.java
+   ENC.java
+   ALIGN.java
+   SIZE.java
+   RES.java
+  }
+  utils=utils {
+   _package.java
+   debug.java
+   strings.java
+   arrays.java
+   numbers.java
+   thread_t.java
+   time_t.java
+   res.java
+   CStringTable.java
+  }
+  io=io {
+   CBinaryReader.java
+   CBinaryWriter.java
+   CStreamReader.java
+   CStreamWriter.java
+   socket_t.java
+   stream_t.java
+  }
+  xml=xml {
+   CXmlTok.java
+   CXmlAttr.java
+   CXmlNode.java
+   CXmlFile.java
+  }
+  nms=nms {
+   _package.java
+   INHandler.java
+   subscribers.java
+   msg_t.java
+   cache_t.java
+   issuer.java
+  }
+  ui=ui {
+   static=. {
+    ALERT.java
+    SLIDER.java
+   }
+   interfaces=. {
+    IMSG.java
+    IAndroidView.java
+    IAndroidListDelegate.java
+    IAndroidListAdapter.java
+   }
+   abstracts=. {
+    AbstractView.java
+   }
+   internal=. {
+    CAndroidAdapter.java
+   }
+   CRect.java
+   CAndroidApp.java
+   CAndroidView.java
+   CAndroidListView.java
+   CAndroidSliderView.java
+   CAndroidScrollView.java
+   CAndroidDialog.java
+   CAndroidProgressDialog.java
+   CAndroidPasswordDialog.java
+   view_t.java
+  }
+ }
+ onload.vim
+ doxyfile
+ Makefile
+ make.jse
+ tags
+ ChangeLog
+}

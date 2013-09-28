@@ -1,0 +1,7 @@
+.*.swp
+.DS_Store
+
+# Exclude all these directories
+bin/
+gen/
+help/
