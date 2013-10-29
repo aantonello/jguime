@@ -18,6 +18,10 @@ BINDIR = bin/apk
 TMPDIR = bin/tmp
 RESDIR = res
 
+PLXLIB = /Users/Shared/plx/libs
+TAGS_SRC = $(PWD)/src
+INSTALL_DIR = $(PLXLIB)/jguime-2.4
+
 # -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
@@ -28,6 +32,7 @@ BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 # DEFAULT COMMAND LINE OPTIONS
 # -----------------------------------------------------------------------------
 JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
+TAGARGS = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
 
 # -----------------------------------------------------------------------------
 # DEFAULT TARGET, WITHOUT debug OR release BUILDS
@@ -118,6 +123,18 @@ $(TMPDIR) :
 $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 	$(JL) $(LINK)
 
-install:
-	publish plx
+$(INSTALL_DIR) :
+	-@mkdir -p $(INSTALL_DIR)/apk
+
+install: $(INSTALL_DIR)
+	cp $(OUTDIR)/*.jar $(INSTALL_DIR)/apk/
+	cp jguime.tags $(INSTALL_DIR)/
+	cp docs/help/jguime.dxt $(INSTALL_DIR)/
+	publish -doc plx/jguime
+
+tags:
+	ctags $(TAGARGS) -f jguime.tags $(TAGS_SRC)/*
+
+docs:
+	doxygen doxyfile
 

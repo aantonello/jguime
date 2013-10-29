@@ -1,4 +1,4 @@
-jguime="$HOME/src/bb/plx/jguime" CD=. in=onload.vim {
+jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim {
 # VERSION: 2.4.50.0
  docs=docs enc="latin1" {
   NOTES
@@ -86,10 +86,11 @@ jguime="$HOME/src/bb/plx/jguime" CD=. in=onload.vim {
    view_t.java
   }
  }
+ .gitignore
  onload.vim
  doxyfile
  Makefile
  make.jse
- tags
+ jguime.tags
  ChangeLog
 }
