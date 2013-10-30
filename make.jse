@@ -18,6 +18,10 @@ TMPDIR = bin\tmp
 BINDIR = bin\apk
 RESDIR = res
 
+PLXLIB = C:/cygwin/home/Alessandro/plx/libs
+TAGS_SRC = $(PWD)/src
+INSTALL_DIR = $(PLXLIB)/jguime-2.4
+
 # ----------------------------------------------------------------------------
 # BOOTCLASSPATH & CLASSPATH
 # ----------------------------------------------------------------------------
@@ -29,6 +33,7 @@ JAVACP = -classpath $(ANDROID);$(TMPDIR)
 # DEFAULT JAVA OPTIONS
 # ----------------------------------------------------------------------------
 JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
+TAGARGS = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
 
 # ----------------------------------------------------------------------------
 # FINAL OUTPUT
@@ -118,4 +123,19 @@ $(TMPDIR) :
 $(OUTPUT) : $(OUTDIR) $(TMPDIR)
 	$(JL) $(LINK)
 #	$(RC) $(MAKERES)
+
+$(INSTALL_DIR) :
+	-@if not exist "$(INSTALL_DIR)/apk" mkdir "$(INSTALL_DIR)/apk"
+
+install : $(INSTALL_DIR)
+	xcopy "$(OUTDIR)/*.jar" "$(INSTALL_DIR)/apk" /q /y
+	xcopy "$(TARGET).tags" "$(INSTALL_DIR)" /q /y
+	xcopy "docs/help/$(TARGET).dxt" "$(INSTALL_DIR)" /q /y
+	publish -doc plx/jguime
+
+tags :
+	ctags $(TAGARGS) -f $(TARGET).tags $(TAGS_SRC)/*
+
+docs :
+	doxygen doxyfile
 
