@@ -14,10 +14,7 @@
  */
 package x.android.ui;
 
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 import android.os.Environment;
@@ -367,6 +364,48 @@ public class CAndroidApp extends android.app.Application
      **/
     public static String countryCode() {
         return __this.getResources().getConfiguration().locale.getCountry();
+    }/*}}}*/
+    //@}
+
+    /** \name EXTERNAL STORAGE ACCESS */ //@{
+    // public static boolean isStorageReadable();/*{{{*/
+    /**
+     * Get a value defining if the external storage path is avaiable for
+     * reading access.
+     * @returns \b true when the external storage can be read. Otherwise \b
+     * false.
+     **/
+    public static boolean isStorageReadable()
+    {
+        String state = Environment.getExternalStorageState();
+        return (state.equals(Environment.MEDIA_MOUNTED) ||
+                state.equals(Environment.MEDIA_MOUNTED_READ_ONLY));
+    }/*}}}*/
+    // public static boolean isStorageWriteable();/*{{{*/
+    /**
+     * Gets a value defining if the external storage path can be written.
+     * @return \b true if the external storage is available for written.
+     * Otherwise \b false.
+     **/
+    public static boolean isStorageWriteable()
+    {
+        String state = Environment.getExternalStorageState();
+        return (state.equals(Environment.MEDIA_MOUNTED));
+    }/*}}}*/
+    // public static File    openDirectory(String type);/*{{{*/
+    /**
+     * Opens an external storage directory.
+     * The storage must be available. Check the values of #isStorageReadable()
+     * or #isStorageWriteable() as of you need.
+     * @param type Type of the directory to open. There are several
+     * directories available. The list if found at \ref x_android_defs group
+     * in the RES::STORAGE class.
+     * @return On success a \b File object pointing to the directory.
+     * Otherwise \b null.
+     **/
+    public static File openDirectory(String type)
+    {
+        return Environment.getExternalStoragePublicDirectory(type);
     }/*}}}*/
     //@}
 
