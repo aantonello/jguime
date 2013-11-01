@@ -24,6 +24,7 @@ import x.android.io.CStreamReader;
 import x.android.io.stream_t;
 
 /**
+ * \ingroup x_android_xml
  * Responsible for reading and tokenize a XML file.
  *//* --------------------------------------------------------------------- */
 public class CXmlTok

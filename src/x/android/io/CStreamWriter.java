@@ -26,6 +26,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
+ * \ingroup x_android_io
  * Writes data to an output stream.
  * Extends \c DataOutputStream providing some extra functionality.
  *//* --------------------------------------------------------------------- */

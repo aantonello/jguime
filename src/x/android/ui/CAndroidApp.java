@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* Imports {{{ */
 import java.io.*;
 import java.util.*;
 
@@ -39,6 +39,7 @@ import x.android.defs.*;
 import x.android.utils.*;
 import x.android.nms.*;
 
+/* }}} Imports */
 /**
  * Represents an Android application.
  * There must be only one android application in a package bundle. For this
@@ -313,10 +314,12 @@ public class CAndroidApp extends android.app.Application
      * code. If the description message is not found, the function returns a
      * generic message.
      **/
-    public static String getMessage(int errCode) {
-        String message = res.getErrorDesc(errCode);
+    public static String getMessage(int errCode)
+    {
+        CStringTable table = CStringTable.LoadAsset("errors.xml");
+        String     message = table.get(errCode);
         if (message == null) {
-            message = res.getErrorDesc(ERROR.FAILED);
+            message = table.get(ERROR.FAILED);
         }
         return message;
     }/*}}}*/

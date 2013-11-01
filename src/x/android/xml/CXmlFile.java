@@ -22,6 +22,7 @@ import x.android.utils.*;
 import x.android.io.*;
 
 /**
+ * \ingroup x_android_xml
  * Represents a XML file or stream.
  * Right now this class only implements the reading and parsing operations. No
  * output or writing operations are available.

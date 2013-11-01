@@ -23,19 +23,22 @@ package x.android.utils;
  * Several classes in this group are static. That is, you don't need an object
  * instance to use them. They are ready to go in its current form. Classes in
  * this group are:
- * - *x.android.utils#debug*: For debugging purpose.
- * - *x.android.utils#strings*: With some helper methods to treat strings.
- * - *x.android.utils#arrays*: A big class, with several methods to work with
- * arrays of scalar values and objects.
+ * - \b debug: For debugging purpose.
+ * - \b strings: With some helper methods to treat strings.
+ * - \b arrays: A big class, with several methods to work with
+ *   arrays of scalar values and objects.
+ * - \b numbers: Compose and decompose numbers.
  * .
  *
  * Others are classes that simply don't fit in any other category. They are:
- * - *x.android.utils#time_t class*: With special and simplified methods to
- * retrieve and format date and time information.
- * - *x.android.utils#thread_t class*: A class that simplified multithreaded
- * applications. Including mechanism to signal a thread to stop it self.
- * - *x.android.utils#CStringTable class*: Which is used to load string tables
- * into memory.
+ * - \b time_t: With special and simplified methods to
+ *   retrieve and format date and time information.
+ * - \b thread_t: A class that simplified multithreaded
+ *   applications. Including mechanism to signal a thread to stop it self.
+ * - \b CStringTable: Which is used to load string tables
+ *   into memory.
+ * - \b SFAsset: Works out loading raw resource files from the
+ *   'assets' Android directory.
  * .
  * @{ *//* ---------------------------------------------------------------- */
 ///@} x_android_utils

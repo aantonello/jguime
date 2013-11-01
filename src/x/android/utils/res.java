@@ -140,7 +140,8 @@ public final class res
      * should be positioned the string must have a pseudo-macro ([...]) that
      * will be replaced.
      **/
-    public static String localizePath(String path) {
+    public static String localizePath(String path)
+    {
         String country = System.getProperty("persist.sys.country");
         String locale;
 

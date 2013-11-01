@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.EOFException;
 
 /**
+ * \ingroup x_android_io
  * Class to read data from input streams.
  *//* --------------------------------------------------------------------- */
 public class CStreamReader implements DataInput

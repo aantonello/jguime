@@ -1,3 +1,17 @@
+2013-11-01  Alessandro <aantonello@paralaxe.com.br>
+
+	* time_t.java (getWeekDayName(), getMonthName(), toString()): These
+	functions were updated to get the correct day and month names from the
+	'assets' Android directory.
+
+	* CAndroidApp.java (getMessage()): Function changed to use the SFAsset
+	class to load error messages correctly.
+
+	* CStringTable.java: Two new functions added.
+
+	* SFAsset.java: New class to work with resources in the 'assets' Android
+	directory.
+
 2013-09-13  Alessandro <aantonello@paralaxe.com.br>
 
 	* thread_t.java: Algumas saídas de depuração removidas.

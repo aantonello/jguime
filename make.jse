@@ -13,19 +13,18 @@ RC = jar.exe
 # ----------------------------------------------------------------------------
 # SOURCE AND TARGET directories
 # ----------------------------------------------------------------------------
-SRCDIR = src/x/android
-TMPDIR = bin\tmp
-BINDIR = bin\apk
-RESDIR = res
+SRCDIR = ./src/x/android
+TMPDIR = ./bin/tmp
+BINDIR = ./bin/apk
+RESDIR = ./res
 
-PLXLIB = C:/cygwin/home/Alessandro/plx/libs
-TAGS_SRC = $(PWD)/src
+PLXLIB = $(WORKHOME)/libs
 INSTALL_DIR = $(PLXLIB)/jguime-2.4
 
 # ----------------------------------------------------------------------------
 # BOOTCLASSPATH & CLASSPATH
 # ----------------------------------------------------------------------------
-ANDROID = "C:\others\android\platforms\android-17\android.jar"
+ANDROID = "$(ANDROID_HOME)\platforms\android-17\android.jar"
 BOOTCP = -bootclasspath $(ANDROID)
 JAVACP = -classpath $(ANDROID);$(TMPDIR)
 
@@ -33,14 +32,14 @@ JAVACP = -classpath $(ANDROID);$(TMPDIR)
 # DEFAULT JAVA OPTIONS
 # ----------------------------------------------------------------------------
 JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
-TAGARGS = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
+CTAGS  = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
 
 # ----------------------------------------------------------------------------
 # FINAL OUTPUT
 # ----------------------------------------------------------------------------
 TARGET = jguime
-OUTDIR = $(BINDIR)\rel
-OUTPUT = $(OUTDIR)\$(TARGET).jar
+OUTDIR = $(BINDIR)/rel
+OUTPUT = $(OUTDIR)/$(TARGET).jar
 
 # -----------------------------------------------------------------------------
 # COMPILER AND LINKER FLAGS
@@ -65,6 +64,7 @@ JGUIME_UTILS=$(SRCDIR)/utils/debug.java\
 			 $(SRCDIR)/utils/thread_t.java\
 			 $(SRCDIR)/utils/time_t.java\
 			 $(SRCDIR)/utils/res.java\
+			 $(SRCDIR)/utils/SFAsset.java\
 			 $(SRCDIR)/utils/CStringTable.java
 
 JGUIME_IO=$(SRCDIR)/io/CBinaryReader.java\
@@ -96,6 +96,7 @@ JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
 		  $(SRCDIR)/ui/CAndroidApp.java\
 		  $(SRCDIR)/ui/CAndroidView.java\
 		  $(SRCDIR)/ui/CAndroidListView.java\
+		  $(SRCDIR)/ui/CAndroidGridView.java\
 		  $(SRCDIR)/ui/CAndroidProgressDialog.java\
 		  $(SRCDIR)/ui/CAndroidPasswordDialog.java\
 		  $(SRCDIR)/ui/view_t.java
@@ -110,31 +111,40 @@ default : all
 all : clean $(OUTPUT)
 
 clean:
-	-@erase $(OUTDIR)\*.* /q
-	-@if exist $(TMPDIR)\ rd $(TMPDIR) /s /q
+	@erase "$(OUTDIR)\*.*" /q
+	@if exist "$(TMPDIR)/" rd "$(TMPDIR)" /s /q
+
+cleanall:
+	-@erase "$(TMPDIR)\*.*" /q
+	-@erase "$(BINDIR)\*.*" /q
+	-@erase $(TARGET).tags
+	-@erase "./docs/help/$(TARGET).dxt" /q
+	-@erase "./docs/help/html\*.*" /q
 
 $(OUTDIR) :
-	-@if not exist $(OUTDIR)/ md $(OUTDIR)
+	@if not exist "$(OUTDIR)/" md "$(OUTDIR)"
 
 $(TMPDIR) :
-	-@if not exist $(TMPDIR)\ md $(TMPDIR)
-	$(JC) $(COMPILE) $(_FILE_LIST_)
+	@if not exist "$(TMPDIR)/" md "$(TMPDIR)"
 
 $(OUTPUT) : $(OUTDIR) $(TMPDIR)
+	$(JC) $(COMPILE) $(_FILE_LIST_)
 	$(JL) $(LINK)
 #	$(RC) $(MAKERES)
 
 $(INSTALL_DIR) :
-	-@if not exist "$(INSTALL_DIR)/apk" mkdir "$(INSTALL_DIR)/apk"
+	@if not exist "$(INSTALL_DIR)/apk/" mkdir "$(INSTALL_DIR)/apk"
+	@if not exist "$(INSTALL_DIR)/res/" mkdir "$(INSTALL_DIR)/res"
 
 install : $(INSTALL_DIR)
-	xcopy "$(OUTDIR)/*.jar" "$(INSTALL_DIR)/apk" /q /y
+	xcopy "$(OUTDIR)\*.jar" "$(INSTALL_DIR)/apk" /q /y
 	xcopy "$(TARGET).tags" "$(INSTALL_DIR)" /q /y
-	xcopy "docs/help/$(TARGET).dxt" "$(INSTALL_DIR)" /q /y
+	xcopy "./docs/help\$(TARGET).dxt" "$(INSTALL_DIR)" /q /y
+	xcopy "./res\*.*" "$(INSTALL_DIR)/res" /q /y /s
 	publish -doc plx/jguime
 
 tags :
-	ctags $(TAGARGS) -f $(TARGET).tags $(TAGS_SRC)/*
+	ctags $(CTAGS) -f $(TARGET).tags "$(HOME)/src/bb/paralaxe/jguime/src/*"
 
 docs :
 	doxygen doxyfile

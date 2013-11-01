@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<stringtable>
+  <!-- ERROR.SUCCESS -->
+  <string id="0" value="No error" />
+  <!-- ERROR.FAILED -->
+  <string id="-1" value="The operation failed" />
+  <!-- ERROR.ACCESS -->
+  <string id="-2" value="Access denied" />
+  <!-- ERROR.NODATA -->
+  <string id="-3" value="Invalid data for the requested operation" />
+  <!-- ERROR.CRC -->
+  <string id="-4" value="Bad CRC" />
+  <!-- ERROR.LENGTH -->
+  <string id="-5" value="Invalid length" />
+  <!-- ERROR.WRITE -->
+  <string id="-6" value="The write operation failed" />
+  <!-- ERROR.READ -->
+  <string id="-7" value="The read operation failed" />
+  <!-- ERROR.IO -->
+  <string id="-8" value="Unknown fault in a read or write operation" />
+  <!-- ERROR.INDEX -->
+  <string id="-9" value="Invalid element index" />
+  <!-- ERROR.PARAM -->
+  <string id="-10" value="Invalid parameter" />
+  <!-- ERROR.ABORTED -->
+  <string id="-11" value="Operation aborted" />
+  <!-- ERROR.NOTFOUND -->
+  <string id="-12" value="Item not found" />
+  <!-- ERROR.FULL -->
+  <string id="-13" value="No storage space left" />
+  <!-- ERROR.EOF -->
+  <string id="-14" value="End of sequency" />
+  <!-- ERROR.NOMEM -->
+  <string id="-15" value="Out of memory" />
+  <!-- ERROR.EXISTS -->
+  <string id="-16" value="Object, item or element already exists" />
+  <!-- ERROR.POINTER -->
+  <string id="-17" value="Null or invalid object" />
+  <!-- ERROR.EXPIRED -->
+  <string id="-18" value="The time has expired" />
+  <!-- ERROR.ACTIVE -->
+  <string id="-19" value="Operation is already active" />
+  <!-- ERROR.CHARSET -->
+  <string id="-20" value="Invalid character code" />
+  <!-- ERROR.EXCEPTION -->
+  <string id="-21" value="An unknown exception occured" />
+  <!-- ERROR.PORT -->
+  <string id="-22" value="Invalid port number" />
+  <!-- ERROR.ADDR -->
+  <string id="-23" value="Invalid address" />
+  <!-- ERROR.SPACE -->
+  <string id="-24" value="Insufficient available memory for this operation" />
+  <!-- ERROR.NORSRC -->
+  <string id="-25" value="Resource not found" />
+  <!-- ERROR.RCFILE -->
+  <string id="-26" value="Resource file not found" />
+  <!-- ERROR.NOCONN -->
+  <string id="-27" value="No active connection available" />
+  <!-- ERROR.UNREACH -->
+  <string id="-28" value="Unreachable network" />
+  <!-- ERROR.RUNNING -->
+  <string id="-29" value="Already running" />
+  <!-- ERROR.CLOSED -->
+  <string id="-30" value="Operation already closed" />
+  <!-- ERROR.SERVER -->
+  <string id="-31" value="Internal server error" />
+  <!-- ERROR.FORMAT -->
+  <string id="-32" value="Invalid format" />
+  <!-- ERROR.REFUSED -->
+  <string id="-33" value="Connection refused" />
+  <!-- ERROR.VERSION -->
+  <string id="-34" value="Wrong version number" />
+  <!-- ERROR.UNRESOLVED -->
+  <string id="-35" value="Unresolved address" />
+  <!-- ERROR.HOST -->
+  <string id="-36" value="Unreachable host" />
+</stringtable>
+

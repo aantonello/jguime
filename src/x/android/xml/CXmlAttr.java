@@ -17,6 +17,7 @@ package x.android.xml;
 import x.android.utils.strings;
 
 /**
+ * \ingroup x_android_xml
  * Represents a XML attribute entity.
  * An attribute entity has a name and a value. Both are in text type but can
  * be converted in any numeric type.

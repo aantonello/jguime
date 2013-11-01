@@ -33,12 +33,12 @@ package x.android.defs;
  * x.android.utils.time_t class.
  *
  * In this group you will find:
- * - x.android.utils#ERROR: Lists all errors constants.
- * - x.android.utils#ENC: List encoding constants, enabling conversion from
+ * - \b ERROR: Lists all errors constants.
+ * - \b ENC: List encoding constants, enabling conversion from
  *   one to another character type set.
- * - x.android.utils#ALIGN: Alignment constants. Although this is used mostly
+ * - \b ALIGN: Alignment constants. Although this is used mostly
  *   in the *x.android.ui* package is available here for all purposes.
- * - x.android.utils#RES: Resources constants. Enable one to recover any
+ * - \b RES: Resources constants. Enable one to recover any
  *   resource available in this library.
  * .
  * @{ *//* ---------------------------------------------------------------- */

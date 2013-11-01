@@ -6,7 +6,12 @@
 # -----------------------------------------------------------------------------
 # DEFAULT EXECUTABLES
 # -----------------------------------------------------------------------------
+ifeq "$(JAVA_HOME)" ""
 JC = javac
+else
+JC = $(JAVA_HOME)/bin/javac.exe
+endif
+
 JL = jar
 RC = jar
 
@@ -18,21 +23,20 @@ BINDIR = bin/apk
 TMPDIR = bin/tmp
 RESDIR = res
 
-PLXLIB = /Users/Shared/plx/libs
-TAGS_SRC = $(PWD)/src
+PLXLIB = $(WORKHOME)/libs
 INSTALL_DIR = $(PLXLIB)/jguime-2.4
 
 # -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
-SDKDIR = $(HOME)/Applications/adt-bundle-mac/sdk/platforms/android-15
+SDKDIR = $(ANDROID_HOME)/platforms/android-17
 BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 
 # -----------------------------------------------------------------------------
 # DEFAULT COMMAND LINE OPTIONS
 # -----------------------------------------------------------------------------
 JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
-TAGARGS = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
+CTAGS  = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
 
 # -----------------------------------------------------------------------------
 # DEFAULT TARGET, WITHOUT debug OR release BUILDS
@@ -105,35 +109,42 @@ _FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_XML)\
 # MAKEFILE TARGETS
 # NOTE: Theres is no more differences between debug or release versions.
 # -----------------------------------------------------------------------------
+.PHONY: clean cleanall install tags docs
+
 default : all
 
 all : clean $(OUTPUT)
 
 clean :
-	-@rm -fR ./bin/apk/rel
-	-@rm -fR ./bin/tmp
+	rm -fR ./bin
+
+cleanall :
+	rm -fR ./bin
+	rm -fR ./docs/help
+	rm -f $(TARGET).tags
+	rm -fR $(WWWROOT)/docs/plx/$(TARGET)
 
 $(OUTDIR) :
-	@mkdir -p $@
+	mkdir -p $@
 
 $(TMPDIR) :
-	@mkdir -p $(TMPDIR)
+	mkdir -p $(TMPDIR)
 	$(JC) $(COMPILE) $(_FILE_LIST_)
 
 $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 	$(JL) $(LINK)
 
 $(INSTALL_DIR) :
-	-@mkdir -p $(INSTALL_DIR)/apk
+	mkdir -p $(INSTALL_DIR)/apk
 
 install: $(INSTALL_DIR)
 	cp $(OUTDIR)/*.jar $(INSTALL_DIR)/apk/
-	cp jguime.tags $(INSTALL_DIR)/
-	cp docs/help/jguime.dxt $(INSTALL_DIR)/
+	cp $(TARGET).tags $(INSTALL_DIR)/
+	cp ./docs/help/$(TARGET).dxt $(INSTALL_DIR)/
 	publish -doc plx/jguime
 
 tags:
-	ctags $(TAGARGS) -f jguime.tags $(TAGS_SRC)/*
+	ctags $(CTAGS) -f $(TARGET).tags $(PWD)/src/*
 
 docs:
 	doxygen doxyfile

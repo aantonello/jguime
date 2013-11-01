@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<stringtable>
+  <!-- ERROR.SUCCESS -->
+  <string id="0" value="Nenhum erro encontrado" />
+  <!-- ERROR.FAILED -->
+  <string id="-1" value="Falha na operação" />
+  <!-- ERROR.ACCESS -->
+  <string id="-2" value="Acesso negado" />
+  <!-- ERROR.NODATA -->
+  <string id="-3" value="Dados inválidos para a operação requerida" />
+  <!-- ERROR.CRC -->
+  <string id="-4" value="Erro no cálculo de conferência binária" />
+  <!-- ERROR.LENGTH -->
+  <string id="-5" value="Comprimento inválido" />
+  <!-- ERROR.WRITE -->
+  <string id="-6" value="Falha na sequência de gravação" />
+  <!-- ERROR.READ -->
+  <string id="-7" value="Falha na sequência de leitura" />
+  <!-- ERROR.IO -->
+  <string id="-8" value="Falha não identificada em uma operação de leitura ou gravação" />
+  <!-- ERROR.INDEX -->
+  <string id="-9" value="Índice de elemento inválido" />
+  <!-- ERROR.PARAM -->
+  <string id="-10" value="Parâmetro inválido" />
+  <!-- ERROR.ABORTED -->
+  <string id="-11" value="Operação abortada" />
+  <!-- ERROR.NOTFOUND -->
+  <string id="-12" value="Item não encontrado" />
+  <!-- ERROR.FULL -->
+  <string id="-13" value="Espaço de armazenamento insuficiente" />
+  <!-- ERROR.EOF -->
+  <string id="-14" value="Final de seqüência encontrado" />
+  <!-- ERROR.NOMEM -->
+  <string id="-15" value="Memória insuficiente" />
+  <!-- ERROR.EXISTS -->
+  <string id="-16" value="Objeto, item ou elemento já existe" />
+  <!-- ERROR.POINTER -->
+  <string id="-17" value="Objeto nulo ou inválido" />
+  <!-- ERROR.EXPIRED -->
+  <string id="-18" value="Prazo expirado" />
+  <!-- ERROR.ACTIVE -->
+  <string id="-19" value="Operação ativa" />
+  <!-- ERROR.CHARSET -->
+  <string id="-20" value="Codificação de caracteres inválida" />
+  <!-- ERROR.EXCEPTION -->
+  <string id="-21" value="Uma esseção não esperada ocorreu" />
+  <!-- ERROR.PORT -->
+  <string id="-22" value="Porta de comunicação inválida" />
+  <!-- ERROR.ADDR -->
+  <string id="-23" value="Endereço especificado não é válido" />
+  <!-- ERROR.SPACE -->
+  <string id="-24" value="Espaço de memória insifuciente" />
+  <!-- ERROR.NORSRC -->
+  <string id="-25" value="Recurso não encontrado" />
+  <!-- ERROR.RCFILE -->
+  <string id="-26" value="Arquivo de recurso inválido" />
+  <!-- ERROR.NOCONN -->
+  <string id="-27" value="Não há conexão ativa" />
+  <!-- ERROR.UNREACH -->
+  <string id="-28" value="Endereço de rede indisponível" />
+  <!-- ERROR.RUNNING -->
+  <string id="-29" value="Já em execução" />
+  <!-- ERROR.CLOSED -->
+  <string id="-30" value="Operação encerrada" />
+  <!-- ERROR.SERVER -->
+  <string id="-31" value="Erro interno do servidor" />
+  <!-- ERROR.FORMAT -->
+  <string id="-32" value="Formato inválido" />
+  <!-- ERROR.REFUSED -->
+  <string id="-33" value="Conexão recusada" />
+  <!-- ERROR.VERSION -->
+  <string id="-34" value="Número de versão inválido" />
+  <!-- ERROR.UNRESOLVED -->
+  <string id="-35" value="Endereço não encontrado" />
+  <!-- ERROR.HOST -->
+  <string id="-36" value="Host não disponível" />
+</stringtable>

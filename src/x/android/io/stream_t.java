@@ -22,6 +22,7 @@ import x.android.defs.ERROR;
 import x.android.utils.*;
 
 /**
+ * \ingroup x_android_io
  * A memory stream class capeable of read and write operations.
  * This class implements both \c DataInput interface and \c DataOutput
  * interface. It can be used to read and write operations at the same time.

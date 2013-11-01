@@ -19,6 +19,7 @@ import x.android.io.CStreamWriter;
 import x.android.io.stream_t;
 
 /**
+ * \ingroup x_android_xml
  * Represents a XML node element.
  * A note is a simplest element in a XML file. A node can have child nodes or
  * a text content. But not both (at least in this implementation).

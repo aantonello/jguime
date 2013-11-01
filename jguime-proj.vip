@@ -1,18 +1,18 @@
-jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim {
-# VERSION: 2.4.50.0
+jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
+# VERSION: 2.4.51
  docs=docs enc="latin1" {
   NOTES
  }
- res=res/x/android enc="utf-8" {
-  pt_BR=pt_BR {
-   errors.xml
-   gui.xml
-   calendar.xml
-  }
-  en_US=en_US {
-   errors.xml
-   gui.xml
-   calendar.xml
+ res=res enc="utf-8" {
+  jguime=jguime {
+   pt_BR=pt_BR {
+    errors.xml
+    calendar.xml
+   }
+   en_US=en_US {
+    errors.xml
+    calendar.xml
+   }
   }
  }
  source=src/x/android enc="utf8" fmt="unix" {
@@ -33,17 +33,20 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim {
    thread_t.java
    time_t.java
    res.java
+   SFAsset.java
    CStringTable.java
   }
   io=io {
+   _package.java
    CBinaryReader.java
    CBinaryWriter.java
    CStreamReader.java
    CStreamWriter.java
-   socket_t.java
    stream_t.java
+   socket_t.java
   }
   xml=xml {
+   _package.java
    CXmlTok.java
    CXmlAttr.java
    CXmlNode.java
@@ -78,6 +81,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim {
    CAndroidApp.java
    CAndroidView.java
    CAndroidListView.java
+   CAndroidGridView.java
    CAndroidSliderView.java
    CAndroidScrollView.java
    CAndroidDialog.java
@@ -87,6 +91,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim {
   }
  }
  .gitignore
+ .commit
  onload.vim
  doxyfile
  Makefile

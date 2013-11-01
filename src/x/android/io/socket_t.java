@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.channels.IllegalBlockingModeException;
 
 /**
+ * \ingroup x_android_io
  * Implements the base socket communication.
  * The class uses the current socket implementation to provide its operations.
  * There is no exception in this implementation. All errors are returned in

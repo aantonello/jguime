@@ -288,8 +288,10 @@ public final class time_t
      * The name is provided internally. No system call is made. They are
      * provided by localized resources in the library.
      **/
-    public String getWeekDayName() {
-        return res.getString(m_weekDay, "/x/android/[...]/calendar.xml", ENC.UTF8);
+    public String getWeekDayName()
+    {
+        CStringTable table = CStringTable.LoadAsset("calendar.xml");
+        return table.get(m_weekDay);
     }/*}}}*/
     // public String getMonthName();/*{{{*/
     /**
@@ -297,8 +299,10 @@ public final class time_t
      * The name is provided internally. No system call is made. They are
      * provided by localized resources in the library.
      **/
-    public String getMonthName() {
-        return res.getString(m_month, "/x/android/[...]/calendar.xml", ENC.UTF8);
+    public String getMonthName()
+    {
+        CStringTable table = CStringTable.LoadAsset("calendar.xml");
+        return table.get(m_month + 10);
     }/*}}}*/
     //@}
 
@@ -350,7 +354,7 @@ public final class time_t
     public String toString(String spec) {
         if (spec == null) return null;
 
-        CStringTable str = res.loadAsTable("/x/android/[...]/calendar.xml", ENC.UTF8);
+        CStringTable str = CStringTable.LoadAsset("calendar.xml");
         StringBuffer sb  = new StringBuffer(spec.length());
         char[] chars = spec.toCharArray();
         int i = 0, limit = chars.length;

@@ -19,6 +19,7 @@ import x.android.defs.*;
 import x.android.utils.*;
 
 /**
+ * \ingroup x_android_io
  * Writes raw Java types to a byte array.
  *//* --------------------------------------------------------------------- */
 public class CBinaryWriter implements DataOutput

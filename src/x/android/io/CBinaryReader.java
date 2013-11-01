@@ -19,6 +19,7 @@ import x.android.defs.ENC;
 import x.android.utils.*;
 
 /**
+ * \ingroup x_android_io
  * Implements a binary data reader.
  * This class is useful to read binary data, that is, stored as byte arrays,
  * and convert data into native Java types.
