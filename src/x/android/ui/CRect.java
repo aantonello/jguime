@@ -488,20 +488,19 @@ public class CRect
      * Changes the position of a View.
      * \param v The View to change its position.
      **/
-    public final void setViewPos(View v) {
-        v.setLeft(this.top);
-        v.setTop(this.left);
+    public final void setViewPos(View v)
+    {
+        CRect rect = ViewRect(v);
+        v.layout(this.left, this.top, rect.right, rect.bottom);
     }/*}}}*/
     // public final void setViewRect(View v);/*{{{*/
     /**
      * Sets the rectangle for the View.
      * \param v View to be changed.
      **/
-    public final void setViewRect(View v) {
-        v.setLeft(this.left);
-        v.setTop(this.top);
-        v.setMinimumWidth(this.width());
-        v.setMinimumHeight(this.height());
+    public final void setViewRect(View v)
+    {
+        v.layout(this.left, this.top, this.right, this.bottom);
     }/*}}}*/
     // public final void getHitRect(View v);/*{{{*/
     /**

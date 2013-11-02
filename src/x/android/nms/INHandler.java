@@ -20,7 +20,7 @@ package x.android.nms;
  *//* --------------------------------------------------------------------- */
 public interface INHandler
 {
-    // public boolean onMessage(int msgID, int nParam, int iParam, Object extra);
+    // public boolean onMessage(int msgID, int nParam, int iParam, Object extra);/*{{{*/
     /**
      * Receives a message from the message system.
      * \param msgID Identifier of this message.
@@ -31,6 +31,6 @@ public interface INHandler
      * instructs the message system to stop propagation and release the
      * message object.
      **/
-    public boolean onMessage(int msgID, int nParam, long lParam, Object extra);
+    public boolean onMessage(int msgID, int nParam, long lParam, Object extra);/*}}}*/
 }
 // vim:syntax=java.doxygen

@@ -6,12 +6,7 @@
 # -----------------------------------------------------------------------------
 # DEFAULT EXECUTABLES
 # -----------------------------------------------------------------------------
-ifeq "$(JAVA_HOME)" ""
 JC = javac
-else
-JC = $(JAVA_HOME)/bin/javac.exe
-endif
-
 JL = jar
 RC = jar
 
@@ -23,13 +18,14 @@ BINDIR = bin/apk
 TMPDIR = bin/tmp
 RESDIR = res
 
-PLXLIB = $(WORKHOME)/libs
-INSTALL_DIR = $(PLXLIB)/jguime-2.4
+PLXLIB = $(WORKHOME)/libs/jguime-2.4
+APKDIR = $(PLXLIB)/apk
+RSCDIR = $(PLXLIB)/res
 
 # -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
-SDKDIR = $(ANDROID_HOME)/platforms/android-17
+SDKDIR = $(ANDROID_HOME)/platforms/android-11
 BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 
 # -----------------------------------------------------------------------------
@@ -67,8 +63,9 @@ JGUIME_UTILS=$(SRCDIR)/utils/debug.java\
 			 $(SRCDIR)/utils/numbers.java\
 			 $(SRCDIR)/utils/thread_t.java\
 			 $(SRCDIR)/utils/time_t.java\
-			 $(SRCDIR)/utils/CStringTable.java\
-			 $(SRCDIR)/utils/res.java
+			 $(SRCDIR)/utils/res.java\
+			 $(SRCDIR)/utils/SFAsset.java\
+			 $(SRCDIR)/utils/CStringTable.java
 
 JGUIME_IO=$(SRCDIR)/io/CBinaryReader.java\
 		  $(SRCDIR)/io/CBinaryWriter.java\
@@ -99,6 +96,7 @@ JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
 		  $(SRCDIR)/ui/CAndroidApp.java\
 		  $(SRCDIR)/ui/CAndroidView.java\
 		  $(SRCDIR)/ui/CAndroidListView.java\
+		  $(SRCDIR)/ui/CAndroidGridView.java\
 		  $(SRCDIR)/ui/CAndroidProgressDialog.java\
 		  $(SRCDIR)/ui/CAndroidPasswordDialog.java\
 		  $(SRCDIR)/ui/view_t.java
@@ -129,22 +127,26 @@ $(OUTDIR) :
 
 $(TMPDIR) :
 	mkdir -p $(TMPDIR)
-	$(JC) $(COMPILE) $(_FILE_LIST_)
 
 $(OUTPUT) : $(TMPDIR) $(OUTDIR)
+	$(JC) $(COMPILE) $(_FILE_LIST_)
 	$(JL) $(LINK)
 
-$(INSTALL_DIR) :
-	mkdir -p $(INSTALL_DIR)/apk
+$(APKDIR) :
+	mkdir -p $(APKDIR)
 
-install: $(INSTALL_DIR)
-	cp $(OUTDIR)/*.jar $(INSTALL_DIR)/apk/
-	cp $(TARGET).tags $(INSTALL_DIR)/
-	cp ./docs/help/$(TARGET).dxt $(INSTALL_DIR)/
-	publish -doc plx/jguime
+$(RSCDIR) :
+	mkdir -p $(RSCDIR)
+
+install: $(APKDIR) $(RSCDIR)
+	cp ./$(OUTPUT) $(APKDIR)/
+	cp ./$(TARGET).tags $(PLXLIB)/
+	cp ./docs/help/$(TARGET).dxt $(PLXLIB)/
+	cp -r ./$(RESDIR)/ $(RSCDIR)
+	publish -doc plx/$(TARGET) -f
 
 tags:
-	ctags $(CTAGS) -f $(TARGET).tags $(PWD)/src/*
+	ctags $(CTAGS) -f $(TARGET).tags $(PWD)/$(SRCDIR)/*
 
 docs:
 	doxygen doxyfile

@@ -24,7 +24,7 @@ INSTALL_DIR = $(PLXLIB)/jguime-2.4
 # ----------------------------------------------------------------------------
 # BOOTCLASSPATH & CLASSPATH
 # ----------------------------------------------------------------------------
-ANDROID = "$(ANDROID_HOME)\platforms\android-17\android.jar"
+ANDROID = "$(ANDROID_HOME)\platforms\android-10\android.jar"
 BOOTCP = -bootclasspath $(ANDROID)
 JAVACP = -classpath $(ANDROID);$(TMPDIR)
 
