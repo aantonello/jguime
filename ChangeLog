@@ -1,3 +1,8 @@
+2013-11-03  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidApp.java (loadDrawable()): Added function to load a drawable
+	from a resource identifier.
+
 2013-11-01  Alessandro <aantonello@paralaxe.com.br>
 
 	* time_t.java (getWeekDayName(), getMonthName(), toString()): These

@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-/* Imports {{{ */
+/* #imports {{{ */
 import java.io.*;
 import java.util.*;
 
@@ -27,6 +27,8 @@ import android.content.res.Configuration;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
 
+import android.graphics.drawable.Drawable;
+
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,7 +41,7 @@ import x.android.defs.*;
 import x.android.utils.*;
 import x.android.nms.*;
 
-/* }}} Imports */
+/* }}} #imports */
 /**
  * Represents an Android application.
  * There must be only one android application in a package bundle. For this
@@ -367,6 +369,19 @@ public class CAndroidApp extends android.app.Application
      **/
     public static String countryCode() {
         return __this.getResources().getConfiguration().locale.getCountry();
+    }/*}}}*/
+    // public static Drawable loadDrawable(int resID);/*{{{*/
+    /**
+     * Loads a Drawable from the application resource.
+     * @param resID The drawable resource identifier.
+     * @returns The object loaded or \b null if the identifier is not valid or
+     * do not point to a valid drawable resource.
+     **/
+    public static Drawable loadDrawable(int resID)
+    {
+        Resources rsc = __this.getResources();
+        try { return rsc.getDrawable(resID); }
+        catch (Exception ex) { return null; }
     }/*}}}*/
     //@}
 

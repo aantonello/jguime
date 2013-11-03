@@ -79,5 +79,5 @@ tags :
 	ctags $(CTAGS) -f $(OUTTAG) "$(HOME)/src/bb/paralaxe/jguime/src/*"
 
 docs : $(DOCDIR)
-	( type doxyfile & echo GENERATE_TAGFILE=$(OUTDXT) ) | doxygen -
+	( type doxyfile & echo $(GENERATE_TAGFILE) & echo $(PROJECT_NUMBER) ) | doxygen -
 
