@@ -13,18 +13,12 @@ RC = jar.exe
 # ----------------------------------------------------------------------------
 # SOURCE AND TARGET directories
 # ----------------------------------------------------------------------------
-SRCDIR = ./src/x/android
-TMPDIR = ./bin/tmp
-BINDIR = ./bin/apk
-RESDIR = ./res
-
-PLXLIB = $(WORKHOME)/libs
-INSTALL_DIR = $(PLXLIB)/jguime-2.4
+include make.inc
 
 # ----------------------------------------------------------------------------
 # BOOTCLASSPATH & CLASSPATH
 # ----------------------------------------------------------------------------
-ANDROID = "$(ANDROID_HOME)\platforms\android-10\android.jar"
+ANDROID = "$(ANDROID_HOME)\platforms\android-11\android.jar"
 BOOTCP = -bootclasspath $(ANDROID)
 JAVACP = -classpath $(ANDROID);$(TMPDIR)
 
@@ -34,13 +28,6 @@ JAVACP = -classpath $(ANDROID);$(TMPDIR)
 JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
 CTAGS  = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
 
-# ----------------------------------------------------------------------------
-# FINAL OUTPUT
-# ----------------------------------------------------------------------------
-TARGET = jguime
-OUTDIR = $(BINDIR)/rel
-OUTPUT = $(OUTDIR)/$(TARGET).jar
-
 # -----------------------------------------------------------------------------
 # COMPILER AND LINKER FLAGS
 # -----------------------------------------------------------------------------
@@ -49,61 +36,6 @@ LINK = cMf $(OUTPUT) -C $(TMPDIR) .
 MAKERES = uf $(OUTPUT) -C $(RESDIR) .
 
 # -----------------------------------------------------------------------------
-# FILE LIST
-# -----------------------------------------------------------------------------
-JGUIME_DEFS=$(SRCDIR)/defs/ERROR.java\
-			$(SRCDIR)/defs/ENC.java\
-			$(SRCDIR)/defs/ALIGN.java\
-			$(SRCDIR)/defs/SIZE.java\
-			$(SRCDIR)/defs/RES.java
-
-JGUIME_UTILS=$(SRCDIR)/utils/debug.java\
-			 $(SRCDIR)/utils/strings.java\
-			 $(SRCDIR)/utils/arrays.java\
-			 $(SRCDIR)/utils/numbers.java\
-			 $(SRCDIR)/utils/thread_t.java\
-			 $(SRCDIR)/utils/time_t.java\
-			 $(SRCDIR)/utils/res.java\
-			 $(SRCDIR)/utils/SFAsset.java\
-			 $(SRCDIR)/utils/CStringTable.java
-
-JGUIME_IO=$(SRCDIR)/io/CBinaryReader.java\
-		  $(SRCDIR)/io/CBinaryWriter.java\
-		  $(SRCDIR)/io/CStreamReader.java\
-		  $(SRCDIR)/io/CStreamWriter.java\
-		  $(SRCDIR)/io/socket_t.java\
-		  $(SRCDIR)/io/stream_t.java
-
-JGUIME_XML=$(SRCDIR)/xml/CXmlTok.java\
-		   $(SRCDIR)/xml/CXmlAttr.java\
-		   $(SRCDIR)/xml/CXmlNode.java\
-		   $(SRCDIR)/xml/CXmlFile.java
-
-JGUIME_NMS=$(SRCDIR)/nms/INHandler.java\
-		   $(SRCDIR)/nms/msg_t.java\
-		   $(SRCDIR)/nms/cache_t.java\
-		   $(SRCDIR)/nms/subscribers.java\
-		   $(SRCDIR)/nms/issuer.java
-
-JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
-		  $(SRCDIR)/ui/IMSG.java\
-		  $(SRCDIR)/ui/IAndroidView.java\
-		  $(SRCDIR)/ui/IAndroidListDelegate.java\
-		  $(SRCDIR)/ui/IAndroidListAdapter.java\
-		  $(SRCDIR)/ui/AbstractView.java\
-		  $(SRCDIR)/ui/CAndroidAdapter.java\
-		  $(SRCDIR)/ui/CRect.java\
-		  $(SRCDIR)/ui/CAndroidApp.java\
-		  $(SRCDIR)/ui/CAndroidView.java\
-		  $(SRCDIR)/ui/CAndroidListView.java\
-		  $(SRCDIR)/ui/CAndroidGridView.java\
-		  $(SRCDIR)/ui/CAndroidProgressDialog.java\
-		  $(SRCDIR)/ui/CAndroidPasswordDialog.java\
-		  $(SRCDIR)/ui/view_t.java
-
-_FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_XML)\
-			$(JGUIME_NMS) $(JGUIME_UI)
-# -----------------------------------------------------------------------------
 # MAKEFILE TARGETS
 # -----------------------------------------------------------------------------
 default : all
@@ -111,15 +43,12 @@ default : all
 all : clean $(OUTPUT)
 
 clean:
-	@erase "$(OUTDIR)\*.*" /q
-	@if exist "$(TMPDIR)/" rd "$(TMPDIR)" /s /q
+	-rd "./$(BINDIR)" /s /q
+	-rd "./$(TMPDIR)" /s /q
 
-cleanall:
-	-@erase "$(TMPDIR)\*.*" /q
-	-@erase "$(BINDIR)\*.*" /q
-	-@erase $(TARGET).tags
-	-@erase "./docs/help/$(TARGET).dxt" /q
-	-@erase "./docs/help/html\*.*" /q
+cleanall: clean
+	-rd "./$(DOCDIR)" /s /q
+	-erase "$(OUTTAG)" /q
 
 $(OUTDIR) :
 	@if not exist "$(OUTDIR)/" md "$(OUTDIR)"
@@ -127,25 +56,28 @@ $(OUTDIR) :
 $(TMPDIR) :
 	@if not exist "$(TMPDIR)/" md "$(TMPDIR)"
 
+$(DOCDIR) :
+	@if not exist "$(DOCDIR)/" md "$(DOCDIR)"
+
+$(APKDIR) :
+	@if not exist "$(APKDIR)/" md "$(APKDIR)"
+
+$(RSCDIR) :
+	@if not exist "$(RSCDIR)/" md "$(RSCDIR)"
+
 $(OUTPUT) : $(OUTDIR) $(TMPDIR)
 	$(JC) $(COMPILE) $(_FILE_LIST_)
 	$(JL) $(LINK)
-#	$(RC) $(MAKERES)
 
-$(INSTALL_DIR) :
-	@if not exist "$(INSTALL_DIR)/apk/" mkdir "$(INSTALL_DIR)/apk"
-	@if not exist "$(INSTALL_DIR)/res/" mkdir "$(INSTALL_DIR)/res"
-
-install : $(INSTALL_DIR)
-	xcopy "$(OUTDIR)\*.jar" "$(INSTALL_DIR)/apk" /q /y
-	xcopy "$(TARGET).tags" "$(INSTALL_DIR)" /q /y
-	xcopy "./docs/help\$(TARGET).dxt" "$(INSTALL_DIR)" /q /y
-	xcopy "./res\*.*" "$(INSTALL_DIR)/res" /q /y /s
-	publish -doc plx/jguime
+install : $(APKDIR) $(RSCDIR)
+	xcopy "$(OUTPUT:/=\)" $(APKDIR:/=\) /d /y
+	xcopy "$(OUTDXT:/=\)" $(PLXLIB:/=\) /d /y
+	xcopy "$(RESDIR:/=\)\*.*" $(RSCDIR:/=\) /d /y /s
+	publish -doc plx/$(TARGET)
 
 tags :
-	ctags $(CTAGS) -f $(TARGET).tags "$(HOME)/src/bb/paralaxe/jguime/src/*"
+	ctags $(CTAGS) -f $(OUTTAG) "$(HOME)/src/bb/paralaxe/jguime/src/*"
 
-docs :
-	doxygen doxyfile
+docs : $(DOCDIR)
+	( type doxyfile & echo GENERATE_TAGFILE=$(OUTDXT) ) | doxygen -
 

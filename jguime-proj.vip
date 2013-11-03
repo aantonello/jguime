@@ -90,12 +90,14 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    view_t.java
   }
  }
+ makefiles=. {
+  make.inc
+  Makefile
+  make.jse
+ }
  .gitignore
  .commit
  onload.vim
  doxyfile
- Makefile
- make.jse
- jguime.tags
  ChangeLog
 }
