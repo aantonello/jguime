@@ -1,0 +1,14 @@
+Version 2.4.54
+
+Tagged as v2.4.54
+
+- Removed tags file from version control. It is not possible to share the tags
+  file across all machies becouse of the differences in paths.
+- make.jse file was updated. A new file, make.inc, has now the source files
+  and common path definitions.
+- Makefile also updated.
+- The installation of tags file from make.jse was removed.
+- CAndroidApp.java (loadDrawable()): Added function to load a drawable from a
+  resource identifier.
+- Added '.commit' to the version control.
+- Added 'make.inc' to version control.
