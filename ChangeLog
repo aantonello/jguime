@@ -1,3 +1,7 @@
+2013-11-04  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidGridView.java: Buggy! Constructors was not calling _internal_init().
+
 2013-11-03  Alessandro <aantonello@paralaxe.com.br>
 
 	* CAndroidApp.java (loadDrawable()): Added function to load a drawable

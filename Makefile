@@ -56,7 +56,7 @@ $(OUTDIR) :
 	mkdir -p $@
 
 $(TMPDIR) :
-	mkdir -p $(TMPDIR)
+	mkdir -p $@
 
 $(DOCDIR) :
 	mkdir -p $@
@@ -82,5 +82,5 @@ tags:
 	ctags $(CTAGS) -f $(OUTTAG) $(PWD)/$(SRCDIR)/*
 
 docs: $(DOCDIR)
-	( cat doxyfile ; echo "GENERATE_TAGFILE=$(OUTDXT)" ) | doxygen -
+	( cat doxyfile ; echo "$(PROJECT_NUMBER)\n$(GENERATE_TAGFILE)" ) | doxygen -
 

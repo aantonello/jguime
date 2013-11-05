@@ -45,6 +45,7 @@ public class CAndroidGridView extends GridView
      **/
     public CAndroidGridView(Context context) {
         super(context);
+        _internal_init();
     }/*}}}*/
     // public CAndroidGridView(Context context, AttributeSet attrs);/*{{{*/
     /**
@@ -55,6 +56,7 @@ public class CAndroidGridView extends GridView
     public CAndroidGridView(Context context, AttributeSet attrs)
     {
         this(context, attrs, 0);
+        _internal_init();
     }/*}}}*/
     // public CAndroidGridView(Context context, AttributeSet attrs, int style);/*{{{*/
     /**
@@ -66,6 +68,7 @@ public class CAndroidGridView extends GridView
     public CAndroidGridView(Context context, AttributeSet attrs, int style)
     {
         super(context, attrs, style);
+        _internal_init();
     }/*}}}*/
     //@}
 
