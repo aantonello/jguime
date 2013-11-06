@@ -1,5 +1,6 @@
 # ============================================================================
 # General Include Make file.
+# vim:ft=make
 # ============================================================================
 
 # Common directories
@@ -11,7 +12,7 @@ OUTDIR = $(BINDIR)/rel
 RESDIR = res
 TARGET = jguime
 APPVER = 2.4
-BUILD  = 54
+BUILD  = 56
 OUTPUT = $(OUTDIR)/$(TARGET).jar
 OUTTAG = $(TARGET).tags
 OUTDXT = $(DOCDIR)/$(TARGET).dxt
@@ -73,6 +74,7 @@ JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
 		  $(SRCDIR)/ui/CAndroidView.java\
 		  $(SRCDIR)/ui/CAndroidListView.java\
 		  $(SRCDIR)/ui/CAndroidGridView.java\
+		  $(SRCDIR)/ui/CAndroidPagerView.java\
 		  $(SRCDIR)/ui/CAndroidProgressDialog.java\
 		  $(SRCDIR)/ui/CAndroidPasswordDialog.java\
 		  $(SRCDIR)/ui/view_t.java

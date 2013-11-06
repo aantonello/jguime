@@ -1,5 +1,4 @@
-Version 2.4.55
+Version 2.4.56
 
-- Makefile: Updated to use 'make.inc' correctly.
-- Compiled on MacBook.
-- CAndroidGridView.java: Buggy! Constructors was not calling _internal_init().
+- CAndroidPagerView.java: New class that implements a pager, which handle
+  scroll over several child views.

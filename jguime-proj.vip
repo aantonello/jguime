@@ -83,6 +83,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    CAndroidListView.java
    CAndroidGridView.java
    CAndroidSliderView.java
+   CAndroidPagerView.java
    CAndroidScrollView.java
    CAndroidDialog.java
    CAndroidProgressDialog.java
@@ -90,7 +91,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    view_t.java
   }
  }
- makefiles=. {
+ makefiles=. enc="utf8" {
   make.inc
   Makefile
   make.jse
