@@ -1,4 +1,7 @@
-Version 2.4.56
+Version 2.4.58
 
-- CAndroidPagerView.java: New class that implements a pager, which handle
-  scroll over several child views.
+- CStringTable.java (Load()): Bug. Was not setting the character code when
+  loading the stringtable XML file. Forgot that the default is Latin1.
+- AbstractView.java (level()): Added function to change the image level of an
+  ImageView.
+- doxyfile: Configuration updated.

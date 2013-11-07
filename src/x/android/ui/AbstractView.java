@@ -649,6 +649,20 @@ public abstract class AbstractView<T extends AbstractView<T>>
         }
         return self();
     }/*}}}*/
+    // public T level(int levelNumber);/*{{{*/
+    /**
+     * Sets the image level of an ImageView constructed with a
+     * LevelListDrawable.
+     * @param levelNumber Index of the level to set.
+     * @returns this.
+     **/
+    public T level(int levelNumber)
+    {
+        if (m_view instanceof ImageView) {
+            ((ImageView)m_view).setImageLevel(levelNumber);
+        }
+        return self();
+    }/*}}}*/
     //@}
 
     /** \name ListView METHODS */ //@{
@@ -954,4 +968,3 @@ public abstract class AbstractView<T extends AbstractView<T>>
     //@}
 }
 // vim:syntax=java.doxygen
-

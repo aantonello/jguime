@@ -919,8 +919,9 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
 
         debug.w("CAndroidPagerView: sizeof m_loadedView: %d, sizeof recycledViews: %d\n",
                 m_loadedViews.size(), m_recycledViews.size());
-        debug.w("CAndroidPagerView: currentX: %d, currentY: %d\n",
-                m_scroller.getCurrX(), m_scroller.getCurrY());
+        if (m_scroller != null)
+            debug.w("CAndroidPagerView: currentX: %d, currentY: %d\n",
+                    m_scroller.getCurrX(), m_scroller.getCurrY());
         debug.w("CAndroidPagerView: index in adapter: %d, in buffer: %d\n",
                 m_currentAdapterIndex, m_currentBufferIndex);
     }/*}}}*/

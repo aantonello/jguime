@@ -15,6 +15,7 @@
 package x.android.utils;
 
 import java.io.InputStream;
+import x.android.defs.*;
 import x.android.xml.*;
 
 /**
@@ -67,7 +68,7 @@ public class CStringTable
     public static CStringTable LoadStream(InputStream is)
     {
         CStringTable stringTable = new CStringTable();
-        CXmlFile file = CXmlFile.Load(is);
+        CXmlFile file = CXmlFile.Load(is, ENC.UTF8);
 
         if (file == null) return stringTable;
         if (!"stringtable".equals(file.root.nodeName))

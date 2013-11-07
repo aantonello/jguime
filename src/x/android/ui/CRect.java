@@ -443,7 +443,7 @@ public class CRect
     }/*}}}*/
     // public static final CRect ViewRect(View v);/*{{{*/
     /**
-     * Build a new CRect objeto with the coordinates of the passed View.
+     * Build a new CRect object with the coordinates of the passed View.
      * \param v View to get its coodinates.
      * \return A new CRect object.
      * \remarks The CRect returned will have the rectangle of the View on
