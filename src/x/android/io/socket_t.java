@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.io;
-
+/* #imports {{{ */
 import x.android.defs.ERROR;
 import x.android.utils.debug;
 
@@ -27,6 +27,7 @@ import java.net.SocketTimeoutException;
 import java.io.IOException;
 import java.nio.channels.IllegalBlockingModeException;
 
+/* }}} #imports */
 /**
  * \ingroup x_android_io
  * Implements the base socket communication.
@@ -48,12 +49,13 @@ public class socket_t
     //@}
 
     /** \name STREAMS */ //@{
-    // public final InputStream getInputStream();/*{{{*/
+    // public final InputStream  getInputStream();/*{{{*/
     /**
      * Gets the stream for reading the socket.
      * \returns The InputStream or **null** if there is no current connection.
      **/
-    public final InputStream getInputStream() {
+    public final InputStream getInputStream()
+    {
         if (m_socket == null) return null;
         try { return m_socket.getInputStream(); }
         catch (Exception ex) {
@@ -260,7 +262,8 @@ public class socket_t
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::EOF No more data to be read.
      **/
-    public final int  read(byte[] buffer, int offset, int count) {
+    public final int  read(byte[] buffer, int offset, int count)
+    {
         InputStream input = this.getInputStream();
 
         if (input == null) return ERROR.NOCONN;
@@ -330,15 +333,11 @@ public class socket_t
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::EOF No more data to be read.
      **/
-    public final int read(stream_t stream, int count) {
-        if (count < 0) count = this.queryDataAvailable();
-        if (count <= 0) return count;
-
-        byte[] data = new byte[count];
-        count = this.read(data, 0, count);
-
-        if (count > 0) stream.write(data, 0, count);
-        return count;
+    public final int read(stream_t stream, int count)
+    {
+        InputStream is = this.getInputStream();
+        if (is == null) return ERROR.NOCONN;
+        return stream.writeFromInputStream(is, count);
     }/*}}}*/
     // public final int  send(stream_t stream, int count);/*{{{*/
     /**
@@ -354,12 +353,18 @@ public class socket_t
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::IO The connection was closed by the peer.
      **/
-    public final int send(stream_t stream, int count) {
-        if (count < 0) count = stream.available();
-
-        byte[] data = new byte[count];
-        count = stream.read(data, 0, count);
-        return this.send(data, 0, count);
+    public final int send(stream_t stream, int count)
+    {
+        OutputStream os = this.getOutputStream();
+        if (os == null) return ERROR.NOCONN;
+        if ((count = stream.readIntoOutputStream(os, count)) > 0)
+        {
+            try { os.flush(); }
+            catch (Exception ex) {
+                debug.e(ex, "A ridiculous Exception in a stupid OuputStream::flush() method: $n, $s\n");
+            }
+        }
+        return count;
     }/*}}}*/
     //@}
 

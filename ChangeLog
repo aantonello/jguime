@@ -1,3 +1,11 @@
+2013-11-08  Alessandro <aantonello@paralaxe.com.br>
+
+	* CStringTable.java (Load()): Bug. Was not setting the character code when
+	loading the stringtable XML file. Forgot that the default is Latin1.
+	* AbstractView.java (level()): Added function to change the image level of
+	an ImageView.
+	* doxyfile: Configuration updated.
+
 2013-11-04  Alessandro <aantonello@paralaxe.com.br>
 
 	* CAndroidGridView.java: Buggy! Constructors was not calling _internal_init().

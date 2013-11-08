@@ -4,21 +4,29 @@
 # =============================================================================
 
 # -----------------------------------------------------------------------------
-# DEFAULT EXECUTABLES
-# -----------------------------------------------------------------------------
-JC = javac
-JL = jar
-RC = jar
-
-# -----------------------------------------------------------------------------
 # SOURCE AND TARGET DIRECTORIES
 # -----------------------------------------------------------------------------
 include make.inc
 
 # -----------------------------------------------------------------------------
+# DEFAULT EXECUTABLES
+# -----------------------------------------------------------------------------
+ifeq "$(HOMEDRIVE)" "C:"
+JC = $(JAVA_HOME)/bin/javac.exe
+JL = $(JAVA_HOME)/bin/jar.exe
+RC = $(JAVA_HOME)/bin/jar.exe
+ANDROID := $(shell cygpath -m $(ANDROID_HOME))
+else
+JC = javac
+JL = jar
+RC = jar
+ANDROID := $(ANDROID_HOME)
+endif
+
+# -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
-SDKDIR = $(ANDROID_HOME)/platforms/android-11
+SDKDIR = $(ANDROID)/platforms/android-11
 BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 
 # -----------------------------------------------------------------------------
@@ -73,14 +81,13 @@ $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 
 install: $(APKDIR) $(RSCDIR)
 	cp ./$(OUTPUT) $(APKDIR)/
-	cp ./$(OUTTAG) $(PLXLIB)/
 	cp ./$(OUTDXT) $(PLXLIB)/
 	cp -r ./$(RESDIR)/ $(RSCDIR)/
-	publish -doc plx/$(TARGET) -f
+	publish -doc plx/$(TARGET) -f -q
 
 tags:
 	ctags $(CTAGS) -f $(OUTTAG) $(PWD)/$(SRCDIR)/*
 
 docs: $(DOCDIR)
-	( cat doxyfile ; echo "$(PROJECT_NUMBER)\n$(GENERATE_TAGFILE)" ) | doxygen -
+	( cat doxyfile ; echo "$(PROJECT_NUMBER)" ; echo "$(GENERATE_TAGFILE)" ) | doxygen -
 

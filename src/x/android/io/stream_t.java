@@ -16,6 +16,8 @@ package x.android.io;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import x.android.defs.ENC;
 import x.android.defs.ERROR;
@@ -1361,6 +1363,87 @@ public class stream_t implements DataInput, DataOutput
         count = m_lastRead;
         m_read += count;
         m_lastRead = 0;
+        return count;
+    }/*}}}*/
+    //@}
+
+    /** \name Input/Output Streams Support */ //@{
+    // public int writeFromInputStream(InputStream is, int count);/*{{{*/
+    /**
+     * Writes the internal buffer reading from the passed stream.
+     * @param is The InputStream to read.
+     * @param count Number of bytes to read. When less than zero the function
+     * will ask the available bytes and read then all.
+     * @return The result is the total number of bytes read from \a is
+     * and written in the internal buffer. If an error occurs the result will
+     * be an error code. Also the error can be retrieved by #writeStatus()
+     * function.
+     * @sa ERROR
+     **/
+    public int writeFromInputStream(InputStream is, int count)
+    {
+        m_lastWrite = 0;
+        if (count == 0) return 0;       /* Nothing to read. */
+
+        if (count < 0)
+        {
+            try { count = is.available(); }
+            catch (Exception ex) {
+                debug.e(ex, "stream_t::writeFromInputStream() InputStream::available($n): $s\n");
+                m_lastWrite = ERROR.READ;
+                return m_lastWrite;
+            }
+        }
+
+        if (!_internal_checkRoom(m_write + count))
+        {
+            m_lastWrite = ERROR.NOMEM;
+            return m_lastWrite;
+        }
+
+        try { count = is.read(m_data, m_write, count); }
+        catch (Exception ex) {
+            debug.e(ex, "stream_t::writeFromInputStream() InputStream::read($n): $s\n");
+            m_lastWrite = ERROR.READ;
+            return m_lastWrite;
+        }
+
+        if (count < 0)
+        {
+            m_lastWrite = ERROR.EOF;
+            return m_lastWrite;
+        }
+
+        m_write += count;
+        return count;
+    }/*}}}*/
+    // public int readIntoOutputStream(OutputStream os, int count);/*{{{*/
+    /**
+     * Reads the internal buffer from the current position writing the
+     * OutputStream passed.
+     * @param os OutputStream to write.
+     * @param count Number of bytes to write. When less than zero all internal
+     * available bytes starting from the current position will be written in
+     * the OutputStream.
+     * @return The total number of bytes written means success. Zero is a
+     * valid result value if there is no bytes available to write. If un error
+     * occurs the result will be its error code. The erro code can also be
+     * retrieved from #readStatus() function.
+     * @sa ERROR
+     **/
+    public int readIntoOutputStream(OutputStream os, int count)
+    {
+        m_lastRead = 0;
+        if ((count < 0) || (count > available()))
+            count = available();
+
+        try { os.write(m_data, m_read, count); }
+        catch (Exception ex) {
+            debug.e(ex, "stream_t::readIntoOutputStream(): os.write($n): $s\n");
+            m_lastRead = ERROR.WRITE;
+            return m_lastRead;
+        }
+        m_read += count;
         return count;
     }/*}}}*/
     //@}

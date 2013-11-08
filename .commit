@@ -1,7 +1,13 @@
-Version 2.4.58
+Version 2.4.60
 
-- CStringTable.java (Load()): Bug. Was not setting the character code when
-  loading the stringtable XML file. Forgot that the default is Latin1.
-- AbstractView.java (level()): Added function to change the image level of an
-  ImageView.
-- doxyfile: Configuration updated.
+- make.mak: Added makefile to compile under Cygwin on Windows.
+- Makefile: Change to work under Cygwin on Windows and Mac OS X.
+- make.mak: File removed.
+- stream_t.java (writeFromInputStream()): Added function to write the internal
+  buffer directly from the provided InputStream.
+- stream_t.java (readIntoOutputStream()): Added to read the internal buffer
+  writint to the provided OutputStream.
+- socket_t.java (send(stream_t, int)): Changed to use the new function of
+  stream_t::readIntoOutputStream(), avoiding temporary memory allocation.
+- socket_t.java (read(stream_t, int)): Changed to use the new function
+  stream_t::writeFromInputStream() to avoid temporary memory allocation.

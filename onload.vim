@@ -2,6 +2,8 @@
 
 if has('win32')
     compiler msvc
+elseif has('win32unix')
+    compiler javac
 endif
 
 " Do this only once.

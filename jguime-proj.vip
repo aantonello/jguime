@@ -91,7 +91,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    view_t.java
   }
  }
- makefiles=. enc="utf8" {
+ makefiles=. enc="utf8" fmt="unix" {
   make.inc
   Makefile
   make.jse
