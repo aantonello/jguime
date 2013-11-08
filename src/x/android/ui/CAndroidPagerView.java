@@ -255,8 +255,7 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
             scrollTo(m_scroller.getCurrX(), m_scroller.getCurrY());
             postInvalidate();
         } else if (m_nextScreen != INVALID_SCREEN) {
-            m_currentScreen = Math.max(0,
-                    Math.min(m_nextScreen, getChildCount() - 1));
+            m_currentScreen = Math.max(0, Math.min(m_nextScreen, getChildCount() - 1));
             m_nextScreen = INVALID_SCREEN;
             post(new Runnable() {
                 @Override public void run() {
@@ -322,7 +321,6 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
 
             // Remember where the motion event started
             m_lastMotionX = x;
-
             m_touchState = m_scroller.isFinished() ? TOUCH_STATE_REST : TOUCH_STATE_SCROLLING;
 
             break;
@@ -546,11 +544,19 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
                     MeasureSpec.makeMeasureSpec(getChildHeight(), MeasureSpec.EXACTLY));
         }
 
-        if (m_scroller == null)     /* First layout. */
+        if ((oldw == 0) && (oldh == 0))
         {
-            m_scroller = new Scroller( getContext() );
+            debug.w("CAndroidPagerView::onSizeChanged(m_currentScreen: %d)\n", m_currentScreen);
+            debug.w("CAndroidPagerView::onSizeChanged(m_currentScreen * getChildWidth())\n", 
+                    m_currentScreen * getChildWidth());
             m_scroller.startScroll(0, 0, m_currentScreen * getChildWidth(), 0, 0);
         }
+        else
+            debug.w("oldw: %d, oldh: %d\n", oldw, oldh);
+//        if (m_scroller == null)     /* First layout. */
+//        {
+//            m_scroller = new Scroller( getContext() );
+//        }
     }/*}}}*/
     // protected void  onLayout(boolean changed, int l, int t, int r, int b);/*{{{*/
     /**
@@ -638,7 +644,7 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     public void setSelection(int position)
     {
         m_nextScreen = INVALID_SCREEN;
-        m_scroller.forceFinished(true);
+        if (m_scroller != null) m_scroller.forceFinished(true);
         if (m_adapter == null)
             return;
         
@@ -708,13 +714,17 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     private void init()
     {
         m_adapter       = null;
-        m_scroller      = null;
+        m_scroller      = new Scroller(getContext());
         m_loadedViews   = new LinkedList<View>();
         m_recycledViews = new LinkedList<View>();
         m_sideBuffer = 3;
         m_touchState = TOUCH_STATE_REST;
         m_nextScreen = INVALID_SCREEN;
         m_scrollEnabled = true;
+        m_datasetObserver = null;
+        m_currentBufferIndex = 0;
+        m_currentAdapterIndex = 0;
+        m_currentScreen = 0;
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         m_touchSlop       = configuration.getScaledTouchSlop();
@@ -779,17 +789,28 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
      */
     private void setVisibleView(int indexInBuffer, boolean uiThread)
     {
-        m_currentScreen = Math.max(0,
-                Math.min(indexInBuffer, getChildCount() - 1));
-        int dx = (m_currentScreen * getChildWidth()) - m_scroller.getCurrX();
-        m_scroller.startScroll(m_scroller.getCurrX(), m_scroller.getCurrY(), dx,
-                0, 0);
-        if(dx == 0)
-            onScrollChanged(m_scroller.getCurrX() + dx, m_scroller.getCurrY(), m_scroller.getCurrX() + dx, m_scroller.getCurrY());
-        if (uiThread)
-            invalidate();
-        else
-            postInvalidate();
+        m_currentScreen = Math.max(0, Math.min(indexInBuffer, getChildCount() - 1));
+
+        /* When 'm_scroller' is null the first layout operation was not called
+         * yet. This means we are still off screen. Whe the first layout
+         * operation is called the selected screen will be positioned
+         * accordingly.
+         */
+        if (m_scroller != null)
+        {
+            int dx = (m_currentScreen * getChildWidth()) - m_scroller.getCurrX();
+
+            m_scroller.startScroll(m_scroller.getCurrX(), m_scroller.getCurrY(), dx, 0, 0);
+
+            if(dx == 0)
+                onScrollChanged(m_scroller.getCurrX() + dx,
+                                m_scroller.getCurrY(),
+                                m_scroller.getCurrX() + dx, m_scroller.getCurrY());
+            if (uiThread)
+                invalidate();
+            else
+                postInvalidate();
+        }
     }/*}}}*/
     // private void resetFocus();/*{{{*/
     /**
@@ -916,14 +937,13 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
      **/
     private void logBuffer()
     {
-
-        debug.w("CAndroidPagerView: sizeof m_loadedView: %d, sizeof recycledViews: %d\n",
-                m_loadedViews.size(), m_recycledViews.size());
-        if (m_scroller != null)
-            debug.w("CAndroidPagerView: currentX: %d, currentY: %d\n",
-                    m_scroller.getCurrX(), m_scroller.getCurrY());
-        debug.w("CAndroidPagerView: index in adapter: %d, in buffer: %d\n",
-                m_currentAdapterIndex, m_currentBufferIndex);
+//        debug.w("CAndroidPagerView: sizeof m_loadedView: %d, sizeof recycledViews: %d\n",
+//                m_loadedViews.size(), m_recycledViews.size());
+//        if (m_scroller != null)
+//            debug.w("CAndroidPagerView: currentX: %d, currentY: %d\n",
+//                    m_scroller.getCurrX(), m_scroller.getCurrY());
+//        debug.w("CAndroidPagerView: index in adapter: %d, in buffer: %d\n",
+//                m_currentAdapterIndex, m_currentBufferIndex);
     }/*}}}*/
     //@}
 
@@ -948,7 +968,6 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
      **/
     class AdapterDataSetObserver extends DataSetObserver
     {
-
         @Override
         public void onChanged() {
             View v = getChildAt(m_currentBufferIndex);
@@ -999,7 +1018,9 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
          **/
         public View getView(int pos, View reuseView, ViewGroup parent)
         {
-            return super.getItem(pos);
+            reuseView = getItem(pos);
+            debug.w("ArrayListView::getView(%d) == %s\n", pos, reuseView.getClass().getSimpleName());
+            return reuseView;
         }/*}}}*/
         //@}
     }/*}}}*/
