@@ -1,3 +1,7 @@
+2013-11-12  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidPagerView.java: Complete rewrote of the class.
+
 2013-11-08  Alessandro <aantonello@paralaxe.com.br>
 
 	* CStringTable.java (Load()): Bug. Was not setting the character code when

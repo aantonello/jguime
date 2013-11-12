@@ -22,6 +22,7 @@ import android.widget.*;
 import java.util.*;
 
 import x.android.utils.*;
+import x.android.nms.*;
 /* }}} #imports */
 /**
  * Implements a pager view.
@@ -45,6 +46,7 @@ import x.android.utils.*;
  * disabled using \c enableScroll() method.
  *//* --------------------------------------------------------------------- */
 public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
+    implements INHandler
 {
     /** \name Constructors */ //@{
     // public CAndroidPagerView(Context context);/*{{{*/
@@ -225,24 +227,6 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     //@}
 
     /** \name View: Overrides */ //@{
-    // public    void  computeScroll();/*{{{*/
-    /**
-     * Called by a parent to request that a child update its values for
-     * \c mScrollX and \c mScrollY if necessary.
-     * This will typically be done if the child is animating a scroll using a
-     * \c Scroller object.
-     **/
-    @Override
-    public void computeScroll()
-    {
-        if (!m_scroller.computeScrollOffset())
-            m_currentIndex = (getScrollX() / getChildWidth());
-        else
-        {
-            scrollTo(m_scroller.getCurrX(), m_scroller.getCurrY());
-            postInvalidate();
-        }
-    }/*}}}*/
     // public boolean  onTouchEvent(MotionEvent ev);/*{{{*/
     /**
      * Implement this method to handle touch screen motion events.
@@ -361,58 +345,60 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        int wSize = (widthMeasureSpec & 0x0FFFFFFF);
-        int hSize = (heightMeasureSpec & 0x0FFFFFFF); 
-        int wMode = (widthMeasureSpec & 0xF0000000);
-        int hMode = (heightMeasureSpec & 0xF0000000);
-
-        int childWidth = 0;
-        int childHeight = 0;
-        int childState = 0;
-
-        final int widthPadding = getWidthPadding();
-        final int heightPadding = getHeightPadding();
-
-        if (getViewsCount() > 0) {
-            final View child = obtainView(0);
-            measureChild(child, widthMeasureSpec, heightMeasureSpec);
-            childWidth = child.getMeasuredWidth();
-            childHeight = child.getMeasuredHeight();
-            childState = child.getMeasuredState();
-        }
-
-        switch (wMode) {
-            case MeasureSpec.UNSPECIFIED:
-                wSize = childWidth + widthPadding;
-                break;
-            case MeasureSpec.AT_MOST:
-                wSize = (childWidth + widthPadding) | childState;
-                break;
-            case MeasureSpec.EXACTLY:
-                if (wSize < childWidth + widthPadding)
-                    wSize |= MEASURED_STATE_TOO_SMALL;
-                break;
-        }
-        switch (hMode) {
-            case MeasureSpec.UNSPECIFIED:
-                hSize = childHeight + heightPadding;
-                break;
-            case MeasureSpec.AT_MOST:
-                hSize = (childHeight + heightPadding) | (childState >> MEASURED_HEIGHT_STATE_SHIFT);
-                break;
-            case MeasureSpec.EXACTLY:
-                if (hSize < childHeight + heightPadding)
-                    hSize |= MEASURED_STATE_TOO_SMALL;
-                break;
-        }
-
-        if (hMode == MeasureSpec.UNSPECIFIED) {
-            hSize = heightPadding + childHeight;
-        } else {
-            hSize |= (childState&MEASURED_STATE_MASK);
-        }
-
+        int wSize = (widthMeasureSpec & 0x00FFFFFF);
+        int hSize = (heightMeasureSpec & 0x00FFFFFF); 
+        int wMode = (widthMeasureSpec & 0xFF000000);
+        int hMode = (heightMeasureSpec & 0xFF000000);
         setMeasuredDimension(wSize, hSize);
+        return;
+
+//        int childWidth = 0;
+//        int childHeight = 0;
+//        int childState = 0;
+//
+//        final int widthPadding = getWidthPadding();
+//        final int heightPadding = getHeightPadding();
+//
+//        if (getViewsCount() > 0) {
+//            final View child = getChildAt(0);
+//            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+//            childWidth = child.getMeasuredWidth();
+//            childHeight = child.getMeasuredHeight();
+//            childState = child.getMeasuredState();
+//        }
+//
+//        switch (wMode) {
+//            case MeasureSpec.UNSPECIFIED:
+//                wSize = childWidth + widthPadding;
+//                break;
+//            case MeasureSpec.AT_MOST:
+//                wSize = (childWidth + widthPadding) | childState;
+//                break;
+//            case MeasureSpec.EXACTLY:
+//                if (wSize < childWidth + widthPadding)
+//                    wSize |= MEASURED_STATE_TOO_SMALL;
+//                break;
+//        }
+//        switch (hMode) {
+//            case MeasureSpec.UNSPECIFIED:
+//                hSize = childHeight + heightPadding;
+//                break;
+//            case MeasureSpec.AT_MOST:
+//                hSize = (childHeight + heightPadding) | (childState >> MEASURED_HEIGHT_STATE_SHIFT);
+//                break;
+//            case MeasureSpec.EXACTLY:
+//                if (hSize < childHeight + heightPadding)
+//                    hSize |= MEASURED_STATE_TOO_SMALL;
+//                break;
+//        }
+//
+//        if (hMode == MeasureSpec.UNSPECIFIED) {
+//            hSize = heightPadding + childHeight;
+//        } else {
+//            hSize |= (childState&MEASURED_STATE_MASK);
+//        }
+//
+//        setMeasuredDimension(wSize, hSize);
     }/*}}}*/
     // protected void  onSizeChanged(int w, int h, int oldw, int oldh);/*{{{*/
     /**
@@ -458,12 +444,17 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
     {
+//        debug.w("CAndroidPagerView::onLayout(%d, %d, %d, %d)\n", left, top, right, bottom);
         int childLeft = getPaddingLeft() + getHorizontalFadingEdgeLength();
 
         final int count = getChildCount();
         final int topPadding = getPaddingTop();
         int childWidth = 0;
+        int childHeight = 0;
         View child = null;
+        CRect rect;
+
+//        debug.w("==> child count: %d\n", count);
 
         for (int i = 0; i < count; i++)
         {
@@ -471,8 +462,13 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
 
             if (child.getVisibility() != View.GONE)
             {
-                childWidth = child.getMeasuredWidth();
-                child.layout(childLeft, topPadding, childLeft + childWidth, topPadding + child.getMeasuredHeight());
+                childWidth  = child.getMeasuredWidth();
+                childHeight = child.getMeasuredHeight();
+
+//                debug.w("==> child %d measured width: %d, measured height: %d\n", i, childWidth, childHeight);
+                child.layout(childLeft, topPadding, childLeft + childWidth, topPadding + childHeight);
+                rect = CRect.ViewRect(child);
+//                debug.w("==> child %d rect: %s\n", i, rect.toString("left: %L, top: %T, width: %W, height: %H"));
 
                 childLeft += childWidth;
             }
@@ -543,6 +539,51 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     }/*}}}*/
     //@}
 
+    /** \name INHandler: Implementation */ //@{
+    // public boolean onMessage(int msgID, int nParam, int iParam, Object extra);/*{{{*/
+    /**
+     * Receives a message from the message system.
+     * \param msgID Identifier of this message.
+     * \param nParam First argument of this message. Message specific data.
+     * \param lParam Second argument of this message. Message specific data.
+     * \param extra Any extra data packed in an Object class.
+     * \return Classes that handle messages usually return \b true, which
+     * instructs the message system to stop propagation and release the
+     * message object.
+     **/
+    public boolean onMessage(int msgID, int nParam, long lParam, Object extra)
+    {
+        if (msgID == IMSG.MSG_DELAY)
+        {
+            boolean stillScrolling = m_scroller.computeScrollOffset();
+
+            scrollTo(m_scroller.getCurrX(), 0);
+            invalidate();
+
+            if (stillScrolling)
+                issuer.post(this, IMSG.MSG_DELAY, nParam, 0L, null);
+            else
+            {
+                int offsetX = getScrollX();
+                float index = (((float)offsetX) / ((float)getChildWidth()));
+
+                m_currentIndex = Math.round(index);
+//                debug.w("CAndroidPagerView::onMessage(): scroll ended! currentIndex: %d (%1.4f)\n", m_currentIndex, index);
+
+                if (nParam == NP_FLING)
+                {
+                    int targetX = (m_currentIndex * getChildWidth());
+
+                    m_scroller.startScroll(offsetX, 0, (targetX - offsetX), 0, 300);
+                    issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
+                }
+            }
+            return true;
+        }
+        return false;
+    }/*}}}*/
+    //@}
+
     /** \name Local Operations */ //@{
     // private void init();/*{{{*/
     /**
@@ -559,8 +600,14 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         m_touchSlop       = configuration.getScaledTouchSlop();
         m_maximumVelocity = configuration.getScaledMaximumFlingVelocity();
+//        debug.w("CAndroidPagerView::init() \n" +
+//                "==> m_touchSlop: %d\n" +
+//                "==> m_maxFlingVelocity: %d\n" +
+//                "==> fling friction: %1.4f\n", m_touchSlop, m_maximumVelocity,
+//                configuration.getScrollFriction());
 
         setAdapter(new ArrayListView(this));
+        m_scroller.setFriction(0.025f);
     }/*}}}*/
     // private int  getWidthPadding()/*{{{*/
     /**
@@ -579,68 +626,6 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     private int getHeightPadding()
     {
         return getPaddingTop() + getPaddingBottom();
-    }/*}}}*/
-    // private void resetFocus();/*{{{*/
-    /**
-     * Resets the current focus.
-     **/
-    private void resetFocus()
-    {
-        removeAllViewsInLayout();
-        requestLayout();
-    }/*}}}*/
-    // private View setupChild(View child, boolean addToEnd, boolean recycle);/*{{{*/
-    /**
-     * Setup a child View.
-     * @param child The child View.
-     * @param addToEnd Add to the end?
-     * @param recycle Recycle it?
-     * @return The View.
-     **/
-    private View setupChild(View child, boolean addToEnd, boolean recycle)
-    {
-        final LayoutParams lp = child.getLayoutParams();
-        child.measure(MeasureSpec.makeMeasureSpec(getChildWidth(), MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(getChildHeight(), MeasureSpec.EXACTLY));
-        if (recycle)
-            attachViewToParent(child, (addToEnd ? -1 : 0), lp);
-        else
-            addViewInLayout(child, (addToEnd ? -1 : 0), lp, true);
-        return child;
-    }/*}}}*/
-    // private View obtainView(int position);/*{{{*/
-    /**
-     * Gets a View.
-     * @param position View position.
-     * @returns The View.
-     **/
-    private View obtainView(int position)
-    {
-        if (m_adapter == null) return null;
-
-        View view = m_adapter.getView(position, null, this);
-        if (view == null) return null;
-
-        ViewGroup.LayoutParams lp = view.getLayoutParams();
-        if (lp == null) {
-            lp = new ViewGroup.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-            view.setLayoutParams(lp);
-        }
-        return view;
-    }/*}}}*/
-    // private void logBuffer();/*{{{*/
-    /**
-     * Logging facility.
-     **/
-    private void logBuffer()
-    {
-//        debug.w("CAndroidPagerView: sizeof m_loadedView: %d, sizeof recycledViews: %d\n",
-//                m_loadedViews.size(), m_recycledViews.size());
-//        if (m_scroller != null)
-//            debug.w("CAndroidPagerView: currentX: %d, currentY: %d\n",
-//                    m_scroller.getCurrX(), m_scroller.getCurrY());
-//        debug.w("CAndroidPagerView: index in adapter: %d, in buffer: %d\n",
-//                m_currentAdapterIndex, m_currentBufferIndex);
     }/*}}}*/
     //@}
 
@@ -672,8 +657,10 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     {
         int deltaX = (int)(m_lastMotionX - pointX);
 
-        /* Scroll the view only if passed the minimum amount. */
-        if (Math.abs(deltaX) > m_touchSlop)
+        /* Start scrolling the view only if passed the minimum amount. When we
+         * are already scrolling, make it smooth.
+         */
+        if ((Math.abs(deltaX) > m_touchSlop) || m_scrolling)
         {
             m_scrolling   = true;
             m_lastMotionX = pointX;
@@ -696,28 +683,52 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     {
         if (!m_scrolling) return true;          /* We are not scrolling. */
 
-        int velocityX, minX, maxX;
+        int velocityX = 0, minX, maxX, offsetX = getScrollX();
         int childWidth = getChildWidth();
 
-        m_velocityTracker.computeCurrentVelocity(1000, m_maximumVelocity);
-        velocityX = (int)m_velocityTracker.getXVelocity();
+        minX = 0;
+        maxX = getChildWidth() * (getViewsCount() - 1);
 
-        if ((velocityX > SNAP_VELOCITY) && (m_currentIndex > 0))
+        if (offsetX < minX)
         {
-            minX = (childWidth * (m_currentIndex - 1)); /* Fling to the previous View. */
-            maxX = (childWidth * m_currentIndex);
+            m_scroller.startScroll(offsetX, 0, (minX - offsetX), 0, 500);
+            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
         }
-        else if ((velocityX < -SNAP_VELOCITY) && (m_currentIndex < (getChildCount() - 1)))
+        else if (offsetX > maxX)
         {
-            minX = (childWidth * m_currentIndex);
-            maxX = (childWidth * (m_currentIndex + 1)); /* Fling to the next View. */
+            m_scroller.startScroll(offsetX, 0, (maxX - offsetX), 0, 500);
+            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
         }
         else
         {
-            minX = (childWidth * m_currentIndex);       /* Keep in the current View. */
-            maxX = minX;
+            /* Compute velocity in pixels/second. */
+            m_velocityTracker.computeCurrentVelocity(1000);     // , m_maximumVelocity);
+            velocityX = (int)m_velocityTracker.getXVelocity();
+
+            m_scroller.fling(getScrollX(), 0, -velocityX, 0, minX, maxX, 0, 0);
+            issuer.post(this, IMSG.MSG_DELAY, NP_FLING, 0L, null);
         }
-        m_scroller.fling(getScrollX(), 0, velocityX, 0, minX, maxX, 0, 0);
+
+//        if ((velocityX > SNAP_VELOCITY) && (m_currentIndex > 0))
+//        {
+//            minX = (childWidth * (m_currentIndex - 1)); /* Fling to the previous View. */
+//            maxX = (childWidth * m_currentIndex);
+//        }
+//        else if ((velocityX < -SNAP_VELOCITY) && (m_currentIndex < (getChildCount() - 1)))
+//        {
+//            minX = (childWidth * m_currentIndex);
+//            maxX = (childWidth * (m_currentIndex + 1)); /* Fling to the next View. */
+//        }
+//        else
+//        {
+//            minX = (childWidth * m_currentIndex);       /* Keep in the current View. */
+//            maxX = minX;
+//        }
+//        debug.w("CAndroidPagerView::handle_actionUp() \n" +
+//                "==> minX.....: %d\n" +
+//                "==> maxX.....: %d\n" +
+//                "==> velocityX: %d\n" +
+//                "==> currentX.: %d\n", minX, maxX, -velocityX, getScrollX());
         m_velocityTracker.recycle();
         m_velocityTracker = null;
         m_scrolling = false;
@@ -757,7 +768,7 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
         public View getView(int pos, View reuseView, ViewGroup parent)
         {
             reuseView = getItem(pos);
-            debug.w("ArrayListView::getView(%d) == %s\n", pos, reuseView.getClass().getSimpleName());
+//            debug.w("ArrayListView::getView(%d) == %s\n", pos, reuseView.getClass().getSimpleName());
             return reuseView;
         }/*}}}*/
         //@}
@@ -778,6 +789,8 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
 
     /** \name Constants */ //@{
     private static final int SNAP_VELOCITY = 1000;
+    private static final int NP_FLING      = 1;
+    private static final int NP_SCROLL     = 0;
     //@}
 }
 // vim:syntax=java.doxygen
