@@ -1,5 +1,3 @@
-Version 2.4.66
+Version 2.4.67
 
-- CAndroidPagerView.java (setSelection()): Bug, calling a method of member
-  'm_scroller' when is possible that it is still null.
-- CAndroidPagerView.java (setVisibleView()): Same bug as before.
+- CAndroidPagerView.java: Completely rewrote of the class.

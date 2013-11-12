@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.util.AttributeSet;
 
 import android.content.Context;
@@ -24,6 +24,7 @@ import android.view.animation.*;
 
 import x.android.utils.debug;
 
+/* }}} #imports */
 /**
  * A ListView based on the most common usage of lists.
  * The rules to use this ListView implementation are simple. All rows must

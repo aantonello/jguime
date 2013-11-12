@@ -13,13 +13,14 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import java.util.*;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+/* }}} #imports */
 /**
  * An adapter used to populate the CAndroidListView class.
  * This adapter has the difference that is does not need a list. The developer
