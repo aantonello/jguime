@@ -1,3 +1,5 @@
-Version 2.4.94
+Version 2.4.96
 
-- CAndroidPagerView.java: Completly rewrote of the class. Passed test.
+- CAndroidPagerView.java: Changed base class to ViewGroup. Removed all
+  functions specific of AdapterView and its local implementation. Some other
+  bug fixes.

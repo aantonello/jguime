@@ -34,18 +34,18 @@ import x.android.nms.*;
  * View and one that handles the loading of a View from a layout resource.
  * Both will add the View in the adapter list.
  *
- * The \c getViewsCount() method will return the current number of Views in
- * the list. \c getSelectedView() gets the current shown View in the screen.
- * \c getSelectedItemPosition() returns the index of the selected View in the
- * adapter list. Finally, \c setSelection() can be used to change the current
- * shown View by its position index.
+ * The \c getChildCount() method will return the current number of Views in
+ * the list. \c getCurrentView() gets the current shown View in the screen.
+ * \c getCurrentViewIndex() returns the index of the selected View in the
+ * adapter list. Finally, \c setCurrentView() can be used to change the
+ * current shown View by its position index.
  *
  * By default the pager will intercept all motion events to acknowledge when
  * the user wants to scroll to another View. This can prevent child Views to
  * receive some motion events. When this behavior is not desired it can be
  * disabled using \c enableScroll() method.
  *//* --------------------------------------------------------------------- */
-public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
+public class CAndroidPagerView extends ViewGroup
     implements INHandler
 {
     /** \name Constructors */ //@{
@@ -57,7 +57,7 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     public CAndroidPagerView(Context context)
     {
         super(context);
-        init();
+        _internal_init();
     }/*}}}*/
     // public CAndroidPagerView(Context context, AttributeSet attrs)/*{{{*/
     /**
@@ -68,7 +68,7 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     public CAndroidPagerView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        _internal_init();
     }/*}}}*/
     // public CAndroidPagerView(Context context, AttributeSet attrs, int style);/*{{{*/
     /**
@@ -80,37 +80,48 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     public CAndroidPagerView(Context context, AttributeSet attrs, int style)
     {
         super(context, attrs, style);
-        init();
+        _internal_init();
     }/*}}}*/
     //@}
 
     /** \name Attributes */ //@{
-    // public int getViewsCount();/*{{{*/
-    /**
-     * Gets the number of client Views.
-     * @return The number of client Views.
-     **/
-    public int getViewsCount()
-    {
-        return ((m_adapter == null) ? 0 : m_adapter.getCount());
-    }/*}}}*/
-    // public int getChildWidth();/*{{{*/
+    // public int  getChildWidth();/*{{{*/
     /**
      * Gets the width of the client area.
      * @return The width in pixels.
      **/
     public int getChildWidth()
     {
-        return getWidth() - getWidthPadding();
+        return getWidth() - _internal_horzPadding();
     }/*}}}*/
-    // public int getChildHeight();/*{{{*/
+    // public int  getChildHeight();/*{{{*/
     /**
      * Gets the height of the child Views.
      * @returns The height in pixels.
      **/
     public int getChildHeight()
     {
-        return getHeight() - getHeightPadding();
+        return getHeight() - _internal_vertPadding();
+    }/*}}}*/
+    // public View getCurrentView();/*{{{*/
+    /**
+     * Retrieves the current shown child view.
+     * @return The current View. \b null if none.
+     **/
+    public View getCurrentView()
+    {
+        if (m_currentIndex < 0) return null;
+        return getChildAt(m_currentIndex);
+    }/*}}}*/
+    // public int  getCurrentViewIndex();/*{{{*/
+    /**
+     * Retrieves the position index of the current selected View.
+     * @return The integer position of the current View. Starting at 0. -1
+     * means there is no View in this pager.
+     **/
+    public int  getCurrentViewIndex()
+    {
+        return m_currentIndex;
     }/*}}}*/
     //@}
 
@@ -126,16 +137,13 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
      **/
     public void addView(View view)
     {
-        if (m_adapter == null) return;
-
         ViewGroup.LayoutParams lp = view.getLayoutParams();
         if (lp == null) {
             lp = new ViewGroup.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         }
-        super.attachViewToParent(view, m_adapter.getCount(), lp);
-
-        m_adapter.add(view);
-        m_adapter.notifyDataSetChanged();
+        int index = getChildCount();
+        super.attachViewToParent(view, index, lp);
+        if (m_currentIndex < 0) m_currentIndex = 0;
     }/*}}}*/
     // public View addView(int layoutID);/*{{{*/
     /**
@@ -151,16 +159,46 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
         addView(view);
         return view;
     }/*}}}*/
-    // public void enableScroll(boolean enabled);/*{{{*/
+    // public CAndroidPagerView enableScroll(boolean enabled);/*{{{*/
     /**
      * Enables or disables the scrolling of the Views in the list.
      * @param enabled Pass \b true to enable the scroll. \b false will disable
      * it. When the scrolling is disabled all motion events are passed to the
      * current shown child View.
+     * @returns This function returns \b this.
      **/
-    public void enableScroll(boolean enabled)
+    public CAndroidPagerView enableScroll(boolean enabled)
     {
         m_scrollEnabled = enabled;
+        return this;
+    }/*}}}*/
+    // public CAndroidPagerView setCurrentView(int position, boolean animated);/*{{{*/
+    /**
+     * Set/Changes the current View.
+     * @param position The position index of the child View. Starting at 0.
+     * @param animated Boolean value indicating if the change should be
+     * animated. \b true to animate the change. \b false will set the current
+     * View immediatly.
+     * @return This function returns \b this.
+     **/
+    public CAndroidPagerView setCurrentView(int position, boolean animated)
+    {
+        if ((position < 0) || (position >= getChildCount()))
+            return this;
+
+        int offsetX = (position * getChildWidth());
+        if (!animated)
+        {
+            scrollTo(offsetX, 0);
+            m_currentIndex = position;
+        }
+        else
+        {
+            int scrollX = getScrollX();
+            m_scroller.startScroll(scrollX, 0, (offsetX - scrollX), 0, 500);
+            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
+        }
+        return this;
     }/*}}}*/
     //@}
 
@@ -220,8 +258,8 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     protected void measureChild(View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec)
     {
         LayoutParams lp = child.getLayoutParams();
-        int childWidthSpec = getChildMeasureSpec(parentWidthMeasureSpec, getWidthPadding(), lp.width);
-        int childHeightSpec = getChildMeasureSpec(parentHeightMeasureSpec, getHeightPadding(), lp.height);
+        int childWidthSpec = getChildMeasureSpec(parentWidthMeasureSpec, _internal_horzPadding(), lp.width);
+        int childHeightSpec = getChildMeasureSpec(parentHeightMeasureSpec, _internal_vertPadding(), lp.height);
         child.measure(childWidthSpec, childHeightSpec);
     }/*}}}*/
     //@}
@@ -356,10 +394,10 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
 //        int childHeight = 0;
 //        int childState = 0;
 //
-//        final int widthPadding = getWidthPadding();
-//        final int heightPadding = getHeightPadding();
+//        final int widthPadding = _internal_horzPadding();
+//        final int heightPadding = _internal_vertPadding();
 //
-//        if (getViewsCount() > 0) {
+//        if (getChildCount() > 0) {
 //            final View child = getChildAt(0);
 //            measureChild(child, widthMeasureSpec, heightMeasureSpec);
 //            childWidth = child.getMeasuredWidth();
@@ -476,69 +514,6 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     }/*}}}*/
     //@}
 
-    /** \name AdapterView: Overrides */ //@{
-    // public ArrayAdapter<View> getAdapter();/*{{{*/
-    /**
-     * Returns the adapter currently associated with this widget.
-     * @returns The adapter used to provide this view's content.
-     **/
-    @Override
-    public ArrayAdapter<View> getAdapter()
-    {
-        return m_adapter;
-    }/*}}}*/
-    // public void    setAdapter(ArrayAdapter<View> adapter);/*{{{*/
-    /**
-     * Sets the adapter that provides the data and the views to represent the
-     * data in this widget.
-     * @param adapter The adapter to use to create this view's content.
-     **/
-    @Override
-    public void setAdapter(ArrayAdapter<View> adapter)
-    {
-        m_adapter = adapter;
-    }/*}}}*/
-    // public View    getSelectedView();/*{{{*/
-    /**
-     * Get the selected View.
-     * @returns The selected View.
-     **/
-    @Override
-    public View getSelectedView()
-    {
-        return ((m_currentIndex < 0) ? null : getChildAt(m_currentIndex));
-    }/*}}}*/
-    // public int     getSelectedItemPosition();/*{{{*/
-    /**
-     * Return the position of the currently selected item within the adapter's
-     * data set.
-     * @returns The selected item position or \c INVALID_POSITION if none is
-     * selected.
-     **/
-    @Override
-    public int getSelectedItemPosition()
-    {
-        return m_currentIndex;
-    }/*}}}*/
-    // public void    setSelection(int position);/*{{{*/
-    /**
-     * Sets the currently selected item.
-     * To support accessibility subclasses that override this method must
-     * invoke the overriden super method first.
-     * @param position Position of the selection.
-     **/
-    @Override
-    public void setSelection(int position)
-    {
-        if (m_scroller != null) m_scroller.forceFinished(true);
-        
-        m_currentIndex = (position % getViewsCount());
-        position = (m_currentIndex * getChildWidth());
-        scrollTo(position, 0);
-        requestLayout();
-    }/*}}}*/
-    //@}
-
     /** \name INHandler: Implementation */ //@{
     // public boolean onMessage(int msgID, int nParam, int iParam, Object extra);/*{{{*/
     /**
@@ -585,13 +560,12 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     //@}
 
     /** \name Local Operations */ //@{
-    // private void init();/*{{{*/
+    // private void _internal_init();/*{{{*/
     /**
      * Initializes this View.
      **/
-    private void init()
+    private void _internal_init()
     {
-        m_adapter       = null;
         m_scroller      = new Scroller(getContext());
         m_currentIndex  = -1;
         m_scrolling     = false;
@@ -599,31 +573,30 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         m_touchSlop       = configuration.getScaledTouchSlop();
-        m_maximumVelocity = configuration.getScaledMaximumFlingVelocity();
 //        debug.w("CAndroidPagerView::init() \n" +
-//                "==> m_touchSlop: %d\n" +
-//                "==> m_maxFlingVelocity: %d\n" +
-//                "==> fling friction: %1.4f\n", m_touchSlop, m_maximumVelocity,
+//                "==> touch slop: %d\n" +
+//                "==> max fling velocity: %d\n" +
+//                "==> fling friction: %1.4f\n", m_touchSlop, 
+//                configuration.getScaledMaximumFlingVelocity(),
 //                configuration.getScrollFriction());
 
-        setAdapter(new ArrayListView(this));
         m_scroller.setFriction(0.025f);
     }/*}}}*/
-    // private int  getWidthPadding()/*{{{*/
+    // private int  _internal_horzPadding()/*{{{*/
     /**
      * Calculates the horizontal padding.
      * @return The horizontal padding in pixels.
      **/
-    private int getWidthPadding()
+    private int _internal_horzPadding()
     {
         return getPaddingLeft() + getPaddingRight() + getHorizontalFadingEdgeLength() * 2;
     }/*}}}*/
-    // private int  getHeightPadding();/*{{{*/
+    // private int  _internal_vertPadding();/*{{{*/
     /**
      * Gets the height of the client area.
      * @returns The height in pixels.
      **/
-    private int getHeightPadding()
+    private int _internal_vertPadding()
     {
         return getPaddingTop() + getPaddingBottom();
     }/*}}}*/
@@ -687,7 +660,7 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
         int childWidth = getChildWidth();
 
         minX = 0;
-        maxX = getChildWidth() * (getViewsCount() - 1);
+        maxX = getChildWidth() * (getChildCount() - 1);
 
         if (offsetX < minX)
         {
@@ -702,28 +675,12 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
         else
         {
             /* Compute velocity in pixels/second. */
-            m_velocityTracker.computeCurrentVelocity(1000);     // , m_maximumVelocity);
+            m_velocityTracker.computeCurrentVelocity(1000);
             velocityX = (int)m_velocityTracker.getXVelocity();
 
             m_scroller.fling(getScrollX(), 0, -velocityX, 0, minX, maxX, 0, 0);
             issuer.post(this, IMSG.MSG_DELAY, NP_FLING, 0L, null);
         }
-
-//        if ((velocityX > SNAP_VELOCITY) && (m_currentIndex > 0))
-//        {
-//            minX = (childWidth * (m_currentIndex - 1)); /* Fling to the previous View. */
-//            maxX = (childWidth * m_currentIndex);
-//        }
-//        else if ((velocityX < -SNAP_VELOCITY) && (m_currentIndex < (getChildCount() - 1)))
-//        {
-//            minX = (childWidth * m_currentIndex);
-//            maxX = (childWidth * (m_currentIndex + 1)); /* Fling to the next View. */
-//        }
-//        else
-//        {
-//            minX = (childWidth * m_currentIndex);       /* Keep in the current View. */
-//            maxX = minX;
-//        }
 //        debug.w("CAndroidPagerView::handle_actionUp() \n" +
 //                "==> minX.....: %d\n" +
 //                "==> maxX.....: %d\n" +
@@ -736,55 +693,14 @@ public class CAndroidPagerView extends AdapterView<ArrayAdapter<View>>
     }/*}}}*/
     //@}
 
-    /** \name Inner Classes */ //@{
-    // class ArrayListView extends ArrayAdapter<View>;/*{{{*/
-    /**
-     * Our implementation of the adapter view.
-     **/
-    class ArrayListView extends ArrayAdapter<View>
-    {
-        /** \name Constructor */ //@{
-        // public ArrayListView(View parent);/*{{{*/
-        /**
-         * Default constructor.
-         * @param parent The parent View.
-         **/
-        public ArrayListView(View parent)
-        {
-            super(parent.getContext(), 0);
-        }/*}}}*/
-        //@}
-
-        /** \name Overrides */ //@{
-        // public View getView(int pos, View reuseView, ViewGroup parent);/*{{{*/
-        /**
-         * Returns the View int the specified position.
-         * @param pos The View position.
-         * @param reuseView A recycled reused View. Not used.
-         * @param parent The parent ViewGroup to place the returned View. Not
-         * used.
-         * @returns The View at the specified position.
-         **/
-        public View getView(int pos, View reuseView, ViewGroup parent)
-        {
-            reuseView = getItem(pos);
-//            debug.w("ArrayListView::getView(%d) == %s\n", pos, reuseView.getClass().getSimpleName());
-            return reuseView;
-        }/*}}}*/
-        //@}
-    }/*}}}*/
-    //@}
-
     /** \name Data Members */ //@{
     private VelocityTracker  m_velocityTracker;
     private Scroller         m_scroller;
-    private ArrayAdapter<View> m_adapter;
     private float            m_lastMotionX;
     private boolean          m_scrollEnabled;
     private boolean          m_scrolling;
     private int m_currentIndex;
     private int m_touchSlop;
-    private int m_maximumVelocity;
     //@}
 
     /** \name Constants */ //@{
