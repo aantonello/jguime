@@ -1,5 +1,3 @@
-Version 2.4.96
+Version 2.4.126
 
-- CAndroidPagerView.java: Changed base class to ViewGroup. Removed all
-  functions specific of AdapterView and its local implementation. Some other
-  bug fixes.
+- CAndroidSliderView.java: Class responsible to perform a slide animation.

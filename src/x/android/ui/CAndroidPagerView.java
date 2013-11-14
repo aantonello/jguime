@@ -462,10 +462,6 @@ public class CAndroidPagerView extends ViewGroup
             child = getChildAt(i);
             child.measure(wMeasureSpec, hMeasureSpec);
         }
-
-        if ((oldw == 0) && (oldh == 0)) {
-            m_scroller.startScroll(0, 0, m_currentIndex * getChildWidth(), 0, 0);
-        }
     }/*}}}*/
     // protected void  onLayout(boolean changed, int l, int t, int r, int b);/*{{{*/
     /**

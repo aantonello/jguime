@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.graphics.Rect;
 import android.graphics.Point;
 import android.view.View;
@@ -22,6 +22,7 @@ import x.android.defs.ALIGN;
 import x.android.defs.SIZE;
 import x.android.utils.strings;
 
+/* }}} #imports */
 /**
  * Represents a screen coordinate.
  *//* --------------------------------------------------------------------- */
@@ -466,6 +467,25 @@ public class CRect
         CRect rect = new CRect();
         rect.box(0, 0, v.getWidth(), v.getHeight());
         return rect;
+    }/*}}}*/
+    // public static final CRect MeasuredRect(View v, CRect reuseRect);/*{{{*/
+    /**
+     * Gets the measured rectangle of a View.
+     * This is built setting left and top fields as 0 and width and height of
+     * the rectangle using \c getMeasuredWidth() and \c getMeasuredHeight().
+     * This function is useful during layout operations.
+     * @param v The View to get the values.
+     * @param reuseRect Reference to a CRect object to reuse. Can be \b null.
+     * @returns When \a reuseRect is \b null the function builds a new CRect
+     * object with the View \a v coordinates and return it. If \a reuseRect is
+     * not \b null it will be reused, setting its bound according to the
+     * View's measured dimensions and returned.
+     **/
+    public static final CRect MeasuredRect(View v, CRect reuseRect)
+    {
+        reuseRect = ((reuseRect == null) ? new CRect() : reuseRect);
+        reuseRect.box(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        return reuseRect;
     }/*}}}*/
     // public final Rect getRect(Rect r);/*{{{*/
     /**
