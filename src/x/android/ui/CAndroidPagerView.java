@@ -17,6 +17,7 @@ import android.content.res.*;
 import android.database.*;
 import android.util.*;
 import android.view.*;
+import android.view.animation.*;
 import android.widget.*;
 
 import java.util.*;
@@ -562,7 +563,8 @@ public class CAndroidPagerView extends ViewGroup
      **/
     private void _internal_init()
     {
-        m_scroller      = new Scroller(getContext());
+        DecelerateInterpolator di = new DecelerateInterpolator(1.0f);
+        m_scroller      = new OverScroller(getContext(), di);
         m_currentIndex  = -1;
         m_scrolling     = false;
         m_scrollEnabled = true;
@@ -572,11 +574,9 @@ public class CAndroidPagerView extends ViewGroup
 //        debug.w("CAndroidPagerView::init() \n" +
 //                "==> touch slop: %d\n" +
 //                "==> max fling velocity: %d\n" +
-//                "==> fling friction: %1.4f\n", m_touchSlop, 
+//                "==> friction: %1.4f\n", m_touchSlop, 
 //                configuration.getScaledMaximumFlingVelocity(),
 //                configuration.getScrollFriction());
-
-        m_scroller.setFriction(0.025f);
     }/*}}}*/
     // private int  _internal_horzPadding()/*{{{*/
     /**
@@ -674,7 +674,9 @@ public class CAndroidPagerView extends ViewGroup
             m_velocityTracker.computeCurrentVelocity(1000);
             velocityX = (int)m_velocityTracker.getXVelocity();
 
-            m_scroller.fling(getScrollX(), 0, -velocityX, 0, minX, maxX, 0, 0);
+            minX = Math.max(minX, (getChildWidth() * (m_currentIndex - 1)));
+            maxX = Math.min(maxX, (getChildWidth() * (m_currentIndex + 1)));
+            m_scroller.fling(offsetX, 0, -velocityX, 0, minX, maxX, 0, 0);
             issuer.post(this, IMSG.MSG_DELAY, NP_FLING, 0L, null);
         }
 //        debug.w("CAndroidPagerView::handle_actionUp() \n" +
@@ -691,7 +693,7 @@ public class CAndroidPagerView extends ViewGroup
 
     /** \name Data Members */ //@{
     private VelocityTracker  m_velocityTracker;
-    private Scroller         m_scroller;
+    private OverScroller     m_scroller;
     private float            m_lastMotionX;
     private boolean          m_scrollEnabled;
     private boolean          m_scrolling;

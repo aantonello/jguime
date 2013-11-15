@@ -22,6 +22,7 @@ import android.util.AttributeSet;
 
 import android.view.*;
 import android.widget.*;
+import android.view.animation.*;
 
 import x.android.defs.*;
 import x.android.utils.*;
@@ -264,10 +265,8 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
                     rctl.set(rect);
                     rctl.setViewRect(childView);
                 }
-                debug.w("%s rect set %s\n", childView.getClass().getSimpleName(), rctl.toString());
             }
         }
-        issuer.post(this, IMSG.MSG_LAST, 0, 0L, null);
     }/*}}}*/
     // protected void onSizeChanged(int w, int h, int oldw, int oldh);/*{{{*/
     /**
@@ -285,7 +284,6 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
         super.onSizeChanged(w, h, oldw, oldh);
 
         if (m_slideState != SLIDE_RESTING) return;
-        debug.w("CAndroidSliderView::onSizeChanged(%d, %d)\n", w, h);
 
         w = w - (getPaddingLeft() + getPaddingRight());
         h = h - (getPaddingTop() + getPaddingBottom());
@@ -324,21 +322,7 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
      **/
     public boolean onMessage(int msgID, int nParam, long lParam, Object extra)
     {
-        if (msgID == IMSG.MSG_LAST)
-        {
-            View view;
-            CRect rect = null;
-            final int limit = getChildCount();
-
-            for (int i = 0; i < limit; i++)
-            {
-                view = getChildAt(i);
-                rect = CRect.MeasuredRect(view, rect);
-                debug.w("%s: %s\n", view.getClass().getSimpleName(), rect.toString("%L, %T, %W, %H"));
-            }
-            return true;
-        }
-        else if (msgID == IMSG.MSG_DELAY)
+        if (msgID == IMSG.MSG_DELAY)
         {
             boolean stillScrolling = m_scroller.computeScrollOffset();
             int deltaY = (m_scroller.getCurrY() - m_currentY);
@@ -355,6 +339,7 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
                 issuer.post(this, IMSG.MSG_DELAY, nParam, 0L, null);
             else if (nParam == NP_FLING)
             {
+                debug.w("CAndroidSliderView::NP_FLING ENDED! ========================================= ||\n");
                 int targetY;
                 int averageY = (m_contentView.getHeight() / 2);
 
@@ -379,7 +364,8 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
      **/
     private void _internal_init()
     {
-        m_scroller    = new Scroller( getContext() );
+        DecelerateInterpolator di = new DecelerateInterpolator(1.0f);
+        m_scroller    = new OverScroller(getContext(), di);
         m_tracker     = null;
         m_handlerView = null;
         m_contentView = null;
@@ -453,6 +439,11 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
 //                        "==> maxY......: %d\n" +
 //                        "==> velocity..: %d\n", m_currentY, minY, maxY, velocity);
 
+                /* NOTE: The fling is starting too much slower than the
+                 * movement of the user. So we are cutting it in the half so
+                 * its ends earlier and we can take the scroll again to reach
+                 * the final position.
+                 */
                 m_scroller.fling(0, m_currentY, 0, velocity, 0, 0, minY, maxY);
                 issuer.post(this, IMSG.MSG_DELAY, NP_FLING, 0L, null);
             }
@@ -482,7 +473,7 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
 
     /** \name Data Members */ //@{
     private VelocityTracker m_tracker;  /**< Help us with fling movement.   */
-    private Scroller m_scroller;        /**< Scroller to help in animations.*/
+    private OverScroller m_scroller;    /**< Scroller to help in animations.*/
     private View m_handlerView;         /**< Handler for the user motions.  */
     private View m_contentView;         /**< Content of this group.         */
     private int  m_lastMotionY;         /**< Holds the last Y coords.       */

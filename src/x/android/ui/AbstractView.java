@@ -205,7 +205,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
      * \param rect A \c CRect instance. May be \b null.
      * \return The function returns the \a rect parameter if it is passed or a
      * newly created \c CRect object otherwise. The returned rectangle will
-     * have the current position and size of this View.
+     * have the current position and size of this View related to its parent.
      **/
     public CRect rect(CRect rect) {
         CRect rc = ((rect == null) ? new CRect() : rect);
@@ -241,6 +241,28 @@ public abstract class AbstractView<T extends AbstractView<T>>
         CRect rc = ((rect != null) ? rect : new CRect());
         if (m_view == null) return rc;
         rc.box(m_view.getLeft(), m_view.getTop(), m_view.getMeasuredWidth(), m_view.getMeasuredHeight());
+        return rc;
+    }/*}}}*/
+    // public CRect   bounds(CRect rect, boolean decreasePadding);/*{{{*/
+    /**
+     * Gets the client rectangle area (bounds) of the current operating View.
+     * @param rect A reusable \c CRect instance. May be \b null.
+     * @param decreasePadding When \b true the function will take the padding
+     * configuration into account and will `deflate` the interal area bounds
+     * according to the View's padding definition.
+     * @return If \a rect is passed the function will set it with the current
+     * operating View's bounds (client area). If \a rect is \b null a new \c
+     * CRect instance will be created for that.
+     **/
+    public CRect bounds(CRect rect, boolean decreasePadding)
+    {
+        CRect rc = ((rect == null) ? new CRect() : rect);
+        if (m_view == null) return rc;
+        rc.box(0, 0, m_view.getWidth(), m_view.getHeight());
+        if (decreasePadding) {
+            CRect padd = padding(null);
+            rc.deflate(padd.left, padd.top, padd.right, padd.bottom);
+        }
         return rc;
     }/*}}}*/
     //@}
@@ -818,6 +840,21 @@ public abstract class AbstractView<T extends AbstractView<T>>
      **/
     public T layout() {
         if (m_view != null) {
+            m_view.requestLayout();
+        }
+        return self();
+    }/*}}}*/
+    // public T force();/*{{{*/
+    /**
+     * Forces the operating View to relayout it self and it's children.
+     * @returns \c this.
+     * @remarks The function will call \c forceLayout() and \c requestLayout()
+     * in the operating View.
+     **/
+    public T force()
+    {
+        if (m_view != null) {
+            m_view.forceLayout();
             m_view.requestLayout();
         }
         return self();
