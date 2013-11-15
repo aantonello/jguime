@@ -1,3 +1,4 @@
-Version 2.4.126
+Version 2.4.127
 
-- CAndroidSliderView.java: Class responsible to perform a slide animation.
+- CAndroidSliderView.java (onInterceptTouchEvent(), onTouchEvent()): Changed
+  to select the default coordinates from the MotionEvent object.

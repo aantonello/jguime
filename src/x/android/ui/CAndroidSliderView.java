@@ -157,9 +157,9 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
         {
             CRect handlerRect = CRect.ViewRect(m_handlerView);
 
-            if (handlerRect.hasPoint((int)event.getX(0), (int)event.getY(0)))
+            if (handlerRect.hasPoint((int)event.getX(), (int)event.getY()))
             {
-                m_lastMotionY = (int)event.getY(0);
+                m_lastMotionY = (int)event.getY();
                 m_slideState  = TOUCH_CAPTURED;
                 return true;
             }
@@ -188,12 +188,12 @@ public class CAndroidSliderView extends ViewGroup implements INHandler
             switch (action)
             {
             case MotionEvent.ACTION_MOVE:
-                _internal_actionMove((int)event.getY(0));
+                _internal_actionMove((int)event.getY());
                 break;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                _internal_actionEnd((int)event.getY(0));
+                _internal_actionEnd((int)event.getY());
                 break;
             }
             return true;
