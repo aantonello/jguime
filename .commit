@@ -1,11 +1,3 @@
 Version 2.4.136
 
-- AbstractView.java (bounds()): New function that returns the bounding
-  rectangle of a View. Option to decrease the internal padding.
-- AbstractView.java (force()): Function to force layout of a View chain.
-- CAndroidSliderView.java (_internal_actionEnd()): Tunning the method
-  'fling()' of Scroller class to take a little less time to end.
-- CAndroidSliderView.java: Changed Scroller to OverScroller so we can choose
-  the interpolator animation function. Solves the problem of slowlyness.
-- CAndroidPagerView.java: Changed Scroller to OverScroller so we can choose
-  the interpolator and twick the paging animation.
+- Makefile: Changed to not stop install when some copy failed.

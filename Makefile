@@ -80,10 +80,10 @@ $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 	$(JL) $(LINK)
 
 install: $(APKDIR) $(RSCDIR)
-	cp ./$(OUTPUT) $(APKDIR)/
-	cp ./$(OUTDXT) $(PLXLIB)/
-	cp -r ./$(RESDIR)/ $(RSCDIR)/
-	publish -doc plx/$(TARGET) -f -q
+	-cp ./$(OUTPUT) $(APKDIR)/
+	-cp ./$(OUTDXT) $(PLXLIB)/
+	-cp -r ./$(RESDIR)/ $(RSCDIR)/
+	-publish -doc plx/$(TARGET) -f -q
 
 tags:
 	ctags $(CTAGS) -f $(OUTTAG) $(PWD)/$(SRCDIR)/*
