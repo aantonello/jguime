@@ -305,6 +305,20 @@ public abstract class AbstractView<T extends AbstractView<T>>
         m_view = view;
         return self();
     }/*}}}*/
+    // public T reset(Activity activity, View root, View view);/*{{{*/
+    /**
+     * Reset to this root View and Activity.
+     * \param activity The activity to be set.
+     * \param root The new root view.
+     * \param view The operating view.
+     * \returns this.
+     **/
+    public T reset(Activity activity, View root, View view) {
+        m_activity = activity;
+        m_root     = root;
+        m_view     = view;
+        return self();
+    }/*}}}*/
     // public T reset(Activity activity, View root);/*{{{*/
     /**
      * Reset to this root View and Activity.
@@ -313,10 +327,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
      * \returns this.
      **/
     public T reset(Activity activity, View root) {
-        m_activity = activity;
-        m_root     = root;
-        m_view     = root;
-        return self();
+        return reset(m_activity, root, root);
     }/*}}}*/
     // public T reset(Activity activity, int rootID);/*{{{*/
     /**

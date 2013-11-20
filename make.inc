@@ -12,7 +12,7 @@ OUTDIR = $(BINDIR)/rel
 RESDIR = res
 TARGET = jguime
 APPVER = 2.4
-BUILD  = 136
+BUILD  = 137
 OUTPUT = $(OUTDIR)/$(TARGET).jar
 OUTTAG = $(TARGET).tags
 OUTDXT = $(DOCDIR)/$(TARGET).dxt
@@ -78,7 +78,11 @@ JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
 		  $(SRCDIR)/ui/CAndroidSliderView.java\
 		  $(SRCDIR)/ui/CAndroidProgressDialog.java\
 		  $(SRCDIR)/ui/CAndroidPasswordDialog.java\
-		  $(SRCDIR)/ui/view_t.java
+		  $(SRCDIR)/ui/view_t.java\
+		  $(SRCDIR)/ui/SFTableDelegate.java\
+		  $(SRCDIR)/ui/SFTableAdapter.java\
+		  $(SRCDIR)/ui/SFTableView.java\
+		  $(SRCDIR)/ui/sfView.java
 
 _FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_XML)\
 			$(JGUIME_NMS) $(JGUIME_UI)

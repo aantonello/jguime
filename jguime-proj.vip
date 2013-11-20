@@ -1,5 +1,5 @@
 jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
-# VERSION: 2.4.136
+# VERSION: 2.4.137
  docs=docs enc="latin1" {
   NOTES
  }
@@ -70,12 +70,14 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
     IAndroidView.java
     IAndroidListDelegate.java
     IAndroidListAdapter.java
+    SFTableDelegate.java
    }
    abstracts=. {
     AbstractView.java
    }
    internal=. {
     CAndroidAdapter.java
+    SFTableAdapter.java
    }
    CRect.java
    CAndroidApp.java
@@ -88,7 +90,9 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    CAndroidDialog.java
    CAndroidProgressDialog.java
    CAndroidPasswordDialog.java
+   SFTableView.java
    view_t.java
+   sfView.java
   }
  }
  makefiles=. enc="utf8" fmt="unix" {
