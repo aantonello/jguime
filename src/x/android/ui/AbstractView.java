@@ -13,15 +13,11 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.app.Activity;
 import android.content.Context;
 
-import android.view.View;
-import android.view.ViewParent;
-import android.view.ViewGroup;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.*;
 
 import android.util.AttributeSet;
 import android.text.TextWatcher;
@@ -31,7 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.*;
 
 import x.android.utils.*;
-
+/* }}} #imports */
 /**
  * Abstracts a Androi View class.
  * The AbstractView can be used to bound to a class like an Activity or a View
@@ -495,7 +491,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
     // public T inflate(Menu m, int id);/*{{{*/
     /**
      * Load a Menu from a resource.
-     * This only works if the instance class has a reference to an Activity.
+     * This only works if the Activity member was defined.
      * \param m The Menu instance to be populated.
      * \param id The resource identifier that has the menu.
      * \returns this.
@@ -506,6 +502,25 @@ public abstract class AbstractView<T extends AbstractView<T>>
             mi.inflate(id, m);
         }
         return self();
+    }/*}}}*/
+    // public View inflate(int id, ViewGroup parent);/*{{{*/
+    /**
+     * Inflates a View from the specified resource identifier.
+     * @param id The resource identifier to be inflated.
+     * @param parent The ViewGroup where the new inflated View will be placed.
+     * The View will not be added to this ViewGroup. This is needed only to
+     * get default LayoutParams values. Can be \b null.
+     * @return The View inflated from the layout resource. If the function
+     * fails, the return will be \b null.
+     **/
+    public View inflate(int id, ViewGroup parent)
+    {
+        if (m_view == null) return null;
+
+        LayoutInflater li = (LayoutInflater)m_view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (li == null) return null;
+
+        return li.inflate(id, parent, false);
     }/*}}}*/
     //@}
 

@@ -1,10 +1,4 @@
-Version 2.4.137
+Version 2.4.138
 
-- SFTableDelegate.java: New interface extending IAndroidListDelegate. This new
-  interface supports build of a list with different types of Views.
-- SFTableAdapter.java: Extending CAndroidAdapter allows the use of different
-  View types in a list View.
-- SFTableView.java: New implementation for ListView allowing different kinds
-  of Views to be used as list items.
-- sfView.java: New implementation for AbstractView class. This implementation
-  builds a cache of reusable objects avoiding unneeded instantiations.
+- AbstractView.java (inflate(int,ViewGroup)): Utility method to inflate a View
+  from a layout resource.
