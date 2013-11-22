@@ -515,9 +515,13 @@ public abstract class AbstractView<T extends AbstractView<T>>
      **/
     public View inflate(int id, ViewGroup parent)
     {
-        if (m_view == null) return null;
+        LayoutInflater li = null;
 
-        LayoutInflater li = (LayoutInflater)m_view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (m_activity != null)
+            li = m_activity.getLayoutInflater();
+        else if (m_view != null)
+            li = (LayoutInflater)m_view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (li == null) return null;
 
         return li.inflate(id, parent, false);
@@ -713,7 +717,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
     }/*}}}*/
     //@}
 
-    /** \name ListView METHODS */ //@{
+    /** \name Adapter METHODS */ //@{
     // public T adapter(ListAdapter l);/*{{{*/
     /**
      * Sets a ListAdapter for the operating view.
@@ -855,6 +859,24 @@ public abstract class AbstractView<T extends AbstractView<T>>
      **/
     public ListView  getListView() {
         return (ListView)m_view;
+    }/*}}}*/
+    // public GridView  getGridView();/*{{{*/
+    /**
+     * Gets the operating View as a GridView widget.
+     * @remarks If the operating View is not of type GridView a
+     * ClassCastException will be thrown.
+     **/
+    public GridView getGridView() {
+        return (GridView)m_view;
+    }/*}}}*/
+    // public Spinner   getSpinner();/*{{{*/
+    /**
+     * Cast the operating View as an Spinner widget.
+     * @remarks If the operating View is not of type Spinner a
+     * ClassCastException will be thrown.
+     **/
+    public Spinner getSpinner() {
+        return (Spinner)m_view;
     }/*}}}*/
     //@}
 

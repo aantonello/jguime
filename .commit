@@ -1,4 +1,6 @@
-Version 2.4.138
+Version 2.4.140
 
-- AbstractView.java (inflate(int,ViewGroup)): Utility method to inflate a View
-  from a layout resource.
+- AbstractView.java (getGridView(), getSpinner()): Added more two convertion
+  (casting) methods.
+- AbstractView.java (inflate(int,ViewGroup)): Changed how to get the
+  LayoutInflater instance.
