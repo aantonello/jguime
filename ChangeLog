@@ -1,3 +1,14 @@
+2013-11-22  Alessandro <aantonello@paralaxe.com.br>
+
+	* AbstractView.java (getGridView(), getSpinner()): Added more two convertion
+	  (casting) methods.
+	* AbstractView.java (inflate(int,ViewGroup)): Changed how to get the
+	  LayoutInflater instance.
+	* AbstractView.java (select(int)): Added method to select an item in a View
+	  descendant of an AdapterView.
+	* AbstractView.java (selected()): Added method to get the index position of
+	  the current selected item in a View descendant of an AdapterView.
+
 2013-11-12  Alessandro <aantonello@paralaxe.com.br>
 
 	* CAndroidPagerView.java: Complete rewrote of the class.

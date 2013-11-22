@@ -717,7 +717,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
     }/*}}}*/
     //@}
 
-    /** \name Adapter METHODS */ //@{
+    /** \name AdapterView METHODS */ //@{
     // public T adapter(ListAdapter l);/*{{{*/
     /**
      * Sets a ListAdapter for the operating view.
@@ -730,6 +730,36 @@ public abstract class AbstractView<T extends AbstractView<T>>
             ((AdapterView)m_view).setAdapter(l);
         }
         return self();
+    }/*}}}*/
+    // public T select(int position);/*{{{*/
+    /**
+     * Selects an item in the AdapterView list.
+     * @param position Zero based index position of the item to select.
+     * @returns \c self().
+     * @remarks This operation requires that the current operating View is a
+     * descendant of \c AdapterView.
+     **/
+    public T select(int position)
+    {
+        if (m_view instanceof AdapterView) {
+            ((AdapterView)m_view).setSelection(position);
+        }
+        return self();
+    }/*}}}*/
+    // public int selected();/*{{{*/
+    /**
+     * Gets the current selection index of an AdapterView.
+     * @return The zero based index position of the selected item in an \a
+     * AdapterView.
+     * @remarks This operation requires that the current operating View be a
+     * descendant of an \c AdapterView.
+     **/
+    public int selected()
+    {
+        if (m_view instanceof AdapterView) {
+            return ((AdapterView)m_view).getSelectedItemPosition();
+        }
+        return -1;
     }/*}}}*/
     //@}
 

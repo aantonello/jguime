@@ -1,6 +1,10 @@
-Version 2.4.140
+Version 2.4.141
 
-- AbstractView.java (getGridView(), getSpinner()): Added more two convertion
+* AbstractView.java (getGridView(), getSpinner()): Added more two convertion
   (casting) methods.
-- AbstractView.java (inflate(int,ViewGroup)): Changed how to get the
+* AbstractView.java (inflate(int,ViewGroup)): Changed how to get the
   LayoutInflater instance.
+* AbstractView.java (select(int)): Added method to select an item in a View
+  descendant of an AdapterView.
+* AbstractView.java (selected()): Added method to get the index position of
+  the current selected item in a View descendant of an AdapterView.
