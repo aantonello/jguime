@@ -88,15 +88,14 @@ public abstract class AbstractView<T extends AbstractView<T>>
                 result = m_view.findViewById(id);
         }
 
-        if (result != null) return result;
-        if (m_root != null) {
+        if ((result == null) && (m_root != null)) {
             if (m_root.getId() == id)
                 result = m_root;
             else
                 result = m_root.findViewById(id);
         }
-        if (result != null) return result;
-        if (m_activity != null) {
+
+        if ((result == null) && (m_activity != null)) {
             result = m_activity.findViewById(id);
         }
         return result;
@@ -323,7 +322,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
      * \returns this.
      **/
     public T reset(Activity activity, View root) {
-        return reset(m_activity, root, root);
+        return reset(activity, root, root);
     }/*}}}*/
     // public T reset(Activity activity, int rootID);/*{{{*/
     /**
@@ -344,7 +343,7 @@ public abstract class AbstractView<T extends AbstractView<T>>
      * \return The function returns \b this.
      **/
     public T reset(View view) {
-        return reset(m_activity, view);
+        return reset(m_activity, view, view);
     }/*}}}*/
     // public T set(int id);/*{{{*/
     /**
@@ -651,6 +650,19 @@ public abstract class AbstractView<T extends AbstractView<T>>
         if (m_view instanceof TextView) {
             ((TextView)m_view).setSingleLine(single);
         }
+        return self();
+    }/*}}}*/
+    // public T selectAll();/*{{{*/
+    /**
+     * Selects all text in a EditView.
+     * If the current operating View is not a descendant of an \e EditView the
+     * function does nothing.
+     * @returns \c self().
+     **/
+    public T selectAll()
+    {
+        if (m_view instanceof EditText)
+            ((EditText)m_view).selectAll();
         return self();
     }/*}}}*/
     // public T error(String errorText);/*{{{*/
@@ -1071,6 +1083,33 @@ public abstract class AbstractView<T extends AbstractView<T>>
     public T seekChanged(SeekBar.OnSeekBarChangeListener listener) {
         if (m_view instanceof SeekBar) {
             ((SeekBar)m_view).setOnSeekBarChangeListener(listener);
+        }
+        return self();
+    }/*}}}*/
+    // public T editorAction(TextView.OnEditorActionListener l);/*{{{*/
+    /**
+     * Sets a listener to be called when an keyboard IME action is performed.
+     * The current operating View must be a descendant of a TextView.
+     * @param l The listener instance.
+     * @returns self().
+     **/
+    public T editorAction(TextView.OnEditorActionListener l)
+    {
+        if (m_view instanceof TextView) {
+            ((TextView)m_view).setOnEditorActionListener(l);
+        }
+        return self();
+    }/*}}}*/
+    // public T checkedChange(CompoundButton.OnCheckedChangeListener l);/*{{{*/
+    /**
+     * Adds a listener to a CompoundButton.
+     * The current operating View must be a descendant of CompoundButton.
+     * @param l The listener instance.
+     * @return \c self().
+     **/
+    public T checkedChange(CompoundButton.OnCheckedChangeListener l) {
+        if (m_view instanceof CompoundButton) {
+            ((CompoundButton)m_view).setOnCheckedChangeListener(l);
         }
         return self();
     }/*}}}*/

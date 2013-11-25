@@ -18,6 +18,8 @@ import java.util.*;
 
 import android.app.Activity;
 import android.view.View;
+
+import x.android.utils.debug;
 /* }}} #imports */
 /**
  * New implementation of AbstractView class.
@@ -144,7 +146,9 @@ public class sfView extends AbstractView<sfView>
         m_view     = null;
         m_root     = null;
 
-        s_list.add(this);
+        if (!s_list.contains(this)) {
+            s_list.add(this);
+        }
     }/*}}}*/
     //@}
 

@@ -1,10 +1,12 @@
-Version 2.4.141
+Version 2.4.153
 
-* AbstractView.java (getGridView(), getSpinner()): Added more two convertion
-  (casting) methods.
-* AbstractView.java (inflate(int,ViewGroup)): Changed how to get the
-  LayoutInflater instance.
-* AbstractView.java (select(int)): Added method to select an item in a View
-  descendant of an AdapterView.
-* AbstractView.java (selected()): Added method to get the index position of
-  the current selected item in a View descendant of an AdapterView.
+* AbstractView.java (selectAll()): Helper method to select all text in
+  an EditText widget.
+* AbstractView.java (editorAction()): Sets the OnEditorActionListener
+  instance to a TextView descendant.
+* AbstractView.java (checkedChange()): Sets the OnCheckedChangeListener
+  instance to a CompoundButton.
+* sfView.java (release()): Add some check to not include the same
+  instance twice in the cache.
+* AbstractView.java (reset(Activity, View)): Found bug getting the wrong
+  Activity to set.
