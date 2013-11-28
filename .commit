@@ -1,4 +1,6 @@
-Version 2.4.154
+Version 2.4.155
 
-* CXmlNode.java (remove()): Added a set of functions to remove a node element
-  from the list of children nodes.
+* AbstractView.java (contextMenu()): New operation to register a View in
+  its activity to show a context menu.
+* issuer.java: All public functions were changed to protected operations
+  against null pointer exceptions.

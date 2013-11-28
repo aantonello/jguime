@@ -993,9 +993,11 @@ public abstract class AbstractView<T extends AbstractView<T>>
      * Attaches a listener to the OnClick event of the operating view.
      * \param listener OnClickListener instance to attach.
      * \return this.
+     * \remarks Will also set the operating View as clickable.
      **/
     public T click(View.OnClickListener listener) {
         if (m_view != null) {
+            m_view.setClickable(true);
             m_view.setOnClickListener(listener);
         }
         return self();
@@ -1047,6 +1049,21 @@ public abstract class AbstractView<T extends AbstractView<T>>
         if (m_view != null) {
             m_view.setOnCreateContextMenuListener(listener);
         }
+        return self();
+    }/*}}}*/
+    // public T contextMenu();/*{{{*/
+    /**
+     * Register the operating View to show context menus.
+     * @returns \c self().
+     * @remarks This operation will only work when this instance was created
+     * or reseted with Activity information. Both Activity and the operating
+     * View must be valid.
+     **/
+    public T contextMenu()
+    {
+        if ((m_activity != null) && (m_view != null))
+            m_activity.registerForContextMenu(m_view);
+
         return self();
     }/*}}}*/
     // public T focusChange(View.OnFocusChangeListener listener);/*{{{*/

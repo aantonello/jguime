@@ -60,6 +60,7 @@ public class issuer
      * be processed. Which will be as soon as possible.
      **/
     public static void send(INHandler h, int id, int np, long lp, Object o) {
+        if (h == null) return;
         issuer.get().sendMsg(h, id, np, lp, o);
     }/*}}}*/
     // public static void post(INHandler h, int id, int np, long lp, Object o);/*{{{*/
@@ -74,6 +75,7 @@ public class issuer
      * queue and will be processed in order.
      **/
     public static void post(INHandler h, int id, int np, long lp, Object o) {
+        if (h == null) return;
         issuer.get().postMsg(h, id, np, lp, o);
     }/*}}}*/
     // public static void post(INHandler h, int id, int np, long lp, Object o, long delay);/*{{{*/
@@ -90,6 +92,7 @@ public class issuer
      * this can be unscheduled with the issuer#cancel() function.
      **/
     public static void post(INHandler h, int id, int np, long lp, Object o, long delay) {
+        if (h == null) return;
         issuer.get().postMsg(h, id, np, lp, o, delay);
     }/*}}}*/
     // public static boolean cancel(INHandler h);/*{{{*/
@@ -100,6 +103,7 @@ public class issuer
      * \return \b true if at least one message is canceled. Otherwise \b false.
      **/
     public static boolean cancel(INHandler h) {
+        if (h == null) return false;
         issuer.get().unschedule(h);
         return true;
     }/*}}}*/
@@ -112,6 +116,7 @@ public class issuer
      * false.
      **/
     public static boolean cancel(INHandler h, int id) {
+        if (h == null) return false;
         issuer.get().unschedule(h, id);
         return true;
     }/*}}}*/
@@ -125,6 +130,7 @@ public class issuer
      * false.
      **/
     public static boolean cancel(INHandler h, int id, int np) {
+        if (h == null) return false;
         issuer.get().unschedule(h, id, np);
         return true;
     }/*}}}*/
@@ -152,6 +158,7 @@ public class issuer
      * other message in the application main loop.
      **/
     public static void send(String name, int id, int np, long lp, Object o) {
+        if (name == null) return;
         issuer.get().sendNotify(name, id, np, lp, o);
     }/*}}}*/
     // public static void post(String name, int id, int np, long lp, Object o);/*{{{*/
@@ -167,6 +174,7 @@ public class issuer
      * process.
      **/
     public static void post(String name, int id, int np, long lp, Object o) {
+        if (name == null) return;
         issuer.get().postNotify(name, id, np, lp, o, 0L);
     }/*}}}*/
     // public static void post(String name, int id, int np, long lp, Object o, long delay);/*{{{*/
@@ -182,6 +190,7 @@ public class issuer
      * ellapses, the message is posted in the end of the main message queue.
      **/
     public static void post(String name, int id, int np, long lp, Object o, long delay) {
+        if (name == null) return;
         issuer.get().postNotify(name, id, np, lp, o, delay);
     }/*}}}*/
     // public static void subscribe(String name, INHandler handler);/*{{{*/
@@ -192,6 +201,7 @@ public class issuer
      * notifications when they will be sent.
      **/
     public static void subscribe(String name, INHandler handler) {
+        if ((name == null) || (handler == null)) return;
         issuer.get().addClient(name, handler);
     }/*}}}*/
     // public static void unsubscribe(String name, INHandler handler);/*{{{*/
@@ -202,6 +212,7 @@ public class issuer
      * subscription. All scheduled messages will be canceled either.
      **/
     public static void unsubscribe(String name, INHandler handler) {
+        if ((name == null) || (handler == null)) return;
         issuer.get().removeClient(name, handler);
     }/*}}}*/
     //@}
