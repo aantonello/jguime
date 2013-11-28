@@ -411,6 +411,49 @@ public class CXmlNode
         this.children = list;
         return count;
     }/*}}}*/
+    // public final boolean  remove(CXmlNode node);/*{{{*/
+    /**
+     * Removes a child node from this node.
+     * @param node Elemento to be removed.
+     * @returns \b true when success. \b false if the \a node doesn't exists
+     * in this element children list.
+     **/
+    public final boolean remove(CXmlNode node)
+    {
+        final CXmlNode[] items = this.children;
+        final int limit = arrays.length(items);
+        int       index = -1;
+
+        for (int i = 0; i < limit; i++) {
+            if (node == items[i]) {
+                index = i;
+                break;
+            }
+        }
+        return remove(index);
+    }/*}}}*/
+    // public final boolean  remove(int index);/*{{{*/
+    /**
+     * Removes a child node element.
+     * @param index Index of the element to be removed.
+     * @return \b true on success. \b false if \a index is invalid.
+     **/
+    public final boolean remove(int index)
+    {
+        final int limit = arrays.length(this.children);
+
+        if ((index < 0) || (index >= limit)) return false;
+
+        CXmlNode[] nodes = new CXmlNode[limit - 1];
+
+        for (int i = 0, j = 0; i < limit; i++) {
+            if (i == index) continue;
+            nodes[j++] = this.children[i];
+        }
+
+        this.children = nodes;
+        return true;
+    }/*}}}*/
     //@}
 
     /** \name OVERRIDES */ //@{

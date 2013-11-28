@@ -1,12 +1,4 @@
-Version 2.4.153
+Version 2.4.154
 
-* AbstractView.java (selectAll()): Helper method to select all text in
-  an EditText widget.
-* AbstractView.java (editorAction()): Sets the OnEditorActionListener
-  instance to a TextView descendant.
-* AbstractView.java (checkedChange()): Sets the OnCheckedChangeListener
-  instance to a CompoundButton.
-* sfView.java (release()): Add some check to not include the same
-  instance twice in the cache.
-* AbstractView.java (reset(Activity, View)): Found bug getting the wrong
-  Activity to set.
+* CXmlNode.java (remove()): Added a set of functions to remove a node element
+  from the list of children nodes.
