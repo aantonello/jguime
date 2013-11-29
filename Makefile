@@ -46,7 +46,7 @@ MAKERES = uf $(OUTPUT) -C $(RESDIR) .
 # MAKEFILE TARGETS
 # NOTE: Theres is no more differences between debug or release versions.
 # -----------------------------------------------------------------------------
-.PHONY: clean cleanall install tags docs
+.PHONY: clean cleanall cleandocs install tags docs
 
 default : all
 
@@ -56,8 +56,10 @@ clean :
 	rm -fR ./$(BINDIR)
 	rm -fR ./$(TMPDIR)
 
-cleanall : clean
+cleandocs :
 	rm -fR ./$(DOCDIR)
+
+cleanall : clean cleandocs
 	rm -f $(OUTTAG)
 
 $(OUTDIR) :

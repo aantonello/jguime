@@ -1,6 +1,10 @@
-Version 2.4.155
+Version 2.4.159
 
-* AbstractView.java (contextMenu()): New operation to register a View in
-  its activity to show a context menu.
-* issuer.java: All public functions were changed to protected operations
-  against null pointer exceptions.
+* sfView.java (autorelease()): Added function to release the sfView
+  instance after code goes out of scope.
+* IMSG.java (MSG_RELEASE): Added constant to be used in
+  sfView::autorelease() method.
+* Makefile: Updated. Added 'cleandocs' target.
+* sfView.java: Changed in the way that all instances are auto released
+  automaticaly. release() and autorelease() functions are dummy
+  implementations doing nothing.

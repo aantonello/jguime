@@ -56,6 +56,13 @@ public interface IMSG
      * instance.
      **/
     public static final int MSG_DIALOG = 0x00000104;/*}}}*/
+    // public static final int MSG_RELEASE= 0x00000105;/*{{{*/
+    /**
+     * Special message used in \c sfView class.
+     * Please, do not use it. Do not send it to any instance of \c sfView
+     * class.
+     **/
+    public static final int MSG_RELEASE = 0x00000105;/*}}}*/
     // public static final int MSG_LAST   = 0x00000FFF;/*{{{*/
     /**
      * Last message identifier.
