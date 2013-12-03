@@ -1,5 +1,5 @@
 jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
-# VERSION: 2.4.159
+# VERSION: 2.4.161
  docs=docs enc="latin1" {
   NOTES
  }
@@ -91,6 +91,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    CAndroidProgressDialog.java
    CAndroidPasswordDialog.java
    SFTableView.java
+   SFGridView.java
    view_t.java
    sfView.java
   }

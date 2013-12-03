@@ -12,7 +12,7 @@ OUTDIR = $(BINDIR)/rel
 RESDIR = res
 TARGET = jguime
 APPVER = 2.4
-BUILD  = 159
+BUILD  = 161
 OUTPUT = $(OUTDIR)/$(TARGET).jar
 OUTTAG = $(TARGET).tags
 OUTDXT = $(DOCDIR)/$(TARGET).dxt
@@ -82,6 +82,7 @@ JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
 		  $(SRCDIR)/ui/SFTableDelegate.java\
 		  $(SRCDIR)/ui/SFTableAdapter.java\
 		  $(SRCDIR)/ui/SFTableView.java\
+		  $(SRCDIR)/ui/SFGridView.java\
 		  $(SRCDIR)/ui/sfView.java
 
 _FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_XML)\

@@ -128,7 +128,7 @@ public class CAndroidApp extends android.app.Application
      * \param dpValue The value in dp units to be converted.
      **/
     public static int dp2px(int dpValue) {
-        return (int)(dpValue * (__this.density / 160.0));
+        return (int)(dpValue * __this.density);
     }/*}}}*/
     //@}
 

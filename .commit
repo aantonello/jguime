@@ -1,10 +1,5 @@
-Version 2.4.159
+Version 2.4.161
 
-* sfView.java (autorelease()): Added function to release the sfView
-  instance after code goes out of scope.
-* IMSG.java (MSG_RELEASE): Added constant to be used in
-  sfView::autorelease() method.
-* Makefile: Updated. Added 'cleandocs' target.
-* sfView.java: Changed in the way that all instances are auto released
-  automaticaly. release() and autorelease() functions are dummy
-  implementations doing nothing.
+* SFGridView.java: Fast implementation of GridView allowing differente
+  Views to be used as cells.
+* CAndroidApp.java: Bug in function dp2px().
