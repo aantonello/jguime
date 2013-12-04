@@ -1,3 +1,8 @@
+2013-12-04  Alessandro <aantonello@paralaxe.com.br>
+
+	* CRect.java (deflatePadding(), deflateMargins()): Two new functions to
+	  help working with Android layout constraints.
+
 2013-11-22  Alessandro <aantonello@paralaxe.com.br>
 
 	* AbstractView.java (getGridView(), getSpinner()): Added more two convertion

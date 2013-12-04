@@ -17,6 +17,7 @@ package x.android.ui;
 import android.graphics.Rect;
 import android.graphics.Point;
 import android.view.View;
+import android.view.ViewGroup;
 
 import x.android.defs.ALIGN;
 import x.android.defs.SIZE;
@@ -569,6 +570,32 @@ public class CRect
      **/
     public final CRect getClientRect(View v) {
         this.box(0, 0, v.getWidth(), v.getHeight());
+        return this;
+    }/*}}}*/
+    // public final CRect deflatePadding(View v);/*{{{*/
+    /**
+     * Deflates the dimensions of this rectangle using the padding
+     * configuration of a View.
+     * @param v The View to get the padding configuration.
+     * @returns This \c CRect instance.
+     **/
+    public final CRect deflatePadding(View v)
+    {
+        deflate(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom());
+        return this;
+    }/*}}}*/
+    // public final CRect deflateMargins(View v);/*{{{*/
+    /**
+     * Deflates this rectangle dimensions with margins configuration.
+     * @param v View hoose margins configuration should be used to deflates
+     * this rectangle.
+     * @return This rectangle instance.
+     **/
+    public final CRect deflateMargins(View v)
+    {
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)v.getLayoutParams();
+
+        deflate(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, mlp.bottomMargin);
         return this;
     }/*}}}*/
     //@}

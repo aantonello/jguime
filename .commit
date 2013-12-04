@@ -1,5 +1,4 @@
 Version 2.4.161
 
-* SFGridView.java: Fast implementation of GridView allowing differente
-  Views to be used as cells.
-* CAndroidApp.java: Bug in function dp2px().
+* CRect.java (deflatePadding(), deflateMargins()): Two new functions to
+  help working with Android layout constraints.
