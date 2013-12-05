@@ -12,7 +12,7 @@ OUTDIR = $(BINDIR)/rel
 RESDIR = res
 TARGET = jguime
 APPVER = 2.4
-BUILD  = 161
+BUILD  = 165
 OUTPUT = $(OUTDIR)/$(TARGET).jar
 OUTTAG = $(TARGET).tags
 OUTDXT = $(DOCDIR)/$(TARGET).dxt
@@ -42,6 +42,7 @@ JGUIME_UTILS=$(SRCDIR)/utils/debug.java\
 			 $(SRCDIR)/utils/time_t.java\
 			 $(SRCDIR)/utils/res.java\
 			 $(SRCDIR)/utils/SFAsset.java\
+			 $(SRCDIR)/utils/SFListT.java\
 			 $(SRCDIR)/utils/CStringTable.java
 
 JGUIME_IO=$(SRCDIR)/io/CBinaryReader.java\

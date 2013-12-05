@@ -43,6 +43,9 @@ import x.android.nms.issuer;
  *
  * Since version 2.5.157 you don't need to call \c release() nor \c
  * autorelease(). All sfView instances will be auto released automaticaly.
+ *
+ * Since version 2.5.163 when a call to \c release() is made the instance is
+ * immediatly released.
  *//* --------------------------------------------------------------------- */
 public class sfView extends AbstractView<sfView> implements INHandler
 {
@@ -113,7 +116,17 @@ public class sfView extends AbstractView<sfView> implements INHandler
      **/
     public final void release()
     {
-        debug.w("sfView::release() called! This call can be removed. It is no longer needed.\n");
+        issuer.cancel(this, IMSG.MSG_RELEASE);
+
+        if (s_list == null) s_list = new ArrayList<sfView>(1);
+
+        /* Removing any references so the objects can be destroied. */
+        m_activity = null;
+        m_view     = null;
+        m_root     = null;
+
+        if (!s_list.contains(this))
+            s_list.add(this);
     }/*}}}*/
     // public final sfView autorelease();/*{{{*/
     /**
@@ -176,17 +189,7 @@ public class sfView extends AbstractView<sfView> implements INHandler
     public boolean onMessage(int msgID, int nParam, long lParam, Object extra)
     {
         if ((msgID == IMSG.MSG_RELEASE) && (extra == this))
-        {
-            if (s_list == null) s_list = new ArrayList<sfView>(1);
-
-            /* Removing any references so the objects can be destroied. */
-            m_activity = null;
-            m_view     = null;
-            m_root     = null;
-
-            if (!s_list.contains(this))
-                s_list.add(this);
-        }
+            this.release();
         return true;
     }/*}}}*/
     //@}
