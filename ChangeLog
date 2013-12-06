@@ -1,3 +1,9 @@
+2013-12-06  Alessandro <aantonello@paralaxe.com.br>
+
+	* strings.java: Updating documentation.
+	* CXmlTok.java (LoadStream()): Buggy! Function was not checking for
+	  errors on load streams.
+
 2013-12-04  Alessandro <aantonello@paralaxe.com.br>
 
 	* CRect.java (deflatePadding(), deflateMargins()): Two new functions to

@@ -96,7 +96,8 @@ public class CXmlFile
      * \returns The \c CXmlFile instance created or \b null if something goes
      * wrong.
      **/
-    public static CXmlFile Load(InputStream is, String enc) {
+    public static CXmlFile Load(InputStream is, String enc)
+    {
         CXmlTok tok = CXmlTok.LoadStream(is, enc);
         if (tok == null) return null;
         return Load( tok );

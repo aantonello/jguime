@@ -141,11 +141,12 @@ public class CXmlTok
      * the encoding looking into the file. But the stream is loaded into
      * memory to speed up the parsing. Knowing the file encoding before reading
      * the file is fast and easy.
-     * \return A CXmlTok object created from the stream or \NULL, if the
+     * \return A CXmlTok object created from the stream or \b null, if the
      * stream could not be loaded. Notice that the XML file is not validated
      * in this operation. Any stream can be loaded.
      **/
-    public static CXmlTok LoadStream(InputStream is, String enc) {
+    public static CXmlTok LoadStream(InputStream is, String enc)
+    {
         CStreamReader sr = new CStreamReader( is );
         int count = 0, pos = 0;
         byte[] buffer = null;
@@ -160,6 +161,11 @@ public class CXmlTok
             pos += count;
         }
         sr.close();         /* Isn't needed any more. */
+
+        /* Check for the nullity of 'buffer'. Happens when the InputStream is
+         * empty or has an error.
+         */
+        if (buffer == null) return null;
 
         /* If the encoding is UTF- something we need to check the presence of
          * the BOM (Byte Order Marker) to remove it from the byte array before
