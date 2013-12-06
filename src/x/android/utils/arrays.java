@@ -1375,12 +1375,13 @@ public final class arrays
      * Does the oposite of the function \c toString(byte[]).
      * Converts a byte array representation in a string into a real byte
      * array. This function supports separators, as of the \c toString()
-     * version can return string using separators. Any character is accepted
-     * as a separator along it is not a valid hexadecimal character.
+     * version, that can return string using separators. Any character is
+     * accepted as a separator along it is not a valid hexadecimal character.
      * @param binary The byte array representation in a string.
      * @return The byte array extracted from the string.
      **/
-    public static byte[] fromString(String binary) {
+    public static byte[] fromString(String binary)
+    {
         char[] nibbles;
         int i, x, limit = strings.length(binary);
 

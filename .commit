@@ -1,7 +1,3 @@
 Version 2.4.165
 
-* SFListT.java: Generic class that reproduces the ArrayList standar
-  class without unwanted exceptions.
-* sfView.java: Changed behavior of 'release()' method so when called
-  the sfView instance will be immediatly released and the posted
-  message will no be called.
+* strings.java: Updating documentation.

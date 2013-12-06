@@ -416,6 +416,9 @@ public final class strings
      * \param text The string to convert in a byte array.
      * \param enc The encoding to encode the string into the byte array.
      * \return The result array on success. \b null if some error occurs.
+     * \remarks This function will use \c String.getBytes() method to convert
+     * the string object into a byte array using the specified encoding. No
+     * excption will be thrown.
      **/
     public static byte[] encode(String text, String enc) {
         byte[] array;
@@ -435,7 +438,8 @@ public final class strings
      * \return The result array on success. If an error occurs the resulting
      * array will be filled with zeroes.
      **/
-    public static byte[] encode(String text, String enc, int len) {
+    public static byte[] encode(String text, String enc, int len)
+    {
         byte[] result = new byte[len];
         byte[] array  = encode(text, enc);
 
