@@ -439,7 +439,10 @@ public abstract class AbstractView<T extends AbstractView<T>>
      **/
     public T background(int resID) {
         if (m_view != null) {
-            m_view.setBackgroundResource(resID);
+            try { m_view.setBackgroundResource(resID); }
+            catch (Exception ex) {
+                debug.e(ex, "$n at AbstractView::background(%d): '$s'\n", resID);
+            }
         }
         return self();
     }/*}}}*/
@@ -498,7 +501,10 @@ public abstract class AbstractView<T extends AbstractView<T>>
     public T inflate(Menu m, int id) {
         if (m_activity != null) {
             MenuInflater mi = m_activity.getMenuInflater();
-            mi.inflate(id, m);
+            try { mi.inflate(id, m); }
+            catch (Exception ex) {
+                debug.e(ex, "$n in AbstractView::inflate(Menu, %d): '$s'\n", id);
+            }
         }
         return self();
     }/*}}}*/
@@ -523,7 +529,13 @@ public abstract class AbstractView<T extends AbstractView<T>>
 
         if (li == null) return null;
 
-        return li.inflate(id, parent, false);
+        View v = null;
+        try { v = li.inflate(id, parent, false); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in AbstractView::inflate(%d, ViewGroup): '$s'\n", id);
+            return null;
+        }
+        return v;
     }/*}}}*/
     //@}
 
@@ -560,7 +572,10 @@ public abstract class AbstractView<T extends AbstractView<T>>
     public T text(int resID) {
         if (m_view instanceof TextView) {
             TextView tv = (TextView)m_view;
-            tv.setText(resID);
+            try { tv.setText(resID); }
+            catch (Exception ex) {
+                tv.setText(String.valueOf(resID));
+            }
         }
         return self();
     }/*}}}*/
@@ -611,7 +626,10 @@ public abstract class AbstractView<T extends AbstractView<T>>
      **/
     public T hint(int resID) {
         if (m_view instanceof TextView) {
-            ((TextView)m_view).setHint(resID);
+            try { ((TextView)m_view).setHint(resID); }
+            catch (Exception ex) {
+                debug.e(ex, "$n in AbstractView::hint(%d): '$s'\n", resID);
+            }
         }
         return self();
     }/*}}}*/
@@ -697,7 +715,10 @@ public abstract class AbstractView<T extends AbstractView<T>>
      **/
     public T image(int resID) {
         if (m_view instanceof ImageView) {
-            ((ImageView)m_view).setImageResource(resID);
+            try { ((ImageView)m_view).setImageResource(resID); }
+            catch (Exception ex) {
+                debug.e(ex, "$n in AbstractView::image(%d): '$s'\n", resID);
+            }
         }
         return self();
     }/*}}}*/

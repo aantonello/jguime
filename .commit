@@ -1,5 +1,6 @@
-Version 2.4.166
+Version 2.4.168
 
-* strings.java: Updating documentation.
-* CXmlTok.java (LoadStream()): Buggy! Function was not checking for
-  errors on load streams.
+* SFAsset.java (getMessage()): New function to load a message from the
+  standard error string table file.
+* AbstractView.java: Added exception protect try...catch blocks for
+  exceptions not documented in Android SDK.

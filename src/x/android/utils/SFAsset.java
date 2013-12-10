@@ -114,6 +114,18 @@ public final class SFAsset
             }
         }
     }/*}}}*/
+    // public static String      getMessage(int errCode);/*{{{*/
+    /**
+     * Gets a message from an error code.
+     * @param errCode An error code declared in the \c ERROR class.
+     * @return A string with the error message. If no message is found the
+     * result will be an empty string.
+     **/
+    public static String getMessage(int errCode)
+    {
+        CStringTable stringTable = CStringTable.LoadStream(Load("[...]/errors.xml"));
+        return stringTable.get(errCode);
+    }/*}}}*/
     //@}
 
     /** \name Local Operations */ //@{

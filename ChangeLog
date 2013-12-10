@@ -1,3 +1,10 @@
+2013-12-09  Alessandro <aantonello@paralaxe.com.br>
+
+	* SFAsset.java (getMessage()): New function to load a message from the
+	  standard error string table file.
+	* AbstractView.java: Added exception protect try...catch blocks for
+	  exceptions not documented in Android SDK.
+
 2013-12-06  Alessandro <aantonello@paralaxe.com.br>
 
 	* strings.java: Updating documentation.
