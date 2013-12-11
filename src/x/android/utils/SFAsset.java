@@ -174,6 +174,7 @@ public final class SFAsset
             return am.open(assetFile);
         }
         catch (Exception ex) {
+            debug.e(ex, "$n in SFAsset::_internal_open('%s')\n", assetFile);
             return null;
         }
     }/*}}}*/

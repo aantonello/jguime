@@ -1,6 +1,3 @@
-Version 2.4.168
+Version 2.4.169
 
-* SFAsset.java (getMessage()): New function to load a message from the
-  standard error string table file.
-* AbstractView.java: Added exception protect try...catch blocks for
-  exceptions not documented in Android SDK.
+* SFAsset.java: Added some debugging output.
