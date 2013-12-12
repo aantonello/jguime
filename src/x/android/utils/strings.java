@@ -418,9 +418,11 @@ public final class strings
      * \return The result array on success. \b null if some error occurs.
      * \remarks This function will use \c String.getBytes() method to convert
      * the string object into a byte array using the specified encoding. No
-     * excption will be thrown.
+     * exception will be thrown. When the convertion cannot be done, a \b null
+     * array will be returned.
      **/
-    public static byte[] encode(String text, String enc) {
+    public static byte[] encode(String text, String enc)
+    {
         byte[] array;
         try { array = text.getBytes(enc); }
         catch (Exception ex) {
@@ -434,7 +436,10 @@ public final class strings
      * \param text The string to convert in a byte array.
      * \param enc The encoding to encode the string into the byte array.
      * \param len The length for the resulting array. This is useful
-     * when encoding a string to put in a binary file.
+     * when encoding a string to put in a binary file. If the length of the
+     * converted array is bigger than this value, the resulbe will be
+     * truncated. When the converted array length is less than this value, the
+     * excedent space is filled with zeroes.
      * \return The result array on success. If an error occurs the resulting
      * array will be filled with zeroes.
      **/
