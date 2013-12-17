@@ -26,7 +26,7 @@ endif
 # -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
-SDKDIR = $(ANDROID)/platforms/android-11
+SDKDIR = $(ANDROID)/platforms/android-19
 BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 
 # -----------------------------------------------------------------------------

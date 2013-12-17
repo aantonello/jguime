@@ -1383,7 +1383,6 @@ public class stream_t implements DataInput, DataOutput
     public int writeFromInputStream(InputStream is, int count)
     {
         m_lastWrite = 0;
-        if (count == 0) return 0;       /* Nothing to read. */
 
         if (count < 0)
         {
@@ -1394,6 +1393,7 @@ public class stream_t implements DataInput, DataOutput
                 return m_lastWrite;
             }
         }
+        if (count == 0) return 0;       /* Nothing to read. */
 
         if (!_internal_checkRoom(m_write + count))
         {

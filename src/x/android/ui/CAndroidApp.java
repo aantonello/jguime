@@ -17,7 +17,7 @@ package x.android.ui;
 import java.io.*;
 import java.util.*;
 
-import android.os.Environment;
+import android.os.*;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -137,8 +137,21 @@ public class CAndroidApp extends android.app.Application
     /**
      * Called when the application is created.
      **/
-    public void onCreate() {
+    public void onCreate()
+    {
         super.onCreate();
+
+        debug.w("\nAndroid Version:\n");
+        debug.w("@@ CODENAME:'%s' INCREMENTAL:'%s' RELEASE:'%s'\n",
+                Build.VERSION.CODENAME, Build.VERSION.INCREMENTAL,
+                Build.VERSION.RELEASE);
+        debug.w("@@ BOARD: '%s'\n", Build.BOARD);
+        debug.w("@@ BRAND: '%s'\n", Build.BRAND);
+        debug.w("@@ DEVICE: '%s'\n", Build.DEVICE);
+
+        CStringTable strt = CStringTable.LoadAsset("version.xml");
+        debug.w("@@ SDK: '%s'\n", strt.get(Build.VERSION.SDK_INT));
+
         DisplayMetrics dm = this.getDisplayMetrics();
 
         this.displayWidth  = dm.widthPixels;

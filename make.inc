@@ -12,7 +12,7 @@ OUTDIR = $(BINDIR)/rel
 RESDIR = res
 TARGET = jguime
 APPVER = 2.4
-BUILD  = 168
+BUILD  = 174
 OUTPUT = $(OUTDIR)/$(TARGET).jar
 OUTTAG = $(TARGET).tags
 OUTDXT = $(DOCDIR)/$(TARGET).dxt
@@ -52,6 +52,9 @@ JGUIME_IO=$(SRCDIR)/io/CBinaryReader.java\
 		  $(SRCDIR)/io/socket_t.java\
 		  $(SRCDIR)/io/stream_t.java
 
+JGUIME_BT=$(SRCDIR)/bt/SFBluetoothSocket.java\
+		  $(SRCDIR)/bt/sfBluetooth.java
+
 JGUIME_XML=$(SRCDIR)/xml/CXmlTok.java\
 		   $(SRCDIR)/xml/CXmlAttr.java\
 		   $(SRCDIR)/xml/CXmlNode.java\
@@ -86,6 +89,6 @@ JGUIME_UI=$(SRCDIR)/ui/ALERT.java\
 		  $(SRCDIR)/ui/SFGridView.java\
 		  $(SRCDIR)/ui/sfView.java
 
-_FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_XML)\
-			$(JGUIME_NMS) $(JGUIME_UI)
+_FILE_LIST_=$(JGUIME_DEFS) $(JGUIME_UTILS) $(JGUIME_IO) $(JGUIME_BT)\
+			$(JGUIME_XML) $(JGUIME_NMS) $(JGUIME_UI)
 

@@ -77,7 +77,7 @@ public class CStringTable
         stringTable._internal_parse(file.root.children);
         return stringTable;
     }/*}}}*/
-    // public static LoadAsset(String assetPath);/*{{{*/
+    // public static CStringTable LoadAsset(String assetPath);/*{{{*/
     /**
      * Load a string table in an 'assets' directory.
      * @param assetPath Path to load the file from.

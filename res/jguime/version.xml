@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<stringtable>
+  <string id="0" value="Unknown" />
+  <string id="1" value="Base (First release)" />
+  <string id="2" value="Base (Update 1.1)" />
+  <string id="3" value="Cupcake (Android 1.5)" />
+  <string id="4" value="Donut (Android 1.6)" />
+  <string id="5" value="Eclair (Android 2.0)" />
+  <string id="6" value="Eclair (Android 2.0.1)" />
+  <string id="7" value="Eclair MR1 (Android 2.1)" />
+  <string id="8" value="Froyo (Android 2.2)" />
+  <string id="9" value="Gingerbread (Android 2.3)" />
+  <string id="10" value="Gingerbread MR1 (Android 2.3.3)" />
+  <string id="10" value="Gingerbread MR1 (Android 2.3.3)" />
+  <string id="11" value="Honeycomb (Android 3.0)" />
+  <string id="12" value="Honeycomb MR1 (Android 3.1)" />
+  <string id="13" value="Honeycomb MR2 (Android 3.2)" />
+  <string id="14" value="Ice Cream Sandwich (Android 4.0)" />
+  <string id="15" value="Ice Cream Sandwich MR1 (Android 4.0.3)" />
+  <string id="16" value="Jelly Bean (Android 4.1)" />
+  <string id="17" value="Jelly Bean MR1 (Android 4.2)" />
+  <string id="18" value="Jelly Bean MR2 (Android 4.3)" />
+  <string id="19" value="KitKat (Android 4.4)" />
+</stringtable>

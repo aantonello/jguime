@@ -1,5 +1,5 @@
 jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
-# VERSION: 2.4.170
+# VERSION: 2.4.174
  docs=docs enc="latin1" {
   NOTES
  }
@@ -13,6 +13,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
     errors.xml
     calendar.xml
    }
+   version.xml
   }
  }
  source=src/x/android enc="utf8" fmt="unix" {
@@ -45,6 +46,11 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
    CStreamWriter.java
    stream_t.java
    socket_t.java
+  }
+  bt=bt {
+   _package.java
+   SFBluetoothSocket.java
+   sfBluetooth.java
   }
   xml=xml {
    _package.java
