@@ -108,7 +108,8 @@ public class thread_t implements Runnable
      * If the thread is active, the return value will be \c ERROR.ACTIVE.
      **/
     public final int getExitCode() {
-        if (m_thread.isAlive()) return ERROR.ACTIVE;
+        if (m_thread.isAlive())
+            return ERROR.ACTIVE;
         return m_exitCode;
     }/*}}}*/
     //@}
@@ -143,11 +144,13 @@ public class thread_t implements Runnable
      * ERROR.RUNNING. If there is an issue in security level, \c ERROR.ACCESS
      * will be returned.
      **/
-    public final int start() {
-        if (m_thread.isAlive()) return ERROR.RUNNING;
+    public final int start()
+    {
+        if (m_thread.isAlive())
+            return ERROR.RUNNING;
 
         m_exitCode = 0;
-        m_stop   = 0;
+        m_stop = 0;
 
         /* We always need to create a new thread. */
         Thread thread = new Thread(this);
@@ -159,17 +162,17 @@ public class thread_t implements Runnable
         }
         catch (IllegalThreadStateException itse) {
             debug.e("thread_t::start(): state exception:\n\t%s", itse);
-            return ERROR.RUNNING;
+            m_exitCode = ERROR.RUNNING;
         }
         catch (SecurityException se) {
             debug.e("thread_t::start(): security exception:\n\t%s", se);
-            return ERROR.ACCESS;
+            m_exitCode = ERROR.ACCESS;
         }
         catch (Exception ex) {
             debug.e("thread_t::start() exception:\n\t%s", ex);
-            return ERROR.EXCEPTION;
+            m_exitCode = ERROR.EXCEPTION;
         }
-        return ERROR.SUCCESS;
+        return m_exitCode;
     }/*}}}*/
     // public final int  abort();/*{{{*/
     /**

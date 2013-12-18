@@ -60,6 +60,7 @@ public final class ERROR
     public static final int VERSION = -34;  /**< Wrong version number.      */
     public static final int UNRESOLVED = -35; /**< Unresolved address.      */
     public static final int HOST    = -36;  /**< Host is unreachable.       */
+    public static final int NOTSUP  = -37;  /**< Not supported.             */
     public static final int USER    = -1000;    /**< Start of user space.   */
 }
 // vim:syntax=java.doxygen

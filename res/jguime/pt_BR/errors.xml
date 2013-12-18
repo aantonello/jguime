@@ -74,4 +74,6 @@
   <string id="-35" value="Endereço não encontrado" />
   <!-- ERROR.HOST -->
   <string id="-36" value="Host não disponível" />
+  <!-- ERROR.NOTSUP -->
+  <string id="-37" value="Operação não suportada" />
 </stringtable>

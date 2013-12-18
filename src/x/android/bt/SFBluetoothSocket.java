@@ -27,6 +27,7 @@ import x.android.io.CStreamWriter;
 import x.android.io.stream_t;
 /* #imports }}} */
 /**
+ * \ingroup x_android_bt
  * Wrapper class for BluetoothSocket.
  *//* --------------------------------------------------------------------- */
 public class SFBluetoothSocket implements Closeable
@@ -100,11 +101,10 @@ public class SFBluetoothSocket implements Closeable
      * This is a blocking operation. It must be called from a thread that is
      * not the main thread. The function will return when the connection is
      * made or when an error occurs, like a timeout interval or calling
-     * #close() from another thread.
+     * SFBluetoothSocket#close() from another thread.
      * @return \b true if the connection was made. Otherwise \b false.
-     * @remarks Don't use this method on server sockets. Instead, use the \c
-     * SFBluetoothServer.accept() to retrive an already connected
-     * SFBluetoothSocket instances.
+     * @remarks Don't use this method on server sockets. Instead, use the 
+     * SFBluetoothSocket#accept() to accept a connection from a client device.
      **/
     public final boolean connect()
     {
@@ -146,7 +146,7 @@ public class SFBluetoothSocket implements Closeable
 
             m_server.close();
         } catch (Exception ex) {
-            debug.e(ex, "$n in SFBluetoothSocket::accept(%d): '$s'\n", timeout);
+            debug.e(ex, "$n in SFBluetoothSocket::accept(timeout: %d): '$s'\n", timeout);
         }
         m_server = null;
         m_connected = (m_socket != null);

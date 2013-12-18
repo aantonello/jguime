@@ -46,7 +46,8 @@ public class CXmlFile
      * \param tok The CXmlTok object to parse and load the XML file.
      * \return The CXmlFile created or \b null if an error occurs.
      **/
-    public static CXmlFile Load(CXmlTok tok) {
+    public static CXmlFile Load(CXmlTok tok)
+    {
         if (tok == null) return null;       /* Invalid file. */
 
         /* The first 5 characters of the file must be '<?xml' */
@@ -110,7 +111,8 @@ public class CXmlFile
      * \param enc The encoded data. This will be used to convert the data into
      * standard Java String encoding.
      **/
-    public static CXmlFile Load(stream_t stream, String enc) {
+    public static CXmlFile Load(stream_t stream, String enc)
+    {
         CXmlTok tok = CXmlTok.LoadStream(stream, enc);
         if (tok == null) return null;
         return CXmlFile.Load(tok);

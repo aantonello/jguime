@@ -24,6 +24,7 @@ import x.android.utils.strings;
 import x.android.ui.CAndroidApp;
 /* #imports }}} */
 /**
+ * \ingroup x_android_bt
  * Static class with helper methods for bluetooth management.
  *//* --------------------------------------------------------------------- */
 public final class sfBluetooth

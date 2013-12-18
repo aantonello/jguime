@@ -17,6 +17,7 @@ package x.android.xml;
 import java.io.InputStream;
 import java.io.IOException;
 
+import x.android.defs.ENC;
 import x.android.utils.arrays;
 import x.android.utils.strings;
 import x.android.utils.debug;
@@ -108,7 +109,8 @@ public class CXmlTok
      * \remarks This function recognizes the file encoding through its BOM
      * bytes.
      **/
-    public static CXmlTok LoadStream(InputStream is) {
+    public static CXmlTok LoadStream(InputStream is)
+    {
         CStreamReader sr = new CStreamReader( is );
         int count = 0, pos = 0;
         byte[] buffer = null;
@@ -124,13 +126,25 @@ public class CXmlTok
         }
         sr.close();         /* Isn't needed any more. */
 
-        /* Convert the stream to a String object. The encoding is recognized
-         * throuth the BOM bytes.
-         */
-        if (buffer == null) return null;    /* Load fails. */
-        String text = strings.toString(buffer, 0, buffer.length);
-        if (text == null) return null;      /* The load fails. */
+        if (buffer == null) {
+            debug.w("CXmlTok::LoadStream(InputStream): InputStream is empty!\n");
+            return null;    /* Load fails. */
+        }
 
+        /* Check if we have BOM. When we does, the enconding can be resolved
+         * by the byte order mark. Otherwise we will use UTF-8 since it is the
+         * default for XML files.
+         */
+        String text = null;
+        if (skipByteOrderMark(buffer) > 0)
+            text = strings.toString(buffer, 0, buffer.length);
+        else
+            text = strings.toString(buffer, 0, buffer.length, ENC.UTF8);
+
+        if (text == null) {
+            debug.w("CXmlTok::LoadStream(InputStream): strings.toString() FAILED!\n");
+            return null;
+        }
         return new CXmlTok(text);
     }/*}}}*/
     // public static CXmlTok LoadStream(InputStream is, String enc);/*{{{*/
@@ -165,20 +179,21 @@ public class CXmlTok
         /* Check for the nullity of 'buffer'. Happens when the InputStream is
          * empty or has an error.
          */
-        if (buffer == null) return null;
-
-        /* If the encoding is UTF- something we need to check the presence of
-         * the BOM (Byte Order Marker) to remove it from the byte array before
-         * the convertion in a string.
-         */
-        int start = 0;
-        if ((buffer[0] == (byte)0xEF) && (buffer[1] == (byte)0xBB) && (buffer[2] == (byte)0xBF)) {
-            start = 3;          /* We have a BOM. */
-            pos  -= 3;
+        if (buffer == null) {
+            debug.w("CXmlTok::LoadStream(InputStream,String): InputStream is empty!\n");
+            return null;
         }
+
+        /* Check if we have BOM. */
+        int start = skipByteOrderMark(buffer);
+        pos -= start;
 
         /* Now we convert it to a string using the encoding defined. */
         String text = strings.decode(buffer, start, pos, enc);
+        if (text == null) {
+            debug.w("CXmlTok::LoadStream(InputStream,String): strings.decode() FAILED!\n");
+            return null;
+        }
 
         /* Create the tokenizer class using this string. */
         return new CXmlTok(text);
@@ -192,16 +207,27 @@ public class CXmlTok
      * \return On success the function returns a new object to parse the XML
      * file. On failure the function returns **null**.
      **/
-    public static CXmlTok LoadStream(stream_t stream) {
+    public static CXmlTok LoadStream(stream_t stream)
+    {
         int total = stream.available();
         byte[] bytes = new byte[ total ];
+        String text  = null;
 
         /* With this object we can read everything in one single pass. */
         total = stream.read(bytes, 0, total);
 
-        /* Now the 'strings' class can convert using BOM. */
-        String text = strings.toString(bytes, 0, total);
-        if (strings.length(text) == 0) return null;
+        /* If we have BOM, the conversion will get the right encoding. When
+         * not, we assume UTF-8 since it is the default for XML files.
+         */
+        if (skipByteOrderMark(bytes) > 0)
+            text = strings.toString(bytes, 0, total);
+        else
+            text = strings.toString(bytes, 0, total, ENC.UTF8);
+
+        if (text == null) {
+            debug.w("CXmlTok::LoadStream(stream_t): strings.toString() FAILED!\n");
+            return null;
+        }
 
         return new CXmlTok(text);
     }/*}}}*/
@@ -215,11 +241,13 @@ public class CXmlTok
      * \return On success the function returns a new object to parse the XML
      * file. On failure the function returns **null**.
      **/
-    public static CXmlTok LoadStream(stream_t stream, String enc) {
-        int total = stream.available();
-        String text = stream.read(enc, total);
-        if (strings.length(text) == 0) return null;
-
+    public static CXmlTok LoadStream(stream_t stream, String enc)
+    {
+        String text = stream.read(enc, stream.available());
+        if (strings.length(text) == 0) {
+            debug.w("CXmlTok::LoadStream(stream_t,String): stream::read(String,int): FAILED!\n");
+            return null;
+        }
         return new CXmlTok(text);
     }/*}}}*/
     //@}
@@ -407,6 +435,46 @@ public class CXmlTok
         /* Update the current read position to the next character. */
         m_index = i + 1;
         return text;
+    }/*}}}*/
+    //@}
+
+    /** \name Internal Static Operations */ //@{
+    // static final int skipByteOrderMark(byte[] data);/*{{{*/
+    /**
+     * Check if the byte array has a byte order mark (BOM).
+     * @param data The byte array to check.
+     * @return When the BOM is found, the function return the number of bytes
+     * to skip from its start.
+     **/
+    static final int skipByteOrderMark(byte[] data)
+    {
+        final int size = arrays.length(data);
+
+        if (size >= 4)
+        {
+            if ((data[0] == (byte)0xFF) && (data[1] == (byte)0xFE) &&
+                (data[2] == 0x00) && (data[3] == 0x00))
+                return 4;       /* ENC.UTF32LE */
+            else if ((data[0] == 0x00) && (data[1] == 0x00) &&
+                     (data[2] == (byte)0xFE) && (data[3] == (byte)0xFF))
+                return 4;       /* ENC.UTF32BE */
+        }
+
+        if (size >= 3)
+        {
+            if ((data[0] == (byte)0xEF) && (data[1] == (byte)0xBB) &&
+                (data[2] == (byte)0xBF))
+                return 3;       /* ENC.UTF8 */
+        }
+
+        if (size >= 2)
+        {
+            if ((data[0] == (byte)0xFF) && (data[1] == (byte)0xFE))
+                return 2;       /* ENC.UTF16LE */
+            else if ((data[0] == (byte)0xFE) && (data[1] == (byte)0xFF))
+                return 2;       /* ENC.UTF16BE */
+        }
+        return 0;
     }/*}}}*/
     //@}
 

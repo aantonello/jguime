@@ -123,7 +123,7 @@ public final class SFAsset
      **/
     public static String getMessage(int errCode)
     {
-        CStringTable stringTable = CStringTable.LoadStream(Load("[...]/errors.xml"));
+        CStringTable stringTable = CStringTable.LoadStream(Load("errors.xml"));
         return stringTable.get(errCode);
     }/*}}}*/
     //@}

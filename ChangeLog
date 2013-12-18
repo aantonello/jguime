@@ -1,3 +1,16 @@
+2013-12-17  Alessandro <aantonello@paralaxe.com.br>
+
+	* SFBluetoothSocket.java: Added bluetooth support.
+	* sfBluetooth.java: Added bluetooth support.
+	* ERROR.java (ERROR.NOTSUP): Added error constant.
+	* res/jguime/pt_BR/errors.xml: Added message for new error constant.
+	* res/jguime/en_US/errors.xml: Added message for new error constant.
+	* thread_t.java (start()): When start() fails, the error code is stored
+	  in and can be retrieved from getExitCode() method.
+	* SFAsset.java (getMessage()): Buggy naming the file to read messages.
+	* CXmlTok.java (skipByteOrderMark()): Correct function to search for a
+	  byte order mark in a stream of bytes.
+
 2013-12-09  Alessandro <aantonello@paralaxe.com.br>
 
 	* SFAsset.java (getMessage()): New function to load a message from the

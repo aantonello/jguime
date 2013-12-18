@@ -294,7 +294,7 @@ public class stream_t implements DataInput, DataOutput
             return 0;
         }
         m_lastRead = 0;
-        return (0x000000FF & m_data[m_read++]);
+        return numbers.toInt(m_data[m_read++]);
     }/*}}}*/
     // public int     readUnsignedShort();/*{{{*/
     /**
@@ -308,7 +308,7 @@ public class stream_t implements DataInput, DataOutput
     public int readUnsignedShort() {
         short result = readShort();
         if (m_lastRead != 0) return 0;
-        return (0x0000FFFF & result);
+        return numbers.toInt(result);
     }/*}}}*/
     // public float   readFloat();/*{{{*/
     /**
@@ -917,12 +917,14 @@ public class stream_t implements DataInput, DataOutput
      * passed. The \c readStatus() always returns 0. This function never
      * fails.
      **/
-    public String read(String encoding, int count) {
-        if (count < 0)
+    public String read(String encoding, int count)
+    {
+        if (count > available())
+            count = available();
+        else if (count < 0)
         {
-            int increment = 1;
-            int index     = m_read;
-            int limit     = arrays.length(m_data);
+            int index = m_read;
+            int limit = arrays.length(m_data);
 
             if (encoding.equals(ENC.ASCII) || encoding.equals(ENC.LATIN1) || encoding.equals(ENC.UTF8)) {
                 while (index < limit) {
