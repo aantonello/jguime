@@ -16,6 +16,7 @@ package x.android.io;
 /* #imports {{{ */
 import x.android.defs.ERROR;
 import x.android.utils.debug;
+import x.android.utils.strings;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -172,6 +173,7 @@ public class socket_t
      * available.
      * \retval ERROR::HOST: The host computer couldn't be found. The server
      * can be down or turned off.
+     * \retval ERROR::UNRESOLVED: Could not resolve the passed address.
      * \sa x.android.defs.ERROR
      **/
     public final int  open(String address, int port) {
@@ -214,7 +216,9 @@ public class socket_t
         catch (IOException ioe) {
             debug.e(ioe, "$n in socket_t::open('%s', %d) $s\n", address, port);
             String errMsg = ioe.getMessage();
-            if (errMsg.indexOf("ENETUNREACH") >= 0)
+            if (strings.length(errMsg) == 0)
+                result = ERROR.IO;
+            else if (errMsg.indexOf("ENETUNREACH") >= 0)
                 result = ERROR.UNREACH;
             else if (errMsg.indexOf("EHOSTUNREACH") >= 0)
                 result = ERROR.HOST;
@@ -234,15 +238,19 @@ public class socket_t
      * This operation will invalidate both members \c input and \c output. No
      * exception will be thrown by this function.
      **/
-    public final void close() {
-        try { m_socket.shutdownInput(); }
-        catch (Exception ex) { /* We can ignore this. */ }
+    public final void close()
+    {
+        if (m_socket != null)
+        {
+            try { m_socket.shutdownInput(); }
+            catch (Exception ex) { /* We can ignore this. */ }
 
-        try { m_socket.shutdownOutput(); }
-        catch (Exception ex) { /* We can ignore this. */ }
+            try { m_socket.shutdownOutput(); }
+            catch (Exception ex) { /* We can ignore this. */ }
 
-        try { m_socket.close(); }
-        catch (Exception ex) { /* We will ignore this either. */ }
+            try { m_socket.close(); }
+            catch (Exception ex) { /* We will ignore this either. */ }
+        }
         m_socket = null;
     }/*}}}*/
     // public final int  read(byte[] buffer, int offset, int count);/*{{{*/
@@ -328,8 +336,8 @@ public class socket_t
      * in the input stream will be read.
      * \return On success the function returns the number of bytes read and
      * stored in the `stream_t` object. Zero is a valid value for this result.
-     * On failure an error code will be return. That can be:
-     * \retval ERROR::IO The connection was closed.
+     * On failure an error code will be returned. That can be:
+     * \retval ERROR::READ The connection was closed.
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::EOF No more data to be read.
      **/

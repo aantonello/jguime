@@ -189,12 +189,15 @@ public class CAndroidApp extends android.app.Application
      * Shows an info dialog to the user.
      * As info dialog Android calls it Toast.
      * \param ctx The current Context. Usually this is an Activity reference.
+     * If \b null, the Application context will be used.
      * \param msg The string message.
      * \param longDuration There are two kinds of duration available for a
      * Toast: short or long. If you want a short duration Toast, pass \c false
      * to this parameter. Otherwise, pass \b true.
      **/
-    public static void info(Context ctx, String msg, boolean longDuration) {
+    public static void info(Context ctx, String msg, boolean longDuration)
+    {
+        if (ctx == null) ctx = (Context)currentApp();
         Toast toast = Toast.makeText(ctx, msg, (longDuration ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT));
         toast.show();
     }/*}}}*/
@@ -203,6 +206,7 @@ public class CAndroidApp extends android.app.Application
      * Shows an info dialog to the user.
      * As info dialog Android calls it Toast.
      * \param ctx The current Context. Usually this is an Activity reference.
+     * If \b null, the Application context will be used.
      * \param msg The string message identifier in the resource.
      * \param longDuration There are two kinds of duration available for a
      * Toast: short or long. If you want a short duration Toast, pass \c false
@@ -215,7 +219,8 @@ public class CAndroidApp extends android.app.Application
     /**
      * Shows an Alert Dialog to the user.
      * An alert message shows the information and only one 'OK' button.
-     * \param ctx The Activity's Context.
+     * \param ctx The Activity's Context. If \b null the Application Context
+     * will be used.
      * \param msg String with the message to be shown.
      * \param nParam Value to use in the parameter \c nParam of the
      * notification message.
@@ -226,7 +231,9 @@ public class CAndroidApp extends android.app.Application
      * with code \c IMSG#MSG_INFO will be sent. The \c nParam parameter of the
      * message will carrie the value of the \a nParam argument.
      **/
-    public static void alert(Context ctx, String msg, final int nParam, final INHandler handler) {
+    public static void alert(Context ctx, String msg, final int nParam, final INHandler handler)
+    {
+        if (ctx == null) ctx = (Context)currentApp();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setMessage(msg).setCancelable(false);
@@ -243,7 +250,8 @@ public class CAndroidApp extends android.app.Application
     // public static void alert(Context ctx, int msgID, int nParam, INHandler handler);/*{{{*/
     /**
      * Shows an AlertDialog with a message.
-     * \param ctx Context to create the Dialog.
+     * \param ctx Context to create the Dialog. If \b null the Application
+     * Context will be used.
      * \param msgID Identifier of the string, in the application resources,
      * with the message to show.
      * \param nParam Value to use in the parameter \c nParam of the
@@ -263,7 +271,8 @@ public class CAndroidApp extends android.app.Application
      * Presents a Dialog with a query to the user.
      * The query will show the message and include two buttons: 'Yes' and
      * 'No'.
-     * \param ctx The Activity's Context.
+     * \param ctx The Activity's Context. If \b null the Application Context
+     * will be used.
      * \param msg String with the query to show to the user.
      * \param nParam Value to be passed in the \c nParam parameter of the
      * notification message.
@@ -274,7 +283,10 @@ public class CAndroidApp extends android.app.Application
      * value of \c lParam parameter will be \c ALERT.BUTTON.YES or \c
      * ALERT.BUTTON.NO, according to the users choice.
      **/
-    public static void query(Context ctx, String msg, final int nParam, final INHandler handler) {
+    public static void query(Context ctx, String msg, final int nParam, final INHandler handler)
+    {
+        if (ctx == null) ctx = (Context)currentApp();
+
         String yesLabel = CAndroidApp.loadString(android.R.string.yes);
         String noLabel  = CAndroidApp.loadString(android.R.string.no);
 
@@ -303,7 +315,8 @@ public class CAndroidApp extends android.app.Application
     /**
      * Presents a Dialog with a query to the user.
      * The query will be shown with the buttons 'Ok' and 'Cancel'.
-     * \param ctx The Activity's Context.
+     * \param ctx The Activity's Context. If \b null the Application Context
+     * will be used.
      * \param msgID Identifier of the string query in the application
      * resource.
      * \param nParam Value to be passed in the \c nParam parameter of the

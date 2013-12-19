@@ -1390,7 +1390,7 @@ public class stream_t implements DataInput, DataOutput
         {
             try { count = is.available(); }
             catch (Exception ex) {
-                debug.e(ex, "stream_t::writeFromInputStream() InputStream::available($n): $s\n");
+                debug.e(ex, "$n in stream_t::writeFromInputStream() calling InputStream::available(): '$s'\n");
                 m_lastWrite = ERROR.READ;
                 return m_lastWrite;
             }
@@ -1438,6 +1438,9 @@ public class stream_t implements DataInput, DataOutput
         m_lastRead = 0;
         if ((count < 0) || (count > available()))
             count = available();
+
+        if (count == 0)
+            return 0;           /* No data to be read. */
 
         try { os.write(m_data, m_read, count); }
         catch (Exception ex) {
