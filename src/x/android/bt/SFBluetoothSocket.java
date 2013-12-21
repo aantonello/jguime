@@ -408,8 +408,10 @@ public class SFBluetoothSocket implements Closeable
      * @param count Number of bytes to read from the InputStream and write
      * into the passed \a stream. If this value is less than zero the function
      * will atempty to read all available bytes in the InputStream.
-     * @return The number of bytes actually written. If the returned value is
-     * less than zero it indicates an error condition.
+     * @return The number of bytes actually read from the InputStream of this
+     * socket and written to the \a stream buffer. Zero is a valid value for
+     * this operation when there is no data in the InputStream. If an error
+     * occurr, the result will be less than zero (an error code).
      **/
     public final int read(stream_t stream, int count)
     {
