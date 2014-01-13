@@ -84,7 +84,7 @@ $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 install: $(APKDIR) $(RSCDIR)
 	-cp ./$(OUTPUT) $(APKDIR)/
 	-cp ./$(OUTDXT) $(PLXLIB)/
-	-cp -r ./$(RESDIR)/ $(RSCDIR)/
+	-cp -r ./$(RESDIR)/* $(RSCDIR)/
 	-publish -doc plx/$(TARGET) -f -q
 
 tags:
