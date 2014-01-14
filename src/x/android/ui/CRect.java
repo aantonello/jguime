@@ -593,9 +593,11 @@ public class CRect
      **/
     public final CRect deflateMargins(View v)
     {
-        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)v.getLayoutParams();
-
-        deflate(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, mlp.bottomMargin);
+        ViewGroup.LayoutParams lp = v.getLayoutParams();
+        if (lp instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)lp;
+            deflate(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, mlp.bottomMargin);
+        }
         return this;
     }/*}}}*/
     //@}

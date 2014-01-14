@@ -493,10 +493,11 @@ public abstract class AbstractView<T extends AbstractView<T>>
     // public T inflate(Menu m, int id);/*{{{*/
     /**
      * Load a Menu from a resource.
-     * This only works if the Activity member was defined.
      * \param m The Menu instance to be populated.
      * \param id The resource identifier that has the menu.
      * \returns this.
+     * \remarks This operation works only when this class was created with an
+     * valid Activity.
      **/
     public T inflate(Menu m, int id) {
         if (m_activity != null) {
@@ -1003,6 +1004,41 @@ public abstract class AbstractView<T extends AbstractView<T>>
             lp.width  = width;
             lp.height = height;
             m_view.setLayoutParams(lp);
+        }
+        return self();
+    }/*}}}*/
+    // public T update(int mode);/*{{{*/
+    /**
+     * Updates the layout of the operating View by hand.
+     * This function was introduced starting from Android API 11 to be used in
+     * cases where #layout() and #force() doesn't get an answer from the
+     * sytem. The function will manually call `View.measure()`,
+     * `View.layout()` and `View.invalidate()` in the operating View.
+     * @param mode The mode of the measurement to be used in the layout
+     * operation. This can be one of the constants:
+     * - `View.MeasureSpec.AT_MOST`: Child views can be as large as the parent
+     *    view, or less.
+     * - `View.MeasureSpec.EXACTLY`: Child views must have the exatcly size of
+     *   its parent.
+     * - `View.MeasureSpec.UNSPECIFIED`: Child view can have any size
+     *   regardless of its parent size.
+     * .
+     * This parameter will be used to build the size specification to pass to
+     * `View.measure()` method. The size specification will get constructed
+     * with the current View size. No padding or margins will be applied. Any
+     * padding must be handled inside an overrode `View.onMeasure()` method.
+     * @returns \b this.
+     **/
+    public T update(int mode)
+    {
+        if (m_view != null)
+        {
+            int widthMeasureSpec  = View.MeasureSpec.makeMeasureSpec(m_view.getWidth(), mode);
+            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(m_view.getHeight(), mode);
+
+            m_view.measure(widthMeasureSpec, heightMeasureSpec);
+            m_view.layout(m_view.getLeft(), m_view.getTop(), m_view.getRight(), m_view.getBottom());
+            m_view.invalidate();
         }
         return self();
     }/*}}}*/
