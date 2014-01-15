@@ -1,3 +1,12 @@
+2014-01-15  Alessandro <aantonello@paralaxe.com.br>
+
+	* Makefile: Updated 'install' target to work in the same way in all
+	  machines.
+	* AbstractView.java (update(int)): New function to manually layout a
+	  view hierarchy.
+	* CRect.java (deflateMargins(View)): Buggy. Not all LayoutParams can be
+	  casted to MarginLayoutParams.
+
 2013-12-17  Alessandro <aantonello@paralaxe.com.br>
 
 	* SFBluetoothSocket.java: Added bluetooth support.
