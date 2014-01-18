@@ -179,7 +179,9 @@ public class CAndroidPagerView extends ViewGroup
      * @param position The position index of the child View. Starting at 0.
      * @param animated Boolean value indicating if the change should be
      * animated. \b true to animate the change. \b false will set the current
-     * View immediatly.
+     * View immediatly. When this call is made before the first layout, \a
+     * animated must be \b false, otherwise the \a position argument will be
+     * ignored.
      * @return This function returns \b this.
      **/
     public CAndroidPagerView setCurrentView(int position, boolean animated)
@@ -463,6 +465,15 @@ public class CAndroidPagerView extends ViewGroup
             child = getChildAt(i);
             child.measure(wMeasureSpec, hMeasureSpec);
         }
+
+        if ((oldw == 0) && (oldh == 0))
+        {
+            /* Check wether the first view is different from 0. Change it
+             * after we have done all layout operations.
+             */
+            if (m_currentIndex != 0)
+                issuer.post(this, IMSG.MSG_DELAY, NP_VIEW, 0L, null);
+        }
     }/*}}}*/
     // protected void  onLayout(boolean changed, int l, int t, int r, int b);/*{{{*/
     /**
@@ -525,7 +536,7 @@ public class CAndroidPagerView extends ViewGroup
      **/
     public boolean onMessage(int msgID, int nParam, long lParam, Object extra)
     {
-        if (msgID == IMSG.MSG_DELAY)
+        if ((msgID == IMSG.MSG_DELAY) && (nParam != NP_VIEW))
         {
             boolean stillScrolling = m_scroller.computeScrollOffset();
 
@@ -550,6 +561,11 @@ public class CAndroidPagerView extends ViewGroup
                     issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
                 }
             }
+            return true;
+        }
+        else if ((msgID == IMSG.MSG_DELAY) && (nParam == NP_VIEW))
+        {
+            setCurrentView(m_currentIndex, false);
             return true;
         }
         return false;
@@ -585,7 +601,7 @@ public class CAndroidPagerView extends ViewGroup
      **/
     private int _internal_horzPadding()
     {
-        return getPaddingLeft() + getPaddingRight() + getHorizontalFadingEdgeLength() * 2;
+        return getPaddingLeft() + getPaddingRight() + (getHorizontalFadingEdgeLength() * 2);
     }/*}}}*/
     // private int  _internal_vertPadding();/*{{{*/
     /**
@@ -705,6 +721,7 @@ public class CAndroidPagerView extends ViewGroup
     private static final int SNAP_VELOCITY = 1000;
     private static final int NP_FLING      = 1;
     private static final int NP_SCROLL     = 0;
+    private static final int NP_VIEW       = -1;
     //@}
 }
 // vim:syntax=java.doxygen
