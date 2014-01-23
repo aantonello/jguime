@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
@@ -24,7 +24,7 @@ import android.widget.*;
 import x.android.defs.*;
 import x.android.utils.*;
 import x.android.nms.*;
-
+/* }}} #imports */
 /**
  * Implements a dialog with a progress meter and a text message.
  * The dialog can be shown in two ways: First, you construct in instance of
@@ -57,7 +57,8 @@ import x.android.nms.*;
  * CAndroidProgressDialog object.
  *//* --------------------------------------------------------------------- */
 public class CAndroidProgressDialog
-    implements DialogInterface.OnDismissListener
+    implements DialogInterface.OnDismissListener,
+               DialogInterface.OnCancelListener
 {
     /** \name CONSTRUCTOR */ //@{
     // public CAndroidProgressDialog(Context context, int id, INHandler target);/*{{{*/
@@ -78,7 +79,9 @@ public class CAndroidProgressDialog
         m_dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         m_dialog.setIndeterminate(true);
         m_dialog.setCancelable(true);
+        m_dialog.setCanceledOnTouchOutside(true);
         m_dialog.setOnDismissListener(this);
+        m_dialog.setOnCancelListener(this);
     }/*}}}*/
     //@}
 
@@ -243,6 +246,23 @@ public class CAndroidProgressDialog
     }/*}}}*/
     //@}
 
+    /** \name DialogInterface.OnCancelListener Implementation */ //@{
+    // public void onCancel(DialogInterface dialog);/*{{{*/
+    /**
+     * Called when the dialog is canceled.
+     * @param dialog The interface representing the dialog implementation.
+     **/
+    public void onCancel(DialogInterface dialog)
+    {
+        if (m_target != null) {
+            issuer.post(m_target, IMSG.MSG_DIALOG, m_dialogID, IMSG.DIALOG.CANCEL, CAndroidProgressDialog.this);
+        }
+        if (m_cancelDismiss) {
+            m_dialog.dismiss();
+        }
+    }/*}}}*/
+    //@}
+
     /** \name DATA MEMBERS */ //@{
     protected int          m_dialogID;  /**< Dialog identifier.              */
     protected boolean m_cancelDismiss;  /**< Dismiss when *back* is pressed. */
@@ -290,12 +310,13 @@ public class CAndroidProgressDialog
          * only sends the notification message.
          **/
         public void onBackPressed() {
-            if (m_target != null) {
-                issuer.post(m_target, IMSG.MSG_DIALOG, m_dialogID, IMSG.DIALOG.CANCEL, CAndroidProgressDialog.this);
-            }
-            if (m_cancelDismiss) {
-                super.onBackPressed();
-            }
+//            if (m_target != null) {
+//                issuer.post(m_target, IMSG.MSG_DIALOG, m_dialogID, IMSG.DIALOG.CANCEL, CAndroidProgressDialog.this);
+//            }
+//            if (m_cancelDismiss) {
+//                super.onBackPressed();
+//            }
+            super.cancel();
         }/*}}}*/
         //@}
     }/*}}}*/

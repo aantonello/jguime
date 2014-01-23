@@ -390,56 +390,9 @@ public class CAndroidPagerView extends ViewGroup
         int hSize = (heightMeasureSpec & 0x00FFFFFF); 
         int wMode = (widthMeasureSpec & 0xFF000000);
         int hMode = (heightMeasureSpec & 0xFF000000);
-        setMeasuredDimension(wSize, hSize);
-        return;
 
-//        int childWidth = 0;
-//        int childHeight = 0;
-//        int childState = 0;
-//
-//        final int widthPadding = _internal_horzPadding();
-//        final int heightPadding = _internal_vertPadding();
-//
-//        if (getChildCount() > 0) {
-//            final View child = getChildAt(0);
-//            measureChild(child, widthMeasureSpec, heightMeasureSpec);
-//            childWidth = child.getMeasuredWidth();
-//            childHeight = child.getMeasuredHeight();
-//            childState = child.getMeasuredState();
-//        }
-//
-//        switch (wMode) {
-//            case MeasureSpec.UNSPECIFIED:
-//                wSize = childWidth + widthPadding;
-//                break;
-//            case MeasureSpec.AT_MOST:
-//                wSize = (childWidth + widthPadding) | childState;
-//                break;
-//            case MeasureSpec.EXACTLY:
-//                if (wSize < childWidth + widthPadding)
-//                    wSize |= MEASURED_STATE_TOO_SMALL;
-//                break;
-//        }
-//        switch (hMode) {
-//            case MeasureSpec.UNSPECIFIED:
-//                hSize = childHeight + heightPadding;
-//                break;
-//            case MeasureSpec.AT_MOST:
-//                hSize = (childHeight + heightPadding) | (childState >> MEASURED_HEIGHT_STATE_SHIFT);
-//                break;
-//            case MeasureSpec.EXACTLY:
-//                if (hSize < childHeight + heightPadding)
-//                    hSize |= MEASURED_STATE_TOO_SMALL;
-//                break;
-//        }
-//
-//        if (hMode == MeasureSpec.UNSPECIFIED) {
-//            hSize = heightPadding + childHeight;
-//        } else {
-//            hSize |= (childState&MEASURED_STATE_MASK);
-//        }
-//
-//        setMeasuredDimension(wSize, hSize);
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(wSize, hSize);
     }/*}}}*/
     // protected void  onSizeChanged(int w, int h, int oldw, int oldh);/*{{{*/
     /**
@@ -500,7 +453,7 @@ public class CAndroidPagerView extends ViewGroup
         View child = null;
         CRect rect;
 
-//        debug.w("==> child count: %d\n", count);
+        debug.w("==> child count: %d\n", count);
 
         for (int i = 0; i < count; i++)
         {
@@ -514,7 +467,7 @@ public class CAndroidPagerView extends ViewGroup
 //                debug.w("==> child %d measured width: %d, measured height: %d\n", i, childWidth, childHeight);
                 child.layout(childLeft, topPadding, childLeft + childWidth, topPadding + childHeight);
                 rect = CRect.ViewRect(child);
-//                debug.w("==> child %d rect: %s\n", i, rect.toString("left: %L, top: %T, width: %W, height: %H"));
+                debug.w("==> child %d rect: %s\n", i, rect.toString("left: %L, top: %T, width: %W, height: %H"));
 
                 childLeft += childWidth;
             }
