@@ -453,7 +453,7 @@ public class CAndroidPagerView extends ViewGroup
         View child = null;
         CRect rect;
 
-        debug.w("==> child count: %d\n", count);
+ //       debug.w("==> child count: %d\n", count);
 
         for (int i = 0; i < count; i++)
         {
@@ -467,7 +467,7 @@ public class CAndroidPagerView extends ViewGroup
 //                debug.w("==> child %d measured width: %d, measured height: %d\n", i, childWidth, childHeight);
                 child.layout(childLeft, topPadding, childLeft + childWidth, topPadding + childHeight);
                 rect = CRect.ViewRect(child);
-                debug.w("==> child %d rect: %s\n", i, rect.toString("left: %L, top: %T, width: %W, height: %H"));
+//                debug.w("==> child %d rect: %s\n", i, rect.toString("left: %L, top: %T, width: %W, height: %H"));
 
                 childLeft += childWidth;
             }
