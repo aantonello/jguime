@@ -96,6 +96,7 @@ public class CAndroidGridView extends GridView
     public final CAndroidGridView reload()
     {
         m_adapter.reloadData();
+        requestLayout();
         return this;
     }/*}}}*/
     // public final View loadView(int layoutID, ViewGroup parent);/*{{{*/
