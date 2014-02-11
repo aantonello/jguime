@@ -240,12 +240,43 @@ public class CAndroidPagerView extends ViewGroup
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
         if (!m_scrollEnabled) return false;
-        onTouchEvent(ev);
 
-        /* For now on, all events will be delivered directly to our own
-         * implementation of onTouchEvent().
+        final int action = ev.getAction();
+        final float y = (int)ev.getY();
+
+        if (action == MotionEvent.ACTION_DOWN)
+        {
+            /* We almost never receive this event through onTouchEvent() since
+             * we are covered with component views. So pass it here to
+             * initialize some internal objects. Return 'false' so the real
+             * target will also receive the event.
+             */
+            onTouchEvent(ev);
+            m_skipScroll = false;
+            return false;
+        }
+        else if ((action == MotionEvent.ACTION_MOVE) && !m_skipScroll)
+        {
+            /* This check must be made before calling 'onTouchEvent()'. If the
+             * user is moving in a different direction (top -> bottom or
+             * vice-versa), we must not pass the event thru, unless we are
+             * already scrolling.
+             */
+            int deltaY = (int)(m_lastMotionY - y);
+            if ((Math.abs(deltaY) > m_touchSlop) && !m_scrolling)
+            {
+                m_skipScroll = true;        /* Skip all events starting from here. */
+                if (m_velocityTracker != null)
+                    m_velocityTracker.recycle();
+                m_velocityTracker = null;
+            }
+            else
+                onTouchEvent(ev);
+        }
+        /* When 'm_scrolling' goes 'true' we pass to receive all
+         * events thru 'onTouchEvent()'.
          */
-        return ((ev.getAction() == MotionEvent.ACTION_MOVE) && m_scrolling);
+        return m_scrolling;
     }/*}}}*/
     // protected void measureChild(View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec);/*{{{*/
     /**
@@ -293,19 +324,22 @@ public class CAndroidPagerView extends ViewGroup
         m_velocityTracker.addMovement(ev);
 
         final int action = ev.getAction();
-        final float x = ev.getX();
+        final int x = (int)ev.getX();
+        final int y = (int)ev.getY();
 
         switch (action)
         {
         case MotionEvent.ACTION_DOWN:
-            return handle_actionDown((int)x);
+            return handle_actionDown(x, y);
 
         case MotionEvent.ACTION_MOVE:
-            return handle_actionMove((int)x);
+            return handle_actionMove(x, y);
 
         case MotionEvent.ACTION_UP:
+            return handle_actionUp(x);
+
         case MotionEvent.ACTION_CANCEL:
-            return handle_actionUp((int)x);
+            return handle_actionCancel();
         }
         return false;
     }/*}}}*/
@@ -535,6 +569,7 @@ public class CAndroidPagerView extends ViewGroup
         DecelerateInterpolator di = new DecelerateInterpolator(1.0f);
         m_scroller      = new OverScroller(getContext(), di);
         m_currentIndex  = -1;
+        m_skipScroll    = false;
         m_scrolling     = false;
         m_scrollEnabled = true;
 
@@ -568,32 +603,36 @@ public class CAndroidPagerView extends ViewGroup
     //@}
 
     /** \name Local Reimplementation */ //@{
-    // final boolean handle_actionDown(int pointX);/*{{{*/
+    // final boolean handle_actionDown(int pointX, int pointY);/*{{{*/
     /**
      * Handles the \b ACTION_DOWN \c MotionEvent action.
      * @param pointX The current X position in the user touch.
+     * @param pointY The current Y position in the user touch.
      * @returns \b true if this view can handle this event. Otherwise \b
      * false.
      **/
-    final boolean handle_actionDown(int pointX)
+    final boolean handle_actionDown(int pointX, int pointY)
     {
         /* Stop any actual scrolling animation. */
         m_scroller.abortAnimation();
-        m_lastMotionX = pointX;          /* Remember this position. */
+        m_lastMotionX = pointX;         /* Remember this position. */
+        m_lastMotionY = pointY;         /* Check point. */
         m_scrolling = false;
 
         return true;
     }/*}}}*/
-    // final boolean handle_actionMove(int pointX);/*{{{*/
+    // final boolean handle_actionMove(int pointX, int pointY);/*{{{*/
     /**
      * Handles the \b ACTION_MOVE of \c MotionEvent action.
      * @param pointX The current X position in the motion.
+     * @param pointY The current Y position in the user touch.
      * @returns \b true when this view can handle this motion. Otherwise \b
      * false.
      **/
-    final boolean handle_actionMove(int pointX)
+    final boolean handle_actionMove(int pointX, int pointY)
     {
         int deltaX = (int)(m_lastMotionX - pointX);
+        int deltaY = (int)(m_lastMotionY - pointY);
 
         /* Start scrolling the view only if passed the minimum amount. When we
          * are already scrolling, make it smooth.
@@ -658,14 +697,34 @@ public class CAndroidPagerView extends ViewGroup
         m_scrolling = false;
         return true;
     }/*}}}*/
+    // final boolean handle_actionCancel();/*{{{*/
+    /**
+     * Cancels the scrolling operation.
+     * @return This function always returns \b true.
+     **/
+    final boolean handle_actionCancel()
+    {
+        m_scroller.abortAnimation();    /* If one was started. */
+        if (m_velocityTracker != null)
+            m_velocityTracker.recycle();
+        m_velocityTracker = null;
+        m_scrolling = false;
+
+        /* Restore the last position. */
+        setCurrentView(m_currentIndex, false);
+
+        return true;
+    }/*}}}*/
     //@}
 
     /** \name Data Members */ //@{
     private VelocityTracker  m_velocityTracker;
     private OverScroller     m_scroller;
     private float            m_lastMotionX;
+    private float            m_lastMotionY;
     private boolean          m_scrollEnabled;
     private boolean          m_scrolling;
+    private boolean          m_skipScroll;
     private int m_currentIndex;
     private int m_touchSlop;
     //@}
