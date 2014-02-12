@@ -392,7 +392,7 @@ public class CXmlTok
         int i     = m_index;
 
         while ((i < count) && (Character.isLetterOrDigit(m_stream[i]) ||
-                               m_stream[i] == '_')) {
+                               m_stream[i] == '_' || m_stream[i] == ':')) {
             i++;
         }
 
@@ -435,6 +435,35 @@ public class CXmlTok
         /* Update the current read position to the next character. */
         m_index = i + 1;
         return text;
+    }/*}}}*/
+    // public final void   dump();/*{{{*/
+    /**
+     * Dumps the stream content.
+     **/
+    public final void dump()
+    {
+        if (!debug.enabled) return;
+        debug.timestamp = false;
+
+        int index = 0, start = 0;
+        final int limit = arrays.length(m_stream);
+
+        do
+        {
+            while (index < limit)
+            {
+                if (m_stream[index] == '\n') {
+                    index++;
+                    break;
+                }
+                index++;
+            }
+            debug.w(strings.toString(m_stream, start, (index - start)));
+            start = index;
+            index = start;
+        } while (start < limit);
+        debug.timestamp = true;
+
     }/*}}}*/
     //@}
 

@@ -333,6 +333,31 @@ public final class strings
         else
             return strings.decode(array, start, count, ENC.LATIN1);
     }/*}}}*/
+    // public static String toString(char[] array, int start, int count);/*{{{*/
+    /**
+     * Converts a char array into a String object.
+     * @param array The array to convert in String object.
+     * @param start The starting index. Must be equal or greater than 0 and
+     * less than the length of the array.
+     * @param count The number of elements to convert starting from \a start.
+     * If less than 0 all elements starting from \a start up to the length of
+     * the array will be used.
+     * @return The String object result of the conversion or an empty string
+     * if some error occured.
+     **/
+    public static String toString(char[] array, int start, int count)
+    {
+        if ((start < 0) || (start >= arrays.length(array)))
+            return EMPTY;
+
+        if (count < 0) count = (arrays.length(array) - start);
+
+        try { return new String(array, start, count); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in strings::toString(char[]): $s\n");
+        }
+        return EMPTY;
+    }/*}}}*/
     // public static String format(String fmt, Object... args);/*{{{*/
     /**
      * Returns a localized formatted string, using the supplied format and

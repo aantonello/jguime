@@ -74,6 +74,11 @@ public class CXmlFile
                 break;
             }
         }
+
+        if ((debug.enabled) && (doc.root == null))
+        {
+            tok.dump();
+        }
         return ((doc.root == null) ? null : doc);
     }/*}}}*/
     // public static CXmlFile Load(InputStream is);/*{{{*/

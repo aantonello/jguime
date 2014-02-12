@@ -1483,6 +1483,39 @@ public class stream_t implements DataInput, DataOutput
     }/*}}}*/
     //@}
 
+    /** \name DEBUGGING OPERATIONS */ //@{
+    // public final void dump();/*{{{*/
+    /**
+     * Writes the content of this stream in the standard ouput.
+     **/
+    public final void dump()
+    {
+        if (!debug.enabled) return;
+        debug.w("Dumping stream_t content:\n");
+        debug.w("read position.: %d\n", m_read);
+        debug.w("write position: %d\n", m_write);
+        debug.w("stream in chuncks of 16 bytes\n");
+        debug.timestamp = false;
+
+        final int limit = arrays.length(m_data);
+        int chunck, i = 0;
+        StringBuilder sb = new StringBuilder(48);
+
+        while (i < limit)
+        {
+            chunck = i + 16;
+            while (i < chunck && i < limit)
+            {
+                sb.append(strings.format(" %02X", m_data[i]));
+                i++;
+            }
+            debug.w("%d-%d [%s]\n", i, chunck, sb.toString());
+            sb.setLength(0);
+        }
+        debug.timestamp = true;
+    }/*}}}*/
+    //@}
+
     /** \name OVERRIDES */ //@{
     // public boolean equals(Object object);/*{{{*/
     /**

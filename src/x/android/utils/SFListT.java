@@ -132,7 +132,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
         if (!_internal_alloc(1))
             return false;
 
-        m_array[m_count++] = element;
+        m_array[m_count] = element;
+        m_count++;
         return true;
     }/*}}}*/
     // public boolean addAll(Collection<? extends E> coll);/*{{{*/
@@ -559,12 +560,15 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             return null;
 
         T result = (T)m_array[index];
-        final int count = (m_count - 1);
+        final int lastIndex = (m_count - 1);
 
-        m_array[index] = null;
+        if (index < lastIndex)
+            arrays.move(m_array, index, m_array, (index + 1), (m_count - 1));
 
-        for (int i = (index + 1); i < count; i++)
-            m_array[i - 1] = m_array[i];
+        m_array[lastIndex] = null;
+
+//        for (int i = (index + 1); i <= count; i++)
+//            m_array[i - 1] = m_array[i];
 
         m_count--;
         return result;
