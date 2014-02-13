@@ -1428,7 +1428,7 @@ public class stream_t implements DataInput, DataOutput
      * available bytes starting from the current position will be written in
      * the OutputStream.
      * @return The total number of bytes written means success. Zero is a
-     * valid result value if there is no bytes available to write. If un error
+     * valid result value if there is no bytes available to write. If an error
      * occurs the result will be its error code. The erro code can also be
      * retrieved from #readStatus() function.
      * @sa ERROR
@@ -1509,7 +1509,7 @@ public class stream_t implements DataInput, DataOutput
                 sb.append(strings.format(" %02X", m_data[i]));
                 i++;
             }
-            debug.w("%d-%d [%s]\n", i, chunck, sb.toString());
+            debug.w("%d-%d [%s ]\n", (i - 16), i, sb.toString());
             sb.setLength(0);
         }
         debug.timestamp = true;

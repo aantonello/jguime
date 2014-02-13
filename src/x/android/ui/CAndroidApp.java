@@ -69,6 +69,27 @@ public class CAndroidApp extends android.app.Application
     public static CAndroidApp currentApp() {
         return CAndroidApp.__this;
     }/*}}}*/
+    // public static DisplayMetrics getDisplayMetrics();/*{{{*/
+    /**
+     * Retrieves the current display metrics for the application.
+     * \returns An instance of the only \c DisplayMetrics object.
+     **/
+    public static DisplayMetrics getDisplayMetrics() {
+        Resources res = __this.getResources();
+        return res.getDisplayMetrics();
+    }/*}}}*/
+    // public static int dp2px(int dbValue);/*{{{*/
+    /**
+     * Calculates a value from dp units to px units.
+     * The calculation take account the current density of the screen.
+     * \param dpValue The value in dp units to be converted.
+     **/
+    public static int dp2px(int dpValue) {
+        return (int)(dpValue * __this.density);
+    }/*}}}*/
+    //@}
+
+    /** \name PRIVATE FILE OPERATIONS */ //@{
     // public static FileInputStream openForInput(String name);/*{{{*/
     /**
      * Opens a private file for reading.
@@ -101,34 +122,45 @@ public class CAndroidApp extends android.app.Application
      * file could not be created for some reason. There is no way to recover
      * from this error without the user help.
      **/
-    public static FileOutputStream openForWrite(String name) {
+    public static FileOutputStream openForWrite(String name)
+    {
         FileOutputStream fos = null;
 
         try { fos = __this.openFileOutput(name, Context.MODE_PRIVATE); }
         catch (Exception ex) {
-            debug.w("CAndroidApp::openForWrite(%s) error:", name);
-            debug.e("=> %s", ex);
-            return null;
+            debug.e(ex, "$n in CAndroidApp::openForWrite('%s'): $s\n", name);
         }
         return fos;
     }/*}}}*/
-    // public static DisplayMetrics getDisplayMetrics();/*{{{*/
+    // public static FileOutputStream openForAppend(String name);/*{{{*/
     /**
-     * Retrieves the current display metrics for the application.
-     * \returns An instance of the only \c DisplayMetrics object.
+     * Opens a file for appending data.
+     * When the file doesn't exsits it will be created. If the file already
+     * exists, data written will be appended to the current file content.
+     * @param name Name of the file. Just name, without path information.
+     * @returns FileOutputStream object or \b null, if the function fails.
      **/
-    public static DisplayMetrics getDisplayMetrics() {
-        Resources res = __this.getResources();
-        return res.getDisplayMetrics();
+    public static FileOutputStream openForAppend(String name)
+    {
+        FileOutputStream fos = null;
+
+        try { fos = __this.openFileOutput(name, Context.MODE_APPEND); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in CAndroidApp::openForAppend('%s'): $s\n", name);
+        }
+        return fos;
     }/*}}}*/
-    // public static int dp2px(int dbValue);/*{{{*/
+    // public static boolean deletePrivateFile(String name);/*{{{*/
     /**
-     * Calculates a value from dp units to px units.
-     * The calculation take account the current density of the screen.
-     * \param dpValue The value in dp units to be converted.
+     * Deletes a private file created in the application context.
+     * @param name Name of the file to delete.
+     * @returns \b true when the file was deleted successful. \b false
+     * otherwise.
      **/
-    public static int dp2px(int dpValue) {
-        return (int)(dpValue * __this.density);
+    public static boolean deletePrivateFile(String name)
+    {
+        if (name == null || name.length() == 0) return false;
+        return __this.deleteFile(name);
     }/*}}}*/
     //@}
 
