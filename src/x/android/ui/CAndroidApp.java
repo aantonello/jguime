@@ -15,6 +15,7 @@
 package x.android.ui;
 /* #imports {{{ */
 import java.io.*;
+import java.nio.channels.*;
 import java.util.*;
 
 import android.os.*;
@@ -161,6 +162,53 @@ public class CAndroidApp extends android.app.Application
     {
         if (name == null || name.length() == 0) return false;
         return __this.deleteFile(name);
+    }/*}}}*/
+    // public static boolean movePrivateFile(String fromName, String toName);/*{{{*/
+    /**
+     * Move files in the private area of the application.
+     * @param fromName Original file name.
+     * @param toName New name for the file.
+     * @return \b true on success. \b false otherwise. If the function
+     * succeeds, the original file will be deleted.
+     **/
+    public static boolean movePrivateFile(String fromName, String toName)
+    {
+        FileOutputStream fos = openForWrite(toName);
+        FileInputStream  fis = openForInput(fromName);
+        FileChannel channelOut = ((fos != null) ? fos.getChannel() : null);
+        FileChannel channelIn  = ((fis != null) ? fis.getChannel() : null);
+        boolean result = false;
+
+        if ((channelOut != null) && (channelIn != null))
+        {
+            try {
+                channelIn.transferTo(0, channelIn.size(), channelOut);
+                result = true;
+            } catch (Exception ex) {
+                debug.e(ex, "$n in CAndroidApp::movePrivateFile('%s', '%s'): $s\n", fromName, toName);
+            }
+
+            try { channelIn.close(); }
+            catch (Exception ex) { /* Ignored. Stupid exception. */ }
+
+            try { channelOut.close(); }
+            catch (Exception ex) { /* Ignored too. More stupid exception. */ }
+        }
+
+        if (fis != null)
+        {
+            try { fis.close(); }
+            catch (Exception ex) { /* Ignored. What is the meaning of this? */ }
+        }
+
+        if (fos != null)
+        {
+            try { fos.close(); }
+            catch (Exception ex) { /* Ignored work of a stupid developer. */ }
+        }
+
+        if (result) deletePrivateFile(fromName);
+        return result;
     }/*}}}*/
     //@}
 
