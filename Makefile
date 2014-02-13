@@ -15,11 +15,13 @@ ifeq "$(HOMEDRIVE)" "C:"
 JC = $(JAVA_HOME)/bin/javac.exe
 JL = $(JAVA_HOME)/bin/jar.exe
 RC = $(JAVA_HOME)/bin/jar.exe
+CP = rsync
 ANDROID := $(shell cygpath -m $(ANDROID_HOME))
 else
 JC = javac
 JL = jar
 RC = jar
+CP = rsync
 ANDROID := $(ANDROID_HOME)
 endif
 
@@ -34,6 +36,11 @@ BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 # -----------------------------------------------------------------------------
 JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
 CTAGS  = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
+
+# -----------------------------------------------------------------------------
+# CP COMMAND LINE OPTIONS
+# -----------------------------------------------------------------------------
+CPOPTS = -vcruptOmC --no-o --no-g --delete --delete-excluded --exclude='.*.sw?'
 
 # -----------------------------------------------------------------------------
 # COMPILER AND LINKER FLAGS
@@ -82,10 +89,14 @@ $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 	$(JL) $(LINK)
 
 install: $(APKDIR) $(RSCDIR)
-	-cp ./$(OUTPUT) $(APKDIR)/
-	-cp ./$(OUTDXT) $(PLXLIB)/
-	-cp -r ./$(RESDIR)/* $(RSCDIR)/
+	$(CP) $(CPOPTS) $(OUTPUT) $(APKDIR)
+	$(CP) $(CPOPTS) $(OUTDXT) $(PLXLIB)
+	$(CP) $(CPOPTS) $(RESDIR)/ $(RSCDIR)
 	-publish -doc plx/$(TARGET) -f -q
+
+#	-cp ./$(OUTPUT) $(APKDIR)/
+# 	-cp ./$(OUTDXT) $(PLXLIB)/
+# 	-cp -r ./$(RESDIR)/* $(RSCDIR)/
 
 tags:
 	ctags $(CTAGS) -f $(OUTTAG) $(PWD)/$(SRCDIR)/*

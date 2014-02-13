@@ -1,3 +1,11 @@
+2014-02-12  Alessandro <aantonello@paralaxe.com.br>
+
+	* stream_t.java (dump()): Changed debugging output format.
+	* CAndroidApp.java (openForAppend()): New function to open a file for
+	  appending data to it.
+	* CAndroidApp.java (deletePrivateFile()): Deletes a file open with one
+	  of the available `openFor` functions.
+
 2014-02-10  Alessandro <aantonello@paralaxe.com.br>
 
 	* CAndroidPagerView.java (onInterceptTouchEvent()): Changed to better
