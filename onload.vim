@@ -27,5 +27,5 @@ let java_ignore_javadoc = 1
 " Add an autocommand to set properties about source files
 augroup JGUIME
     au BufNewFile  *.java set ff=unix fenc=utf8 syntax=java.doxygen nobomb
-    au BufNewFile,BufRead .commit setl tw=72
+    au BufNewFile,BufRead changes setl tw=72
 augroup END

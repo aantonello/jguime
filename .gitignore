@@ -1,6 +1,7 @@
 .*.swp
 .DS_Store
 .commit
+changes
 jguime.tags
 
 # Exclude all these directories

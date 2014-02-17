@@ -59,7 +59,8 @@ public class CXmlTok
      * \param text The string to be decoded.
      * \returns The same string passed in the \a text argument processed.
      **/
-    public static String Decode(String text) {
+    public static String Decode(String text)
+    {
         StringBuilder buff;
         int  i = 0, count = text.length();
         char c;
