@@ -54,6 +54,7 @@ public class CXmlFile
         String buff = tok.next(5);
         if (!buff.equals("<?xml")) {
             debug.w("CXmlFile::Load() failed! File does not start with '<?xml': '%s'", buff);
+            tok.dump();
             return null;
         }
 
