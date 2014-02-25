@@ -1,5 +1,4 @@
 jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
-# VERSION: 2.4.221
  docs=docs enc="latin1" {
   NOTES
  }

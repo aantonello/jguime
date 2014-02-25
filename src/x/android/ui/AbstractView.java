@@ -1042,6 +1042,18 @@ public abstract class AbstractView<T extends AbstractView<T>>
         }
         return self();
     }/*}}}*/
+    // public T invalidate();/*{{{*/
+    /**
+     * Invalidates the operating View.
+     * Method calls `invalidate()` in the operating. If the operating view is
+     * \b NULL, the function does nothing.
+     * @returns \b this.
+     **/
+    public T invalidate()
+    {
+        if (m_view != null) m_view.invalidate();
+        return self();
+    }/*}}}*/
     //@}
 
     /** \name EVENT HANDLERS ATTACHMENT */ //@{
