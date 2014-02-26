@@ -192,8 +192,9 @@ public class socket_t
             return ERROR.PARM;
         }
 
+        m_socket = new Socket();
+
         try {
-            m_socket = new Socket();
             m_socket.setPerformancePreferences(2, 1, 0);
             m_socket.setReceiveBufferSize(1*1024);      // 1K.
             m_socket.setSoLinger(false, 0);
@@ -232,13 +233,13 @@ public class socket_t
         close();
         return result;
     }/*}}}*/
-    // public final void close();/*{{{*/
+    // public final synchronized void close();/*{{{*/
     /**
      * Disconnects and closes the current connection, if any.
      * This operation will invalidate both members \c input and \c output. No
      * exception will be thrown by this function.
      **/
-    public final void close()
+    public final synchronized void close()
     {
         if (m_socket != null)
         {
@@ -404,7 +405,7 @@ public class socket_t
     //@}
 
     /** \name DATA MEMBERS */ //@{
-    protected Socket m_socket;          /**< Socket implementation. */
+    protected volatile Socket m_socket;         /**< Socket implementation. */
     //@}
 }
 // vim:syntax=java.doxygen

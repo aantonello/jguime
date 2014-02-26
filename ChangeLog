@@ -1,3 +1,12 @@
+2014-02-26  Alessandro <aantonello@paralaxe.com.br>
+
+	* CAndroidProgressDialog.java (dismissOnCancel()): Changed the way that
+	  feature was implemented since it stop working without notice.
+	* socket_t.java (open()): Changed the way the underlining socket is
+	  created.
+	* socket_t.java (close()): Now the function is synchronized because we
+	  need to access the native socket interface.
+
 2014-02-25  Alessandro <aantonello@paralaxe.com.br>
 
 	* CXmlFile.java (Load(CXmlTok)): Dumping stream output when the parser

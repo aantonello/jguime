@@ -310,7 +310,8 @@ public class issuer
      * the main message queue and processed in order. Messages scheduled like
      * this can be unscheduled with the issuer#cancel() function.
      **/
-    final void postMsg(INHandler h, int id, int np, long lp, Object o, long delay) {
+    final void postMsg(INHandler h, int id, int np, long lp, Object o, long delay)
+    {
         Handler handler;
         cache_t holded;
         msg_t   msg;

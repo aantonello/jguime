@@ -189,6 +189,8 @@ public class CAndroidProgressDialog
     public final boolean dismissOnCancel(boolean dismiss) {
         boolean value = m_cancelDismiss;
         m_cancelDismiss = dismiss;
+        m_dialog.setCancelable(dismiss);
+        m_dialog.setCanceledOnTouchOutside(dismiss);
         return value;
     }/*}}}*/
     // public final boolean dismissOnCancel();/*{{{*/
@@ -255,11 +257,11 @@ public class CAndroidProgressDialog
     public void onCancel(DialogInterface dialog)
     {
         if (m_target != null) {
-            issuer.post(m_target, IMSG.MSG_DIALOG, m_dialogID, IMSG.DIALOG.CANCEL, CAndroidProgressDialog.this);
+            issuer.post(m_target, IMSG.MSG_DIALOG, m_dialogID, IMSG.DIALOG.CANCEL, this);
         }
-        if (m_cancelDismiss) {
-            m_dialog.dismiss();
-        }
+//        if (m_cancelDismiss) {
+//            m_dialog.dismiss();
+//        }
     }/*}}}*/
     //@}
 
@@ -309,14 +311,15 @@ public class CAndroidProgressDialog
          * Dismiss the dialog when `m_cancelDismiss` is **true**. Otherwise
          * only sends the notification message.
          **/
-        public void onBackPressed() {
-//            if (m_target != null) {
-//                issuer.post(m_target, IMSG.MSG_DIALOG, m_dialogID, IMSG.DIALOG.CANCEL, CAndroidProgressDialog.this);
-//            }
-//            if (m_cancelDismiss) {
-//                super.onBackPressed();
-//            }
-            super.cancel();
+        public void onBackPressed()
+        {
+            if (m_cancelDismiss)
+                super.cancel();
+            else
+            {
+                DialogInterface.OnCancelListener li = CAndroidProgressDialog.this;
+                li.onCancel(this);
+            }
         }/*}}}*/
         //@}
     }/*}}}*/
