@@ -1,3 +1,17 @@
+2014-02-28  Alessandro <aantonello@paralaxe.com.br>
+
+	* IMSG.java (MSG_PAGER): New constant to identify notifications sent
+	  from CAndroidPagerView class.
+	* IMSG.java (BROADCAST): New class to list all broadcast identifiers
+	  used in the library.
+	* IMSG.java (PAGER): New class listing the identifiers of notification
+	  events sent by CAndroidPagerView class through IMSG.MSG_PAGER
+	  notification.
+	* CAndroidPagerView.java: Implemented the notifications to inform
+	  interested objects on events happening inside the View. Notifications
+	  are sent in broadcast format, using the IMSG.BROADCAST.PAGER
+	  identifier.
+
 2014-02-26  Alessandro <aantonello@paralaxe.com.br>
 
 	* CAndroidProgressDialog.java (dismissOnCancel()): Changed the way that

@@ -63,6 +63,20 @@ public interface IMSG
      * class.
      **/
     public static final int MSG_RELEASE = 0x00000105;/*}}}*/
+    // public static final int MSG_PAGER  = 0x00000106;/*{{{*/
+    /**
+     * Indentify all messages where the source is \c CAndroidPagerView.
+     * In these messages the \e nParam argument carries the event code as of
+     * defined in the \c IMSG.PAGER class. The \e lParam argument depends on
+     * the code passed through \e nParam. The \e extra argument always has the
+     * \c CAndroidPagerView instance.
+     *
+     * The \c CAndroidPagerView don't has a way to set one single handler for
+     * its notifications. The interested ones must subscribe to the \c
+     * IMSG.BROADCAST.PAGER broadcast notifications using \c
+     * issuer::subscribe().
+     **/
+    public static final int MSG_PAGER  = 0x00000106;/*}}}*/
     // public static final int MSG_LAST   = 0x00000FFF;/*{{{*/
     /**
      * Last message identifier.
@@ -89,6 +103,92 @@ public interface IMSG
         public static final long DISMISS = 2L;      /**< Dialog has been dismissed. */
         public static final long CANCEL  = 3L;      /**< Dialog has been canceled. */
         public static final long OK      = 4L;      /**< Dialog has been applied. */
+    }/*}}}*/
+    // public interface PAGER;/*{{{*/
+    /**
+     * Lists the identifiers for the \c IMSG.MSG_PAGER notifications.
+     * All these identifiers are sent in the \e nParam parameter of the
+     * notification.
+     **/
+    public interface PAGER
+    {
+        // public static final int STARTSCROLL = 1;/*{{{*/
+        /**
+         * The user was started scrolling to the next or previous page.
+         * When this message is sent the current page is not changed yet. So
+         * the information on \c CAndroidPagerView::getCurrentViewIndex() or
+         * \c CAndroidPagerView::getCurrentView() will return the View showed
+         * just before the user starts scrolling the View. Also, this
+         * notification is not sent when the current page changes by a call to
+         * \c CAndroidPagerView::setCurrentView(int,boolean).
+         *
+         * The \e lParam parameter is not used. Its value is \b 0L.
+         *
+         * The \e extra parameter has the instance of \c CAndroidPagerView,
+         * source of the notification.
+         **/
+        public static final int STARTSCROLL = 1;/*}}}*/
+        // public static final int ENDSCROLL   = 2;/*{{{*/
+        /**
+         * Sent when the scroll ends.
+         * When this notification is sent the current page was already
+         * changed. Calling \c CAndroidPagerView::getCurrentView() or \c
+         * CAndroidPagerView::getCurrentViewIndex() will return the updated
+         * result. Thus, this does not indicate the end of the animation. The
+         * pager may be changing its scroll position in the case the user
+         * passed the beginning or end of the internal Views.
+         *
+         * This notification is not sent when the current View changes by a
+         * call to \c CAndroidPagerView::setCurrentView(int,boolean). Even if
+         * the \e animated parameter of that call was \b true.
+         *
+         * The \e lParam parameter is not used. Its value is \b 0L.
+         *
+         * The \e extra parameter has the instance of \c CAndroidPagerView,
+         * source of the notification.
+         **/
+        public static final int ENDSCROLL   = 2;/*}}}*/
+        // public static final int PAGECHANGED = 3;/*{{{*/
+        /**
+         * Sent when the current page View changes.
+         * This notification is always sent. Just after the user ends
+         * scrolling the View (after the \c IMSG.PAGER.ENDSCROLL notification)
+         * and when the current page was changed by a call to \c
+         * CAndroidPagerView::setCurrentView(int,boolean).
+         *
+         * The \e lParam parameter will carrie the current View index.
+         *
+         * The \e extra parameter has the instance of \c CAndroidPagerView,
+         * source of the notification.
+         **/
+        public static final int PAGECHANGED = 3;/*}}}*/
+        // public static final int COUNTCHANGED= 4;/*{{{*/
+        /**
+         * Sent when the number of View pages changed.
+         * This notification is sent when new Views are added or Views are
+         * removed from \c CAndroidPagerView pager.
+         *
+         * The \e lParam parameter carries the updated number of internal
+         * Views.
+         *
+         * The \e extra parameter has the instance of \c CAndroidPagerView,
+         * source of the notification.
+         **/
+        public static final int COUNTCHANGED = 4;/*}}}*/
+    }/*}}}*/
+    // public interface BROADCAST;/*{{{*/
+    /**
+     * Lists the broadcasts notifications identifiers.
+     **/
+    public interface BROADCAST
+    {
+        // public static String PAGER = "IMSG.BROADCAST.PAGER";/*{{{*/
+        /**
+         * Broadcast notifications sent by a \c CAndroidPagerView object.
+         * All messages sent under this identifier are identified by the ID \c
+         * IMSG.MSG_PAGER.
+         **/
+        public static String PAGER = "IMSG.BROADCAST.PAGER";/*}}}*/
     }/*}}}*/
     //@}
 }

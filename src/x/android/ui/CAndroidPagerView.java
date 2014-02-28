@@ -145,6 +145,7 @@ public class CAndroidPagerView extends ViewGroup
         int index = getChildCount();
         super.attachViewToParent(view, index, lp);
         if (m_currentIndex < 0) m_currentIndex = 0;
+        trigger(IMSG.PAGER.COUNTCHANGED, numbers.toLong(index + 1));
     }/*}}}*/
     // public View addView(int layoutID);/*{{{*/
     /**
@@ -194,6 +195,7 @@ public class CAndroidPagerView extends ViewGroup
         {
             scrollTo(offsetX, 0);
             m_currentIndex = position;
+            trigger(IMSG.PAGER.PAGECHANGED, numbers.toLong(m_currentIndex));
         }
         else
         {
@@ -202,6 +204,16 @@ public class CAndroidPagerView extends ViewGroup
             issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
         }
         return this;
+    }/*}}}*/
+    // public void removeView(View view);/*{{{*/
+    /**
+     * Removes a View from this group.
+     * @param view View to remove.
+     **/
+    public void removeView(View view)
+    {
+        super.removeView(view);
+        trigger(IMSG.PAGER.COUNTCHANGED, numbers.toLong(getChildCount()));
     }/*}}}*/
     //@}
 
@@ -531,21 +543,27 @@ public class CAndroidPagerView extends ViewGroup
             invalidate();
 
             if (stillScrolling)
-                issuer.post(this, IMSG.MSG_DELAY, nParam, 0L, null);
+                issuer.post(this, IMSG.MSG_DELAY, nParam, lParam, null);
             else
             {
                 int offsetX = getScrollX();
                 float index = (((float)offsetX) / ((float)getChildWidth()));
 
                 m_currentIndex = Math.round(index);
-//                debug.w("CAndroidPagerView::onMessage(): scroll ended! currentIndex: %d (%1.4f)\n", m_currentIndex, index);
 
                 if (nParam == NP_FLING)
                 {
                     int targetX = (m_currentIndex * getChildWidth());
 
                     m_scroller.startScroll(offsetX, 0, (targetX - offsetX), 0, 300);
-                    issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
+                    issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, lParam, null);
+                }
+                else if (nParam == NP_SCROLL)
+                {
+                    if (lParam == LP_USER)      /* Only if started by the user. */
+                        trigger(IMSG.PAGER.ENDSCROLL, 0L);
+
+                    trigger(IMSG.PAGER.PAGECHANGED, numbers.toLong(m_currentIndex));
                 }
             }
             return true;
@@ -639,6 +657,9 @@ public class CAndroidPagerView extends ViewGroup
          */
         if ((Math.abs(deltaX) > m_touchSlop) || m_scrolling)
         {
+            if (!m_scrolling)       /* Just started scrolling */
+                trigger(IMSG.PAGER.STARTSCROLL, 0L);
+
             m_scrolling   = true;
             m_lastMotionX = pointX;
             super.scrollBy(deltaX, 0);
@@ -669,12 +690,12 @@ public class CAndroidPagerView extends ViewGroup
         if (offsetX < minX)
         {
             m_scroller.startScroll(offsetX, 0, (minX - offsetX), 0, 500);
-            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
+            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, LP_USER, null);
         }
         else if (offsetX > maxX)
         {
             m_scroller.startScroll(offsetX, 0, (maxX - offsetX), 0, 500);
-            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, 0L, null);
+            issuer.post(this, IMSG.MSG_DELAY, NP_SCROLL, LP_USER, null);
         }
         else
         {
@@ -685,7 +706,7 @@ public class CAndroidPagerView extends ViewGroup
             minX = Math.max(minX, (getChildWidth() * (m_currentIndex - 1)));
             maxX = Math.min(maxX, (getChildWidth() * (m_currentIndex + 1)));
             m_scroller.fling(offsetX, 0, -velocityX, 0, minX, maxX, 0, 0);
-            issuer.post(this, IMSG.MSG_DELAY, NP_FLING, 0L, null);
+            issuer.post(this, IMSG.MSG_DELAY, NP_FLING, LP_USER, null);
         }
 //        debug.w("CAndroidPagerView::handle_actionUp() \n" +
 //                "==> minX.....: %d\n" +
@@ -717,6 +738,18 @@ public class CAndroidPagerView extends ViewGroup
     }/*}}}*/
     //@}
 
+    /** \name Notification Triggers */ //@{
+    // private final void trigger(int nParam, long lParam);/*{{{*/
+    /**
+     * Trigger one notification to the broadcast system.
+     * @param nParam Value to be passed as \e nParam parameter.
+     * @param lParam value to be passed as \e lParam parameter.
+     **/
+    private final void trigger(int nParam, long lParam) {
+        issuer.send(IMSG.BROADCAST.PAGER, IMSG.MSG_PAGER, nParam, lParam, this);
+    }/*}}}*/
+    //@}
+
     /** \name Data Members */ //@{
     private VelocityTracker  m_velocityTracker;
     private OverScroller     m_scroller;
@@ -734,6 +767,7 @@ public class CAndroidPagerView extends ViewGroup
     private static final int NP_FLING      = 1;
     private static final int NP_SCROLL     = 0;
     private static final int NP_VIEW       = -1;
+    private static final long LP_USER      = 1L;
     //@}
 }
 // vim:syntax=java.doxygen
