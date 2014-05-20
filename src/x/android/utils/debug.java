@@ -79,9 +79,9 @@ public final class debug
      * \param msg A string with text to output and optional format specifiers.
      * The format follows the same rules of `String::format()` function with
      * some additions:
-     * - **$n**: Will be replaced by the name of the exception class.
-     * - **$s**: Will be replaced by the message of the exception.
-     * - **$t**: Will be replaced by the stack trace output. The stack trace
+     * - \b $n: Will be replaced by the name of the exception class.
+     * - \b $s: Will be replaced by the message of the exception.
+     * - \b $t: Will be replaced by the stack trace output. The stack trace
      * output will have the following format:
      * <pre>
      * "file 'file_name' at line 'line_number' in 'class_name::method_name'"

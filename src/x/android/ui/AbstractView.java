@@ -1054,6 +1054,22 @@ public abstract class AbstractView<T extends AbstractView<T>>
         if (m_view != null) m_view.invalidate();
         return self();
     }/*}}}*/
+    // public T refresh();/*{{{*/
+    /**
+     * Calls \c force() and \c invalidate() in the operating view.
+     * This is the preferable way to force a re-layout of a view.
+     * @returns \b this.
+     **/
+    public T refresh()
+    {
+        if (m_view != null)
+        {
+            m_view.forceLayout();
+            m_view.requestLayout();
+            m_view.invalidate();
+        }
+        return self();
+    }/*}}}*/
     //@}
 
     /** \name EVENT HANDLERS ATTACHMENT */ //@{
