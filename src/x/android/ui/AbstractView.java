@@ -1111,6 +1111,18 @@ public abstract class AbstractView<T extends AbstractView<T>>
         }
         return self();
     }/*}}}*/
+    // public T itemSelected(AdapterView.OnItemSelectedListener listener);/*{{{*/
+    /**
+     * Attaches a listener to the OnItemSelected event of an AdapterView.
+     * @param listener The listener to attaches to.
+     * @returns this.
+     **/
+    public T itemSelected(AdapterView.OnItemSelectedListener listener)
+    {
+        if ((m_view != null) && (m_view instanceof AdapterView))
+            ((AdapterView)m_view).setOnItemSelectedListener(listener);
+        return self();
+    }/*}}}*/
     // public T touch(View.OnTouchListener listener);/*{{{*/
     /**
      * Attaches a listener to the OnTouchListener event of the operating view.
