@@ -752,16 +752,16 @@ public abstract class AbstractView<T extends AbstractView<T>>
     //@}
 
     /** \name AdapterView METHODS */ //@{
-    // public T adapter(ListAdapter l);/*{{{*/
+    // public T adapter(Adapter a);/*{{{*/
     /**
      * Sets a ListAdapter for the operating view.
      * The operating view needs to be a decendant of an AdapterView.
-     * \param l The ListAdapter or decendant to set.
+     * \param a The Adapter or decendant to set.
      * \returns this.
      **/
-    public T adapter(ListAdapter l) {
+    public T adapter(Adapter a) {
         if (m_view instanceof AdapterView) {
-            ((AdapterView)m_view).setAdapter(l);
+            ((AdapterView)m_view).setAdapter(a);
         }
         return self();
     }/*}}}*/
