@@ -136,6 +136,30 @@ public final class strings
         arrays.set(array, c);
         return new String(array);
     }/*}}}*/
+    // public static String upper(String str);/*{{{*/
+    /**
+     * Converts a string to upper case.
+     * @param str String to convert.
+     * @return The result of the conversion of \a str in upper case using the
+     * default locale. When \a str is \b null \c string.EMPTY will be
+     * returned.
+     **/
+    public static String upper(String str)
+    {
+        return ((str == null) ? EMPTY : str.toUpperCase());
+    }/*}}}*/
+    // public static String lower(String str);/*{{{*/
+    /**
+     * Converts a string to lower case.
+     * @param str String to convert.
+     * @return The result of the conversion of \a str in lower case using the
+     * default locale. When \a str is \b null \c string.EMPTY will be
+     * returned.
+     **/
+    public static String lower(String str)
+    {
+        return ((str == null) ? EMPTY : str.toLowerCase());
+    }/*}}}*/
     // public static int    toInt(String num, int radix);/*{{{*/
     /**
      * Converts a string to a number using the given radix.

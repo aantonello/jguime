@@ -563,12 +563,9 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
         final int lastIndex = (m_count - 1);
 
         if (index < lastIndex)
-            arrays.move(m_array, index, m_array, (index + 1), (m_count - 1));
+            arrays.move(m_array, index, m_array, (index + 1), ((index + 1) - m_count));
 
         m_array[lastIndex] = null;
-
-//        for (int i = (index + 1); i <= count; i++)
-//            m_array[i - 1] = m_array[i];
 
         m_count--;
         return result;
