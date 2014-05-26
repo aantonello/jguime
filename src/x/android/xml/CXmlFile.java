@@ -33,8 +33,11 @@ public class CXmlFile
     // public CXmlFile();/*{{{*/
     /**
      * Constructs an empty CXmlFile object.
+     * The root node will be \b null. You must create and set the root node so
+     * this file can be written.
      **/
-    public CXmlFile() {
+    public CXmlFile()
+    {
         this.root = null;
     }/*}}}*/
     //@}
