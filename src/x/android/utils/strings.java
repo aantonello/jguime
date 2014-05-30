@@ -515,6 +515,65 @@ public final class strings
     public static boolean isHexChar(char c) {
         return ("0123456789ABCDEFabcdef".indexOf(c) >= 0);
     }/*}}}*/
+    // public static boolean startsWith(String prefix);/*{{{*/
+    /**
+     * Checks if a string has the specified prefix.
+     * @param str String to be checked.
+     * @param prefix Prefix to compare to the \a str start.
+     * @return \b true if the \a str string starts with \a prefix. \b false
+     * otherwise.
+     **/
+    public static boolean startsWith(String str, String prefix)
+    {
+        if (str == null) return false;
+        try { return str.startsWith(prefix); }
+        catch (Exception ex) { /* Ignored excepcion. */ }
+
+        return false;
+    }/*}}}*/
+    // public static boolean endsWith(String str, String suffix);/*{{{*/
+    /**
+     * Checks if a string has the specified suffix.
+     * @param str String to be checked.
+     * @param suffix Suffix to compare to the \a str start.
+     * @return \b true if the \a str string ends with \a suffix. \b false
+     * otherwise.
+     **/
+    public static boolean endsWith(String str, String suffix)
+    {
+        if (str == null) return false;
+        try { return str.endsWith(suffix); }
+        catch (Exception ex) { /* Ignored excepcion. */ }
+
+        return false;
+    }/*}}}*/
+
+    // public static String  lastPathItem(String path);/*{{{*/
+    /**
+     * Retrieves the last component of a file or URL path.
+     * @param path The file or URL to retrieve the last component.
+     * @returns The last component found. If the string pointed by \a path
+     * desn't has any path separator the resulting string will be the same as
+     * \a path.
+     * @par Example
+     * <pre>
+     * String item = strings.lastPathItem("directory/name/file.ext");
+     * // item = "file.ext"
+     * String item = strings.lastPathItem("directory/name/");
+     * // item = "name"
+     * String item = strings.lastPathItem("directory");
+     * // item = "directory"
+     * </pre>
+     **/
+    public static String  lastPathItem(String path)
+    {
+        if (path == null) return strings.EMPTY;
+
+        int index = path.lastIndexOf('/', (path.length() - 2));
+        if (index < 0) return path;
+
+        return strings.substr(path, (index + 1), -1);
+    }/*}}}*/
 
     public static final String EMPTY = "";      /**< Empty string object. */
 }

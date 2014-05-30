@@ -173,6 +173,14 @@ public final class numbers
     public static long  toLong(byte value) {
         return numbers.toLong(numbers.toInt(numbers.toShort(value)));
     }/*}}}*/
+    // public static long  toLong(float value);/*{{{*/
+    /**
+     * \copydoc numbers::toLong(int)
+     **/
+    public static long  toLong(float value)
+    {
+        return Float.valueOf(value).longValue();
+    }/*}}}*/
 
     // public static short byteToShort(byte unsignedByte);/*{{{*/
     /**
