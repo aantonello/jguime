@@ -983,6 +983,54 @@ public final class arrays
     }/*}}}*/
     //@}
 
+    /** \name search() operations */ //@{
+    // public static int search(byte[] array, int start, int count, byte value);/*{{{*/
+    /**
+     * Search for a value in the array.
+     * @param array The array to be searched.
+     * @param start Index to start the search.
+     * @param count Number of bytes to search in \a array. When less than zero
+     * or greater than the length of the array starting at \a start all the
+     * data will be searched. No exceptions thrown.
+     * @param value Value to be searched in the array \a array.
+     * @return The index of the element when \a value is found. Otherwise -1
+     * is returned. -1 is also returned when \a array is \b null, \a start is
+     * less than zero or greater than \a count.
+     **/
+    public static int search(byte[] array, int start, int count, byte value)
+    {
+        if ((array == null) || (array.length == 0) || (start < 0) || (start >= count))
+            return -1;
+
+        if ((count < 0) || (count > (array.length - start)))
+            count = array.length - start;
+
+        for (int i = 0; i < count; i++) {
+            if (array[start + i] == value)
+                return (start + i);
+        }
+        return -1;
+    }/*}}}*/
+    // public static int search(byte[] array, int start, int count, short value);/*{{{*/
+    /**
+     * \copydoc search(byte[],int,int,byte)
+     **/
+    public static int search(byte[] array, int start, int count, short value)
+    {
+        if ((array == null) || (array.length == 0) || (start < 0) || (start >= count))
+            return -1;
+
+        if ((count < 0) || (count > (array.length - start)))
+            count = array.length - start;
+
+        for (int i = 0; i < count - 1; i++) {
+            if (value == bigEndToShort(array, (start + i)))
+                return (start + i);
+        }
+        return -1;
+    }/*}}}*/
+    //@}
+
     /** \name NUMBER TO BYTE ARRAY CONVERSION */ //@{
     // public static byte[] longAsLittleEnd(long val);/*{{{*/
     /**
