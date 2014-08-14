@@ -110,6 +110,7 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
  .gitignore
  onload.vim
  doxyfile
+ README.md
  ChangeLog
  changes
 }
