@@ -1,4 +1,4 @@
-jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
+jguime="$WORKHOME/plx/src/simple/jguime" CD=. in=onload.vim enc="utf8" {
  docs=docs enc="latin1" {
   NOTES
  }
@@ -112,5 +112,4 @@ jguime="$HOME/src/bb/paralaxe/jguime" CD=. in=onload.vim enc="utf8" {
  doxyfile
  README.md
  ChangeLog
- changes
 }
