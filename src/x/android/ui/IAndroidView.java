@@ -17,6 +17,7 @@ package x.android.ui;
 import x.android.nms.INHandler;
 
 /**
+ * \ingroup x_android_ui
  * Declare function implemented by all class that extends a view.
  *//* --------------------------------------------------------------------- */
 public interface IAndroidView extends INHandler

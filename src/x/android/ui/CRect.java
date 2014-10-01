@@ -25,6 +25,7 @@ import x.android.utils.strings;
 
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Represents a screen coordinate.
  *//* --------------------------------------------------------------------- */
 public class CRect

@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.util.AttributeSet;
 import android.app.Application;
 import android.content.Context;
@@ -21,8 +21,10 @@ import android.view.View;
 import android.view.ViewParent;
 
 import x.android.nms.*;
+/* }}} #imports */
 
 /**
+ * \ingroup x_android_ui
  * Base implementation of a Android View.
  * The job of this class is to serve as basis to construct views of an
  * application.

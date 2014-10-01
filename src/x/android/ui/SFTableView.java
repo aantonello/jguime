@@ -25,6 +25,7 @@ import x.android.nms.*;
 import x.android.utils.*;
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Extends ListView allowing different types of Views in a list.
  * Classes extending this class can override the \c SFTableDelegate
  * implementation specifying their custom Views to be used in the list. Also,
@@ -112,7 +113,8 @@ public class SFTableView extends ListView implements SFTableDelegate,
      * \param position The position of the deleted row.
      * \param animated If the deletion of the row should be animated or not.
      **/
-    public void deleteRow(View view, int position, boolean animated) {
+    public void deleteRow(View view, int position, boolean animated)
+    {
         if (!animated) {
             this.reloadData();
             return;

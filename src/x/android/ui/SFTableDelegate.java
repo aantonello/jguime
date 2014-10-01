@@ -15,6 +15,7 @@
 package x.android.ui;
 
 /**
+ * \ingroup x_android_ui
  * Interface defining a delegate for a table view.
  * A table view is a list view with several kinds of different items. This is
  * an extension of the \c IAndroidListDelegate allowing to have different list
@@ -24,11 +25,16 @@ package x.android.ui;
  * the number of differente items that will be shown in the view and inform
  * the system where that different items are placed.
  *
- * The system will call the function \c numberOfTypes() when it needs to know
+ * The system will call the function #numberOfTypes() when it needs to know
  * the number of different view types. Also, when a view needs to placed on
- * the screen, the system will call \c typeOfViewAtPosition(). This function
+ * the screen, the system will call #typeOfViewAtPosition(). This function
  * must return a code (can be an arbritaty code) to differentiate the type of
  * the view to be placed in that position.
+ *
+ * Also, the system needs to known when a certain kind of item will respond
+ * to user inputs like touches or clicks. So the #typeRespondsToUserInput()
+ * method will be called with the type code returned by \c
+ * typeOfViewAtPosition().
  *//* --------------------------------------------------------------------- */
 public interface SFTableDelegate extends IAndroidListDelegate
 {

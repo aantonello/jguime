@@ -15,6 +15,7 @@
 package x.android.ui;
 
 /**
+ * \ingroup x_android_ui
  * Declares the constants used to show Alert dialogs.
  *//* --------------------------------------------------------------------- */
 public final class ALERT

@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.annotation.Widget;
 
 import android.content.Context;
@@ -38,8 +38,10 @@ import android.view.ViewGroup;
 import android.view.animation.Transformation;
 
 import com.android.internal.R;
+/* }}} #imports */
 
 /**
+ * \ingroup x_android_ui
  * A horizontal scroll view with facilities.
  * The default values for the Gallery assume you will be using
  * android.R.styleable#Theme_galleryItemBackground as the background for

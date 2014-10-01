@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-
+/* #imports {{{ */
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
@@ -27,8 +27,10 @@ import android.view.inputmethod.*;
 import x.android.defs.*;
 import x.android.utils.*;
 import x.android.nms.*;
+/* }}} #imports */
 
 /**
+ * \ingroup x_android_ui
  * Builds a password dialog.
  * This dialog sends 3 messages to its handler, defined in the constructor.
  * All messages are defined with the code \c IMSG.MSG_DIALOG in the \a msgID

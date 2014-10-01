@@ -15,6 +15,7 @@
 package x.android.ui;
 
 /**
+ * \ingroup x_android_ui
  * Interface that declares common message identifiers.
  *//* --------------------------------------------------------------------- */
 public interface IMSG

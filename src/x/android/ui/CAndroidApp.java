@@ -44,6 +44,7 @@ import x.android.nms.*;
 
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Represents an Android application.
  * There must be only one android application in a package bundle. For this
  * reason, this class has an static member of it self. This reference can be

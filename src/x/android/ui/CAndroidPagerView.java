@@ -26,6 +26,7 @@ import x.android.utils.*;
 import x.android.nms.*;
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Implements a pager view.
  * The implementation provides a default adapter that handles the storage of
  * cliente views. So there is no need to supply an adapter as long as storing

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 /**
+ * \ingroup x_android_ui
  * Defines an interface to be implemented by a ListView simple adapter.
  *//* --------------------------------------------------------------------- */
 public interface IAndroidListDelegate

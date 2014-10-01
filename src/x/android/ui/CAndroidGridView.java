@@ -23,6 +23,7 @@ import android.view.animation.*;
 import x.android.utils.*;
 /* }}} Imports */
 /**
+ * \ingroup x_android_ui
  * Based in the most common usage of a grid view.
  * Rules to use this implementation:
  * -# All cells must have the same size.

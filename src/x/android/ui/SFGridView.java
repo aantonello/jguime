@@ -25,6 +25,7 @@ import x.android.nms.*;
 import x.android.utils.*;
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Extends GridView allowing different types of Views in the grid.
  * Classes extending this class can override the \c SFTableDelegate
  * implementation specifying their custom Views to be used in the list. Also,

@@ -1570,14 +1570,16 @@ public final class arrays
         if (strings.length(separator) > 0)
         {
             for (int i = 0; i < limit; i++) {
-                sb.append(String.valueOf(array[i])).append(separator);
+                if (array[i] != null)
+                    sb.append(String.valueOf(array[i])).append(separator);
             }
             sb.setLength(sb.length() - separator.length());
         }
         else
         {
             for (int i = 0; i < limit; i++) {
-                sb.append(String.valueOf(array[i]));
+                if (array[i] != null)
+                    sb.append(String.valueOf(array[i]));
             }
         }
         return sb.toString();

@@ -26,6 +26,7 @@ import x.android.utils.debug;
 
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * A ListView based on the most common usage of lists.
  * The rules to use this ListView implementation are simple. All rows must
  * have the same type of View.
@@ -86,6 +87,23 @@ public class CAndroidListView extends ListView
         if (m_adapter == null) return;      /* Unkown error. */
         m_adapter.setDelegate(delegate);
     }/*}}}*/
+    // public void setDeleteRowFinishedHandler(IDeleteRowFinished handler);/*{{{*/
+    /**
+     * Sets the handler of all delete row animations.
+     * @param handler Instance of the handler. Can be \b null to eliminate a
+     * previous defined handler.
+     * @remarks When set by this method the \a handler is kept and used in all
+     * calls to \c deleteRow(View,int,boolean) when \e animated is \b true.
+     * A different handler still can be passed through
+     * \c deleteRow(View,int,IDeleteRowFinished) method for a specific type
+     * of row if needed. The specific handler will be used only in that
+     * particular execution.
+     * @since 2.4
+     **/
+    public void setDeleteRowFinishedHandler(IDeleteRowFinished handler)
+    {
+        m_handleDel = handler;
+    }/*}}}*/
     // public void reloadData();/*{{{*/
     /**
      * Reloads all data and Views for this list.
@@ -114,17 +132,45 @@ public class CAndroidListView extends ListView
      * \param view View that represents the row to be deleted.
      * \param position The position of the deleted row.
      * \param animated If the deletion of the row should be animated or not.
+     * The animation collapses the list over the deleted item. Notice that the
+     * list cannot be updated while the animation is running. This means that
+     * the \c reloadData() must not be called while the animation is running.
+     * The item should only be removed after the animation ends. If you are
+     * extending this class, when the animation ends the method
+     * \c onDeleteRowAnimateEnd() will be called. If you are not extending this
+     * class you can set a handler in the method
+     * \c setDeleteRowFinishedHandler().
      **/
-    public void deleteRow(View view, int position, boolean animated) {
-        if (!animated) {
-            this.reloadData();
-            return;
-        }
-
-        DeleteRowAnimation   dra      = new DeleteRowAnimation(view, position, this);
-        CollapseRowAnimation collapse = new CollapseRowAnimation(view, dra);
-        collapse.setDuration( 200 );
-        view.startAnimation( collapse );
+    public void deleteRow(View view, int position, boolean animated)
+    {
+        if (animated)
+            deleteRow(view, position, m_handleDel);
+        else
+            onDeleteRowAnimateEnd(view, position);
+    }/*}}}*/
+    // public void deleteRow(View view, int position, IDeleteRowFinished handler);/*{{{*/
+    /**
+     * Delete a row in the specified index.
+     * Since this class doesn't hold the list of items you will need to delete
+     * the item manually.
+     * @param view View that represents the row to be deleted.
+     * @param position The position of the deleted row.
+     * @param handler Instance of \c IDeleteRowFinished to handle the
+     * animation termination. If you setted a handler in
+     * \c setDeleteRowFinishedHandler() the instance passed here will be used
+     * instead, but will not overwrite the handler defined in that method. If
+     * you pass \b null here no handler will be called but the
+     * \c onDeleteRowAnimateEnd() method will still be called and the list
+     * will be updated automatically.
+     * @since 2.4
+     **/
+    public void deleteRow(View view, int position, IDeleteRowFinished handler)
+    {
+        long rowID = m_adapter.getItemId(position);
+        RowAnimationHandler rah  = new RowAnimationHandler(view, position, rowID, handler);
+        CollapseRowAnimation cra = new CollapseRowAnimation(view, rah);
+        cra.setDuration( 300 );
+        view.startAnimation( cra );
     }/*}}}*/
     //@}
 
@@ -135,8 +181,9 @@ public class CAndroidListView extends ListView
      * \param view The View passed passed to the #deleteRow() function.
      * \param position The position passed to the #deleteRow() function.
      **/
-    public void onDeleteRowAnimateEnd(View view, int position) {
-        /* Does nothing. */
+    public void onDeleteRowAnimateEnd(View view, int position)
+    {
+        reloadData();
     }/*}}}*/
     //@} OVERRIDABLES
 
@@ -226,8 +273,10 @@ public class CAndroidListView extends ListView
      * This function is called from the constructors, after the view is
      * constructed.
      **/
-    final void _internal_init() {
+    final void _internal_init()
+    {
         m_adapter = new CAndroidAdapter();
+        m_handleDel = null;
 
         /* The initial delegate is our selves. */
         m_adapter.setDelegate(this);
@@ -237,24 +286,29 @@ public class CAndroidListView extends ListView
     //@}
 
     /** \name INNER CLASSES */ //@{
-    // private class DeleteRowAnimation;/*{{{*/
+    // private class RowAnimationHandler;/*{{{*/
     /**
      * Implements the AnimationListener for the animated deletion of a row.
      **/
-    private class DeleteRowAnimation implements Animation.AnimationListener
+    private class RowAnimationHandler implements Animation.AnimationListener
     {
         /** \name CONSTRUCTOR */ //@{
-        // public DeleteRowAnimation(View animatedView, int rowPos, CAndroidListView listView);/*{{{*/
+        // public RowAnimationHandler(View animatedView, int rowPos, long id, IDeleteRowFinished handler);/*{{{*/
         /**
-         * Constructor
-         * \param animatedView View that will be animated.
-         * \param rowPos Row position of the \a animatedView.
-         * \param listView Pass the CAndroidListView instance to this object.
+         * Parametrized constructor.
+         * @param animatedView View that will be animated.
+         * @param rowPos Row position of the \a animatedView.
+         * @param id The identifier of the item.
+         * @param handler \c IDeleteRowFinished instance to be called when the
+         * animation ends.
+         * @since 2.4
          **/
-        public DeleteRowAnimation(View animatedView, int rowPos, CAndroidListView listView) {
+        public RowAnimationHandler(View animatedView, int rowPos, long id, IDeleteRowFinished handler)
+        {
             m_animatedView = animatedView;
             m_rowPosition  = rowPos;
-            m_listView     = listView;
+            m_rowID        = id;
+            m_handler      = handler;
         }/*}}}*/
         //@} CONSTRUCTOR
 
@@ -280,15 +334,20 @@ public class CAndroidListView extends ListView
          * Called when the animation ends.
          * \param animation The animation object.
          **/
-        public void onAnimationEnd(Animation animation) {
-            m_listView.onDeleteRowAnimateEnd(m_animatedView, m_rowPosition);
+        public void onAnimationEnd(Animation animation)
+        {
+            if (m_handler != null)
+                m_handler.deleteAnimationEnded(m_animatedView, m_rowPosition, m_rowID);
+
+            onDeleteRowAnimateEnd(m_animatedView, m_rowPosition);
         }/*}}}*/
         //@} AnimationListener IMPLEMENTATION
 
         /** \name DATA MEMBERS */ //@{
-        private CAndroidListView m_listView = null;     /**< Holds the list view instance. */
-        private View         m_animatedView = null;     /**< The animated view.            */
-        private int          m_rowPosition  = -1;       /**< Animated View position.       */
+        private IDeleteRowFinished m_handler;   /**< Called when finished.      */
+        private View    m_animatedView;         /**< The animated view.         */
+        private int     m_rowPosition;          /**< Animated View position.    */
+        private long    m_rowID;                /**< Row identifier.            */
         //@} DATA MEMBERS
     }/*}}}*/
     // private class CollapseRowAnimation;/*{{{*/
@@ -344,8 +403,38 @@ public class CAndroidListView extends ListView
     }/*}}}*/
     //@} INNER CLASSES
 
+    /** \name INNER INTERFACES */ //@{
+    // public interface IDeleteRowFinished;/*{{{*/
+    /**
+     * Interface called when the deletion of a row finishes.
+     * This interface is called only when the deletion is animated. The
+     * interface can be set in the
+     * CAndroidListView#setDeleteRowFinishedHandler() method or directly in
+     * the CAndroidListView#deleteRow(View,int,IDeleteRowFinished) method.
+     * @since 2.4
+     **/
+    public interface IDeleteRowFinished
+    {
+        // public void deleteAnimationEnded(View view, int itemPosition, long itemID);/*{{{*/
+        /**
+         * Called when the delete animation ends.
+         * @param view \c View removed from the list.
+         * @param itemPosition Zero based position of the item in the list.
+         * @param itemID Identifier of the item as queried from
+         * CAndroidListView#idForRow().
+         * @remarks When this method is called you should remove the element
+         * used to populate the item in the list. When this method returns the
+         * list is updated automaticaly. You does not need to call
+         * CAndroidListView#reloadData().
+         * @since 2.4
+         **/
+        public void deleteAnimationEnded(View view, int itemPosition, long itemID);/*}}}*/
+    }/*}}}*/
+    //@}
+
     /** \name DATA MEMBERS */ //@{
-    CAndroidAdapter m_adapter;                  /**< Used internally. */
+    CAndroidAdapter m_adapter;          /**< Used internally.           */
+    IDeleteRowFinished m_handleDel;     /**< Delete animation handler.  */
     //@}
 }
 // vim:syntax=java.doxygen

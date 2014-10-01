@@ -29,6 +29,7 @@ import android.widget.*;
 import x.android.utils.*;
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Abstracts a Androi View class.
  * The AbstractView can be used to bound to a class like an Activity or a View
  * building a common interface to these objects. Also, can be used to access

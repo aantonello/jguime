@@ -15,6 +15,7 @@
 package x.android.ui;
 
 /**
+ * \ingroup x_android_ui
  * Provides constant values used in CAndroidSliderView configuration.
  * This is an static class. That is, all its members are `static final`. This
  * class should not be instanteated.

@@ -24,6 +24,7 @@ import x.android.nms.INHandler;
 import x.android.nms.issuer;
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * New implementation of AbstractView class.
  * This new implementation avoids the instantiation of the class building a
  * cache of reusable elements. For this metter the constructors are protected.

@@ -30,6 +30,7 @@ import x.android.nms.*;
 
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * A slider view that provides functionality resemble SlidingDrawer.
  * This class builds a ViewGroup that must have only three Views or ViewGroups
  * as children. The top most View/ViewGroup will be the content View and will

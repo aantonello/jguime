@@ -26,6 +26,7 @@ import x.android.utils.*;
 import x.android.nms.*;
 /* }}} #imports */
 /**
+ * \ingroup x_android_ui
  * Implements a dialog with a progress meter and a text message.
  * The dialog can be shown in two ways: First, you construct in instance of
  * the class using the solely available constructor. After construct you can

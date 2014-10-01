@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 /**
+ * \ingroup x_android_ui
  * Sets the interface for a basic ListAdapter implementation in this library.
  *//* --------------------------------------------------------------------- */
 public interface IAndroidListAdapter extends ListAdapter

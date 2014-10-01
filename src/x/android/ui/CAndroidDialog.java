@@ -15,6 +15,7 @@
 package x.android;
 
 /**
+ * \ingroup x_android_ui
  * A base class for dialogs construction.
  *//* --------------------------------------------------------------------- */
 public class CAndroidDialog

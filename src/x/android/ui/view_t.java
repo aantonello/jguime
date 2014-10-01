@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.view.View;
 
 /**
+ * \ingroup x_android_ui
  * Sole implementation of the AbstractView class.
  * Used as a common implementation.
  *//* --------------------------------------------------------------------- */

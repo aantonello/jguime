@@ -67,6 +67,7 @@ jguime="$WORKHOME/plx/src/simple/jguime" CD=. in=onload.vim enc="utf8" {
    issuer.java
   }
   ui=ui {
+   _package.java
    static=. {
     ALERT.java
     SLIDER.java

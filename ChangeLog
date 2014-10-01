@@ -1,10 +1,8 @@
-Build: 248	Version: 2.4	Branch: Master
+Build: 252	Version: 2.4	Branch: Master
 
-	* changes: Removed.
-	* ChangeLog: Turn it back to using as Git Log messages.
-	* jguime-proj.vip: Renamed to jguime.vip.
-	* jguime.vip: Put under '$WORKHOME' tree again.
-	* jguime.vip: 'Github' is now the official repository.
-	* make.inc: Updated output version.
-	* doxyfile: Updated. Removed CLANG_* references.
-	* jguime.vip: Built. Everything Ok.
+	* arrays.java (join()): Changed to protect the loop against NULL
+	  elements in the passed array.
+	* ui/*.java: Updated documentation.
+	* CAndroidListView.java (IDeleteRowFinished): New interface
+	  declared.
+	* CAndroidListView.java (deleteRow()): New overloaded method.
