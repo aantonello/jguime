@@ -1,8 +1,4 @@
 Build: 252	Version: 2.4	Branch: Master
 
-	* arrays.java (join()): Changed to protect the loop against NULL
-	  elements in the passed array.
-	* ui/*.java: Updated documentation.
-	* CAndroidListView.java (IDeleteRowFinished): New interface
-	  declared.
-	* CAndroidListView.java (deleteRow()): New overloaded method.
+	* README.md: File updated.
+	* doxyfile: Configuration updated.
