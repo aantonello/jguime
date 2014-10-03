@@ -46,7 +46,7 @@ The root of the library directory has these files:
 + `make.inc`: A common makefile include file having some variables
     definitions. Why a makefile you will ask. Well, essentially I was writing
     my own makefiles too long before starting develop in Java. Also, a
-    `build.xml` used with [Ant](http://ant.apache.com) is just a makefile with
+    `build.xml` used with [Ant](http://ant.apache.org) is just a makefile with
     an XML makeup. The `build.xml` file is not supposed to be written by hand.
     You should use Eclipse or something to do this job. I don't. I prefer to
     organize my projects with a similar structure and don't be dependent of
