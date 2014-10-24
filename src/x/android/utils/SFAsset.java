@@ -15,17 +15,18 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.utils;
-/* Imports {{{ */
+/* #imports {{{ */
 import java.util.*;
-import java.io.InputStream;
+import java.io.*;
 
+import android.os.*;
 import android.app.Application;
 import android.content.*;
 import android.content.res.*;
 
 import x.android.utils.*;
 import x.android.ui.CAndroidApp;
-/* }}} Imports */
+/* }}} #imports */
 /**
  * \ingroup x_android_utils
  * Static class to help work with 'assets' resources in Android projects.
@@ -40,7 +41,7 @@ import x.android.ui.CAndroidApp;
  *//* --------------------------------------------------------------------- */
 public final class SFAsset
 {
-    /** \name Static Operations */ //@{
+    /** \name Assets Files */ //@{
     // public static InputStream Load(String resourcePath);/*{{{*/
     /**
      * This function loads the resource specified.
@@ -126,6 +127,59 @@ public final class SFAsset
         CStringTable stringTable = CStringTable.LoadStream(Load("errors.xml"));
         return stringTable.get(errCode);
     }/*}}}*/
+    //@}
+
+    /** \name External Storage */ //@{
+    // public static boolean isStorageReadable();/*{{{*/
+    /**
+     * Checks whether the external storage is readable.
+     * @return \b true when the external extorage is readable. Otherwise \b
+     * false.
+     * @remarks The external storage can be unreadable when the device is
+     * pluged via USB on a computer or other device. The external storage is
+     * mounted by that device and no one application can access the storage.
+     * @since 2.4
+     **/
+    public static boolean isStorageReadable()
+    {
+        String state = Environment.getExternalStorageState();
+        return (state.equals(Environment.MEDIA_MOUNTED) ||
+                state.equals(Environment.MEDIA_MOUNTED_READ_ONLY));
+    }
+    /*}}}*/
+    // public static boolean isStorageWritable();/*{{{*/
+    /**
+     * Checks whether the external storage is writable.
+     * @return \b true when the external extorage is writable. Otherwise \b
+     * false.
+     * @remarks The external storage can become unreacheable when the device
+     * is pluged via USB on a computer or other device. The external storage
+     * is mounted by that device and no other application can access it.
+     * @since 2.4
+     **/
+    public static boolean isStorageWritable()
+    {
+        String state = Environment.getExternalStorageState();
+        return (state.equals(Environment.MEDIA_MOUNTED));
+    }
+    /*}}}*/
+    // public static File    openDirectory(String dirType);/*{{{*/
+    /**
+     * Open an external storage directory.
+     * @param dirType String defining the directory to open. Valid directories
+     * are declared in the x::android::defs::RES#STORAGE interface.
+     * @return A \c File object pointing to the directory means success. When
+     * the function fails, \b null will be returned.
+     * @remarks The external storage must be accessible. You can check the
+     * accessibility of the storage by calling #isStorageReadable() or
+     * #isStorageWritable().
+     * @since 2.4
+     **/
+    public static File openDirectory(String dirType)
+    {
+        return Environment.getExternalStoragePublicDirectory(dirType);
+    }
+    /*}}}*/
     //@}
 
     /** \name Local Operations */ //@{

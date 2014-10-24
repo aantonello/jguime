@@ -1,3 +1,6 @@
-Build: 252	Version: 2.4	Branch: Master
+Build: 254	Version: 2.4	Branch: Master
 
-	* README.md: File updated.
+	* RES.java: Updated documentation. Also changed declaration from
+	  class to interface.
+	* SFAsset.java (isStorageReadable(), isStorageWritable(),
+	  openDirectory()): New functions added.
