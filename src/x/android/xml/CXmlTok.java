@@ -103,12 +103,13 @@ public class CXmlTok
     // public static CXmlTok LoadStream(InputStream is);/*{{{*/
     /**
      * Creates an CXmlTok object from an InputStream.
-     * \param is The stream to load the data.
+     * \param is The stream to load the data. It is closed after the reading
+     * operation.
      * \return A CXmlTok object created from the stream or \NULL, if the
      * stream could not be loaded. Notice that the XML file is not validated
      * in this operation. Any stream can be loaded.
      * \remarks This function recognizes the file encoding through its BOM
-     * bytes.
+     * (Byte Order Mark) bytes.
      **/
     public static CXmlTok LoadStream(InputStream is)
     {
@@ -151,7 +152,8 @@ public class CXmlTok
     // public static CXmlTok LoadStream(InputStream is, String enc);/*{{{*/
     /**
      * Creates an CXmlTok object from an InputStream.
-     * \param is The stream to load the data.
+     * \param is The stream to load the data. It is closed after the reading
+     * operation.
      * \param enc The character encoding of the stream. The object could find
      * the encoding looking into the file. But the stream is loaded into
      * memory to speed up the parsing. Knowing the file encoding before reading

@@ -76,5 +76,7 @@
   <string id="-36" value="Unreachable host" />
   <!-- ERROR.NOTSUP -->
   <string id="-37" value="Operation not supported" />
+  <!-- ERROR.STORAGE -->
+  <string id="-38" value="Storage Card not accessible" />
 </stringtable>
 

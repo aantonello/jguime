@@ -505,6 +505,18 @@ public final class strings
         return result;
     }/*}}}*/
 
+    // public static boolean empty(String str);/*{{{*/
+    /**
+     * Just check if the object exists and is empty.
+     * @param str The String object to check.
+     * @returns \b true when \a str is \b null or a zero length string. \b
+     * false otherwise.
+     * @since 2.4
+     **/
+    public static boolean empty(String str)
+    {
+        return (strings.length(str) == 0);
+    }/*}}}*/
     // public static boolean isHexChar(char c);/*{{{*/
     /**
      * Checks if a character can represent an hexadecimal number.

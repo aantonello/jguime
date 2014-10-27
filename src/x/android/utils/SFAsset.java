@@ -18,6 +18,7 @@ package x.android.utils;
 /* #imports {{{ */
 import java.util.*;
 import java.io.*;
+import java.nio.channels.*;
 
 import android.os.*;
 import android.app.Application;
@@ -126,6 +127,72 @@ public final class SFAsset
     {
         CStringTable stringTable = CStringTable.LoadStream(Load("errors.xml"));
         return stringTable.get(errCode);
+    }/*}}}*/
+    //@}
+
+    /** \name Standard Files */ //@{
+    // public static boolean copyFile(String originalFile, String destFile);/*{{{*/
+    /**
+     * Copy a file duplicating it in another place.
+     * @param originalFile Path and name of the origin file.
+     * @param destFile Path and name for the destination file.
+     * @returns \b true on success. \b false on failure.
+     * @since 2.4
+     **/
+    public static boolean copyFile(String originalFile, String destFile)
+    {
+        File originFile = new File(originalFile);
+        File targetFile = new File(destFile);
+
+        FileInputStream  fis = null;
+        FileOutputStream fos = null;
+
+        try {
+            fis = new FileInputStream(originFile);
+            fos = new FileOutputStream(targetFile);
+        }
+        catch (Exception e) {
+            debug.e(e, "$n in SFAsset.copyFile('%s', '%s')\n\t|=> $s\n"+
+                    "When constructing FileInputStream and FileOutputStream\n",
+                    originalFile, destFile);
+            return false;
+        }
+
+        FileChannel inChannel  = fis.getChannel();
+        FileChannel outChannel = fos.getChannel();
+
+        try
+        {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+            inChannel.close();
+            outChannel.close();
+            fis.close();
+            fos.close();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            /* So many things can go wrong here. We just output the error. */
+            debug.e(ex, "$n in SFAsset.copyFile('%s', '%s')\n\t| => $s\n",
+                    originalFile, destFile);
+        }
+        return false;
+    }/*}}}*/
+    // public static boolean moveFile(String originalFile, String destFile);/*{{{*/
+    /**
+     * Move a file from one place to another.
+     * @param originalFile Path and name of the origin file.
+     * @param destFile Path and name for the destination file.
+     * @returns \b true on success. \b false on failure.
+     * @since 2.4
+     **/
+    public static boolean moveFile(String originalFile, String destFile)
+    {
+        File originFile = new File(originalFile);
+        File targetFile = new File(destFile);
+
+        return originFile.renameTo(targetFile);
     }/*}}}*/
     //@}
 

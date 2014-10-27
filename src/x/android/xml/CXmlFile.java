@@ -14,8 +14,7 @@
  */
 package x.android.xml;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 import x.android.defs.*;
 import x.android.utils.*;
@@ -85,14 +84,68 @@ public class CXmlFile
         }
         return ((doc.root == null) ? null : doc);
     }/*}}}*/
+    // public static CXmlFile Load(String pathName, String encoding);/*{{{*/
+    /**
+     * Loads an XML file from disc.
+     * @param pathName Path name and extension of the file to load. Cannot be
+     * \b null not empty string.
+     * @param encoding The encoding of the file on disc. If \b null or empty
+     * string the default will be \b UTF-8.
+     * @return On success a newly created %CXmlFile object. Otherwise \b null.
+     * @since 2.4
+     **/
+    public static CXmlFile Load(String pathName, String encoding)
+    {
+        if (strings.empty(pathName)) return null;
+        if (strings.empty(encoding)) encoding = ENC.UTF8;
+
+        FileInputStream fis;
+
+        try { fis = new FileInputStream(pathName); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in CXmlFile::Load(String,String) for file: '%s'\n\t|=> $s\n",
+                    pathName);
+            return null;
+        }
+        return Load(fis, encoding);
+    }
+    /*}}}*/
+    // public static CXmlFile Load(File file, String enc);/*{{{*/
+    /**
+     * Loads an XML file from disc.
+     * @param file \c File object naming the file to load. Cannot be \b null.
+     * @param enc The encoding of the file on disc. If \b null or empty string
+     * the default will be \b UTF-8.
+     * @return On success a newly created %CXmlFile object. Otherwise \b null.
+     * @since 2.4
+     **/
+    public static CXmlFile Load(File file, String enc)
+    {
+        if (file == null) return null;
+
+        if (strings.empty(enc)) enc = ENC.UTF8;
+
+        FileInputStream fis;
+
+        try { fis = new FileInputStream(file); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in CXmlFile::Load(File,String) for file: '%s'\n\t|=> $s\n",
+                    file.getAbsolutePath());
+            return null;
+        }
+        return Load(fis, enc);
+    }/*}}}*/
     // public static CXmlFile Load(InputStream is);/*{{{*/
     /**
      * Loads a XML file from an InputStream.
      * \param is The \c InputStream with the XML file to load.
      * \returns The \c CXmlFile instance created or \b null if something goes
      * wrong.
+     * \remarks The \a is stream is passed to CXmlTok#LoadStream(InputStream).
+     * So it is closed when the reading ends. Even when it fails.
      **/
-    public static CXmlFile Load(InputStream is) {
+    public static CXmlFile Load(InputStream is)
+    {
         CXmlTok tok = CXmlTok.LoadStream( is );
         if (tok == null) return null;
 
@@ -105,6 +158,9 @@ public class CXmlFile
      * \param enc The encoding of the file. See \c x.android.defs#ENC.
      * \returns The \c CXmlFile instance created or \b null if something goes
      * wrong.
+     * \remarks The \a is stream is passed to
+     * CXmlTok#LoadStream(InputStream,String). So it is closed when the
+     * reading ends. Even when it fails.
      **/
     public static CXmlFile Load(InputStream is, String enc)
     {
@@ -145,6 +201,64 @@ public class CXmlFile
     //@}
 
     /** \name OVERRIDABLES */ //@{
+    // public void write(String pathName, String enc, boolean bom);/*{{{*/
+    /**
+     * Writes a file on disc.
+     * @param pathName Path, name and extension for the target file. Cannot be
+     * \b null nor an empty string.
+     * @param enc The encoding to be used to write the file. If \b null or
+     * empty string \b UTF-8 will be used.
+     * @param bom Set to \b true to write the Byte Order Mark in the beginning
+     * of the file. \b false to leave the mark of.
+     * @since 2.4
+     **/
+    public void write(String pathName, String enc, boolean bom)
+    {
+        if (strings.empty(pathName)) return;
+        if (strings.empty(enc)) enc = ENC.UTF8;
+
+        FileOutputStream fos;
+
+        try { fos = new FileOutputStream(pathName); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in CXmlFile::write(String,String,boolean) for file: '%s'\n\t|=> $s\n",
+                    pathName);
+            return;
+        }
+
+        write(fos, enc, bom);   /* "fos" is closed here. */
+    }
+    /*}}}*/
+    // public void write(File file, String enc, boolean bom);/*{{{*/
+    /**
+     * Writes a file on disc.
+     * @param file \c File object representing the file to write. Cannot be \b
+     * null.
+     * @param enc The encoding to be used to write the file. If \b null or
+     * empty string \b UTF-8 will be used.
+     * @param bom Set to \b true to write the Byte Order Mark in the beginning
+     * of the file. \b false to leave the mark of.
+     * @since 2.4
+     **/
+    public void write(File file, String enc, boolean bom)
+    {
+        if (file == null) return;
+
+        if (strings.empty(enc)) enc = ENC.UTF8;
+
+        FileOutputStream fos;
+
+        try { fos = new FileOutputStream(file); }
+        catch (Exception ex) {
+            debug.e(ex, "$n in CXmlFile::write(File,String,boolean) for file: '%s'\n\t|=> $s\n",
+                    file.getAbsolutePath());
+
+            return;
+        }
+
+        write(fos, enc, bom);   /* "fos" is closed here. */
+    }
+    /*}}}*/
     // public void write(OutputStream os, String enc, boolean bom);/*{{{*/
     /**
      * Writes the content of this XML file to a stream.
@@ -152,6 +266,7 @@ public class CXmlFile
      * \param enc The encoding to write the file.
      * \param bom Sets if BOM (byte order mark) will be written to the file or
      * not.
+     * \remarks The stream is closed after the writing ends.
      **/
     public void write(OutputStream os, String enc, boolean bom) {
         CStreamWriter writer = new CStreamWriter(os);
