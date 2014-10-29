@@ -1487,6 +1487,13 @@ public class stream_t implements DataInput, DataOutput
     // public final void dump();/*{{{*/
     /**
      * Writes the content of this stream in the standard ouput.
+     * The writing starts at the current position and goes until the
+     * #available() bytes are reached. The output is done in chuncks of 16
+     * bytes formated as hexadecimal values:
+     * <pre>
+     * [00 01 0A 0C BE BE CA FE FF EF CD 1A 98 33 22 11]
+     * </pre>
+     * Each value is space separated. The space is not part of the stream.
      **/
     public final void dump()
     {
@@ -1497,8 +1504,8 @@ public class stream_t implements DataInput, DataOutput
         debug.w("stream in chuncks of 16 bytes\n");
         debug.timestamp = false;
 
-        final int limit = arrays.length(m_data);
-        int chunck, i = 0;
+        final int limit = m_write;
+        int chunck, i = m_read;
         StringBuilder sb = new StringBuilder(48);
 
         while (i < limit)

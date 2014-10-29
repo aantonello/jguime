@@ -1,10 +1,4 @@
-Build: 260	Version: 2.4	Branch: Master
+Build: 262	Version: 2.4	Branch: Master
 
-	* ERROR.java (ERROR.STORAGE): New error code.
-	* {pt_BR,en_US}/errors.xml: Added description for ERROR::STORAGE.
-	* SFAsset.java (copyFile(), moveFile()): Two new methods added.
-	* strings.java (empty()): New method added.
-	* CXmlFile.java (Load(String,String)): New method added.
-	* CXmlFile.java (Load(File,String)): New method added.
-	* CXmlFile.java (write(String,String,boolean)): New method added.
-	* CXmlFile.java (write(File,String,boolean)): New method added.
+	* stream_t.java (dump()): Changed to write only the data starting
+	  in the current position.
