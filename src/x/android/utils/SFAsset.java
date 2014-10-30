@@ -39,6 +39,17 @@ import x.android.ui.CAndroidApp;
  * This class will use the `AssetManager` Android class to find the resources
  * you need. Read careful the functions documentation so you know how to
  * identify the required resource correctly.
+ *
+ * Some operations requires that an instance of the CAndroidApp class has been
+ * loaded. Notablue the SFAsset::Load(String) and SFAsset::getMessage(int)
+ * functions are dependent of that. If you don't want to extend this class you
+ * can add a reference to it directly in the AndroidManifest file. Using the
+ * application name atribute:
+ * ~~~~~~~~~~~~{.xml}
+ * <application android:name="x.android.ui.CAndroidApp" ... />
+ * ~~~~~~~~~~~~
+ * That is enough to Android instantiate the class and it will be available to
+ * the entire application.
  *//* --------------------------------------------------------------------- */
 public final class SFAsset
 {

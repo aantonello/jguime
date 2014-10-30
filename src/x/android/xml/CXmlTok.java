@@ -328,10 +328,17 @@ public class CXmlTok
      * \param count The number of characters to get.
      * \return A string formed of the characters read. If \a count is greater
      * than the number of characters remaining in the stream the function
-     * returns \b null.
+     * returns the remaining characters in the stream ignoring \a count. When
+     * there is no more characters to be read, the result is an empty string.
      **/
-    public final String next(int count) {
-        if ((m_index + count) >= m_stream.length) return null;
+    public final String next(int count)
+    {
+        if (m_index >= m_stream.length)
+            return strings.EMPTY;
+
+        if ((m_index + count) >= m_stream.length)
+            count = m_stream.length - m_index;
+
         String result = new String(m_stream, m_index, count);
         m_index += count;
         return result;

@@ -131,3 +131,29 @@ tags file will also be written in the `docs/help` directory named
 `jguime.dxt`. The `Makefile` script will take care of creating those
 directories if they don't exists yet.
 
+Resources
+---------
+
+This library provides a series of resource files to be added in the `assets`
+directory of the Android application. Mostly the resources are string tables
+with text in Brazilian Portuguese and US English. To get access to those
+files, besides copying the files in your `assets` directory, an instance of
+the [CAndroidApp](@ref x.android.ui.CAndroidApp) class must be loaded.
+`CAndroidApp` extends android.app.Application and provides some facilities to
+the running application. If you don't intend to create your own Application
+subclass (that should extend CAndroidApp) you can direct the Android OS to
+instantiate the class by setting its name in the application element of the
+AndroidManifest file, as in the following example:
+
+    <application
+      android:name="x.android.ui.CAndroidApp"
+      android:icon="..."
+      >
+      ...
+    </application>
+
+That is be enough to load an instance of the CAndroidApp class and make it
+available to the entire application. Without that, the
+[SFAsset](@ref x.android.utils.SFAsset) class will no work properly and will
+throw exceptions in some cases.
+

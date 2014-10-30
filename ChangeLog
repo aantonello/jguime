@@ -1,4 +1,6 @@
-Build: 262	Version: 2.4	Branch: Master
+Build: 264	Version: 2.4	Branch: Master
 
-	* stream_t.java (dump()): Changed to write only the data starting
-	  in the current position.
+	* CXmlTok.java (next(int)): Changed the return value of the
+	  function to be more resilient.
+	* SFAsset.java: Documentation update.
+	* README.md: Updated.
