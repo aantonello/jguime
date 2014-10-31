@@ -527,11 +527,31 @@ public final class strings
     public static boolean isHexChar(char c) {
         return ("0123456789ABCDEFabcdef".indexOf(c) >= 0);
     }/*}}}*/
-    // public static boolean startsWith(String prefix);/*{{{*/
+    // public static boolean startsWith(String str, char prefix);/*{{{*/
     /**
      * Checks if a string has the specified prefix.
-     * @param str String to be checked.
-     * @param prefix Prefix to compare to the \a str start.
+     * @param str String to be checked. If \b null or empty \b false will be
+     * returned.
+     * @param prefix Prefix to compare to the \a str first character.
+     * @return \b true if the \a str string starts with \a prefix. \b false
+     * otherwise.
+     **/
+    public static boolean startsWith(String str, char prefix)
+    {
+        if (strings.empty(str)) return false;
+
+        try { return (prefix == str.charAt(0)); }
+        catch (Exception ex) { /* Ignored excepcion. */ }
+
+        return false;
+    }/*}}}*/
+    // public static boolean startsWith(String str, String prefix);/*{{{*/
+    /**
+     * Checks if a string has the specified prefix.
+     * @param str String to be checked. If \b null or empty \b false will be
+     * returned.
+     * @param prefix Prefix to compare to the \a str start. If \b null or
+     * empty \b false will be returned.
      * @return \b true if the \a str string starts with \a prefix. \b false
      * otherwise.
      **/
@@ -543,11 +563,31 @@ public final class strings
 
         return false;
     }/*}}}*/
+    // public static boolean endsWith(String str, char suffix);/*{{{*/
+    /**
+     * Checks if a string has the specified suffix.
+     * @param str String to be checked. If \b null or empty \b false will be
+     * returned.
+     * @param suffix Suffix to compare to the \a str last character.
+     * @return \b true if the \a str string ends with \a suffix. \b false
+     * otherwise.
+     **/
+    public static boolean endsWith(String str, char suffix)
+    {
+        if (strings.empty(str)) return false;
+
+        try { return (suffix == str.charAt(str.length() - 1)); }
+        catch (Exception ex) { /* Ignored excepcion. */ }
+
+        return false;
+    }/*}}}*/
     // public static boolean endsWith(String str, String suffix);/*{{{*/
     /**
      * Checks if a string has the specified suffix.
-     * @param str String to be checked.
-     * @param suffix Suffix to compare to the \a str start.
+     * @param str String to be checked. If \b null or empty \b false will be
+     * returned.
+     * @param suffix Suffix to compare to the \a str start. If \b null or
+     * empty \b false will be returned.
      * @return \b true if the \a str string ends with \a suffix. \b false
      * otherwise.
      **/
@@ -586,6 +626,139 @@ public final class strings
 
         return strings.substr(path, (index + 1), -1);
     }/*}}}*/
+
+    /** \name StringBuilder Support */ //@{
+    // public static boolean empty(StringBuilder sb);/*{{{*/
+    /**
+     * Checks if the object exists and is empty.
+     * @param sb The StringBuilder object to check.
+     * @returns \b true when \a sb is \b null or has no content. \b
+     * false otherwise.
+     * @since 2.4
+     **/
+    public static boolean empty(StringBuilder sb)
+    {
+        return ((sb == null) || (sb.length() == 0));
+    }
+    /*}}}*/
+    // public static boolean startsWith(StringBuilder sb, char c);/*{{{*/
+    /**
+     * Checks whether the StringBuilder object contents starts with the passed
+     * character.
+     * @param sb The \c StringBuilder object. If \b null or empty the result
+     * is \b false.
+     * @param c Character to compare with the first character in \a sb.
+     * @returns \b true if the StringBuild object has the character \a c as
+     * its first character. Otherwise \b false.
+     * @since 2.4
+     **/
+    public static boolean startsWith(StringBuilder sb, char c)
+    {
+        if ((sb == null) || (sb.length() == 0))
+            return false;
+
+        try { return (c == sb.charAt(0)); }
+        catch (Exception ex) {
+            debug.e(ex, "Useless $n at strings::startsWith(StringBuilder, char)");
+        }
+        return false;
+    }
+    /*}}}*/
+    // public static boolean startsWith(StringBuilder sb, String str);/*{{{*/
+    /**
+     * Checks whether the StringBuilder object contents starts with the passed
+     * string.
+     * @param sb The \c StringBuilder object. If \b null or empty the result
+     * will be \b false.
+     * @param str String to check. When \b null the result will be \b false.
+     * @returns \b true if the StringBuild object has the String \a str as
+     * its first substring. Otherwise \b false.
+     * @since 2.4
+     **/
+    public static boolean startsWith(StringBuilder sb, String str)
+    {
+        if (strings.empty(str) || strings.empty(sb))
+            return false;
+
+        try {
+            if (str.equals(sb.substring(0, str.length())))
+                return true;
+        }
+        catch (Exception ex) {
+            debug.e(ex, "Useless $n at strings::startsWith(StringBuilder, String)");
+        }
+        return false;
+    }
+    /*}}}*/
+    // public static boolean endsWith(StringBuilder sb, char c);/*{{{*/
+    /**
+     * Checks if a StringBuilder has the specified character suffix.
+     * @param sb StringBuilder object to check. If \b null or empty the result
+     * will be \b null.
+     * @param c Character to be compared with the last character in \a sb.
+     * @return \b true if the \a str string ends with \a suffix. \b false
+     * otherwise.
+     * @since 2.4
+     **/
+    public static boolean endsWith(StringBuilder sb, char c)
+    {
+        if (strings.empty(sb)) return false;
+
+        try { return (c == sb.charAt(sb.length() - 1)); }
+        catch (Exception ex) {
+            debug.e(ex, "Useless $n at strings.endsWith(StringBuilder, char)");
+        }
+        return false;
+    }
+    /*}}}*/
+    // public static boolean endsWith(StringBuilder sb, String str);/*{{{*/
+    /**
+     * Checks if a StringBuilder ends with the specified string.
+     * @param sb StringBuilder to check. When \b null or empty, \b false will
+     * be returned.
+     * @param str String to compare with the final substring of \a sb. If \b
+     * null or empty \b false will be returned.
+     * @returns \b true if the \a sb object ends with the value of \a str.
+     * Otherwise \b false.
+     * @since 2.4
+     **/
+    public static boolean endsWith(StringBuilder sb, String str)
+    {
+        if (strings.empty(sb) || strings.empty(str))
+            return false;
+
+        try {
+            if (str.equals(sb.substring(sb.length() - str.length())))
+                return true;
+        }
+        catch (Exception ex) {
+            debug.e(ex, "Unseless $n at strings.endsWith(StringBuilder, String)");
+        }
+        return false;
+    }
+    /*}}}*/
+    // public static int     indexOf(String str, StringBuilder sb);/*{{{*/
+    /**
+     * Gets index of a string or character in a StringBuilder object.
+     * @param str String to check. If \b null or empty the result will be \b
+     * -1.
+     * @param sb StringBuilder to search for \a str. If \b null or empty the
+     * result will be \b -1.
+     * @return When \a str is found in \a sb, the index of its first character
+     * in \a sb will be returned. Otherwise the function returns \b -1.
+     * @since 2.4
+     **/
+    public static int indexOf(String str, StringBuilder sb)
+    {
+        if (strings.empty(sb)) return -1;
+
+        try { return sb.indexOf(str); }
+        catch (Exception ex) { /* Ignored useless exception. */ }
+
+        return -1;
+    }
+    /*}}}*/
+    //@}
 
     public static final String EMPTY = "";      /**< Empty string object. */
 }

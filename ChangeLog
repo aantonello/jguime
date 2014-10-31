@@ -1,6 +1,13 @@
-Build: 264	Version: 2.4	Branch: Master
+Build: 268	Version: 2.4	Branch: Master
 
-	* CXmlTok.java (next(int)): Changed the return value of the
-	  function to be more resilient.
-	* SFAsset.java: Documentation update.
-	* README.md: Updated.
+	* strings.java (empty(StringBuilder)): New method added.
+	* strings.java (startsWith(StringBuilder, char)): New method
+	  added.
+	* strings.java (startsWith(StringBuilder, String)): New method
+	  added.
+	* strings.java (endsWith(StringBuilder, char)): New method added.
+	* strings.java (endsWith(StringBuilder, String)): New method
+	  added.
+	* strings.java (startsWith(String, char)): New method added.
+	* strings.java (endsWith(String, char)): New method added.
+	* strings.java (indexOf(String, StringBuilder)): New method added.

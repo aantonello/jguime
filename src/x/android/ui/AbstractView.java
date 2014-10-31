@@ -753,6 +753,22 @@ public abstract class AbstractView<T extends AbstractView<T>>
     //@}
 
     /** \name AdapterView METHODS */ //@{
+    // public Adapter adapter();/*{{{*/
+    /**
+     * Gets the Adapter object bound to an AdapterView.
+     * @return The Adapter object or \b null.
+     * @remarks The current selected view must be an instance of or extension
+     * of AdapterView. Otherwise the result will be \b null.
+     * @since 2.4
+     **/
+    public Adapter adapter()
+    {
+        if (m_view instanceof AdapterView)
+            return ((AdapterView)m_view).getAdapter();
+
+        return null;
+    }
+    /*}}}*/
     // public T adapter(Adapter a);/*{{{*/
     /**
      * Sets a ListAdapter for the operating view.
