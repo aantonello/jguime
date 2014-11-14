@@ -999,7 +999,7 @@ public final class arrays
      **/
     public static int search(byte[] array, int start, int count, byte value)
     {
-        if ((array == null) || (array.length == 0) || (start < 0) || (start >= count))
+        if ((array == null) || (array.length <= start) || (start < 0))
             return -1;
 
         if ((count < 0) || (count > (array.length - start)))
@@ -1017,7 +1017,7 @@ public final class arrays
      **/
     public static int search(byte[] array, int start, int count, short value)
     {
-        if ((array == null) || (array.length == 0) || (start < 0) || (start >= count))
+        if ((array == null) || (array.length <= start) || (start < 0))
             return -1;
 
         if ((count < 0) || (count > (array.length - start)))
