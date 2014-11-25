@@ -394,7 +394,7 @@ public final class debug
     //@}
 
     /** \name PUBLIC CONSTANTS */ //@{
-    public static final String TAG = "X__X";    /**< Logging tag.   */
+    public static String TAG = "X__X";          /**< Logging tag.   */
     //@}
 }
 // vim:syntax=java.doxygen

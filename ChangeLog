@@ -1,3 +1,4 @@
-Build: 269	Version: 2.4	Branch: Master
+Build: 270	Version: 2.4	Branch: Master
 
-	* utils/arrays.java (search()): Bug on passed arguments check.
+	* debug.java (TAG): Constant now is non-static. Can be changed by
+	  an application.
