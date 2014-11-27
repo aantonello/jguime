@@ -12,6 +12,16 @@ jguime="$WORKHOME/plx/src/simple/jguime" CD=. in=onload.vim enc="utf8" {
     errors.xml
     calendar.xml
    }
+   pt=pt {
+    errors.xml
+    calendar.xml
+   }
+   en=en {
+    errors.xml
+    calendar.xml
+   }
+   errors.xml
+   calendar.xml
    version.xml
   }
  }

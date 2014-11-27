@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<stringtable>
+  <string id="1" value="domingo" />
+  <string id="2" value="segunda-feira" />
+  <string id="3" value="terça-feira" />
+  <string id="4" value="quarta-feira" />
+  <string id="5" value="quinta-feira" />
+  <string id="6" value="sexta-feira" />
+  <string id="7" value="sábado" />
+  
+  <string id="11" value="Janeira" />
+  <string id="12" value="Fevereiro" />
+  <string id="13" value="Março" />
+  <string id="14" value="Abril" />
+  <string id="15" value="Maio" />
+  <string id="16" value="Junho" />
+  <string id="17" value="Julho" />
+  <string id="18" value="Agosto" />
+  <string id="19" value="Setembro" />
+  <string id="20" value="Outubro" />
+  <string id="21" value="Novembro" />
+  <string id="22" value="Dezembro" />
+</stringtable>

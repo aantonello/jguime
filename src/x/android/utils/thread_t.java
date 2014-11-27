@@ -179,7 +179,7 @@ public class thread_t implements Runnable
      * Signals this thread to end its operations.
      * The actual result is produced by the implementation. It should monitor
      * the state of the thread using the \c aborted() method and returns from
-     * the main function as soon as possible.
+     * the \c execute() function as soon as possible.
      * \return The normal result is \c ERROR.SUCCESS. If the thread is already
      * stoped the return code will be \c ERROR.FAILED.
      **/
@@ -194,13 +194,12 @@ public class thread_t implements Runnable
      * The function will wait until the thread fully stops or the interval
      * passed elapses, which comes first.
      * \param interval The maximum interval, in milliseconds, for the function
-     *      to wait. If this value is zero the function will act as the \c
-     *      abort() method except in the return value. That is, the thread will
-     *      be signaled and the function will return \c ERROR.SUCCESS
-     *      invariably. If this value is \c INFINITE (-1L) the function will
-     *      never return until the thread fully stops. Notice that this is the
-     *      only negative value allowed. If another negative value is passed
-     *      the function will fail.
+     * to wait. If this value is zero the function will act as the \c abort()
+     * method except in the return value. That is, the thread will be signaled
+     * and the function will return \c ERROR.SUCCESS invariably. If this value
+     * is \c INFINITE (-1L) the function will never return until the thread
+     * fully stops. Notice that this is the only negative value allowed. If
+     * another negative value is passed the function will fail.
      * \return If the thread stops before the interval elapsed the result will
      * be \c ERROR.SUCCESS. If the interval elapses before the thread stops
      * the result will be \c ERROR.EXPIRED. If the thread is not running when
@@ -233,6 +232,17 @@ public class thread_t implements Runnable
         }
         return ERROR.SUCCESS;
     }/*}}}*/
+    // public final long id();/*{{{*/
+    /**
+     * Retrieves this thread identifier.
+     * @return A \b long value with this thread identifier.
+     * @since 2.4
+     **/
+    public final long id()
+    {
+        return ((m_thread != null) ? m_thread.getId() : 0L);
+    }
+    /*}}}*/
     //@}
 
     /** \name OVERRIDABLE */ //@{

@@ -303,6 +303,9 @@ public final class SFAsset
         AssetManager am = res.getAssets();
 
         try {
+//            InputStream is = am.open(assetFile);
+//            debug.w("SFAsset::_internal_open('%s'): %s", assetFile, is);
+//            return is;
             return am.open(assetFile);
         }
         catch (Exception ex) {
