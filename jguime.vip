@@ -1,4 +1,4 @@
-jguime="$WORKHOME/plx/src/simple/jguime" CD=. in=onload.vim enc="utf8" {
+jguime="$WORKHOME/plx/src/jguime" CD=. in=onload.vim enc="utf8" {
  docs=docs enc="latin1" {
   NOTES
  }
