@@ -17,6 +17,7 @@ JL = $(JAVA_HOME)/bin/jar.exe
 RC = $(JAVA_HOME)/bin/jar.exe
 CP = rsync
 ANDROID := $(shell cygpath -m $(ANDROID_HOME))
+HTDOCS := /c/xampp/htdocs/docs/$(TARGET)-$(APPVER)
 else
 JC = javac
 JL = jar
@@ -28,13 +29,13 @@ endif
 # -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
-SDKDIR = $(ANDROID)/platforms/android-19
+SDKDIR = $(ANDROID)/sdk/platforms/android-19
 BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 
 # -----------------------------------------------------------------------------
-# DEFAULT COMMAND LINE OPTIONS
+# DEFAULT COMMAND LINE OPTIONS -source 1.5 -target 1.5
 # -----------------------------------------------------------------------------
-JCOPTS = -encoding UTF-8 -source 1.5 -target 1.5 -Xlint:deprecation -Xmaxerrs 5
+JCOPTS = -encoding UTF-8 -Xlint:deprecation -Xmaxerrs 5
 CTAGS  = -R --extra=+q --fields=+iaS --file-scope=no --java-kinds=-eg --tag-relative=no
 
 # -----------------------------------------------------------------------------
@@ -63,10 +64,10 @@ clean :
 	rm -fR ./$(BINDIR)
 	rm -fR ./$(TMPDIR)
 
-cleandocs :
+docs-clean :
 	rm -fR ./$(DOCDIR)
 
-cleanall : clean cleandocs
+all-clean : clean cleandocs
 	rm -f $(OUTTAG)
 
 $(OUTDIR) :
@@ -92,11 +93,10 @@ install: $(APKDIR) $(RSCDIR)
 	$(CP) $(CPOPTS) $(OUTPUT) $(APKDIR)
 	$(CP) $(CPOPTS) $(OUTDXT) $(PLXLIB)
 	$(CP) $(CPOPTS) $(RESDIR)/ $(RSCDIR)
-	-publish -doc plx/$(TARGET) -f -q
 
-#	-cp ./$(OUTPUT) $(APKDIR)/
-# 	-cp ./$(OUTDXT) $(PLXLIB)/
-# 	-cp -r ./$(RESDIR)/* $(RSCDIR)/
+docs-install: $(OUTDXT)
+	$(CP) $(CPOPTS) $(DOCDIR)/html/ $(HTDOCS)/
+	$(CP) $(CPOPTS) $(OUTDXT) $(PLXLIB)
 
 tags:
 	ctags $(CTAGS) -f $(OUTTAG) $(PWD)/$(SRCDIR)/*
@@ -104,3 +104,15 @@ tags:
 docs: $(DOCDIR)
 	( cat doxyfile ; echo "$(PROJECT_NUMBER)" ; echo "$(GENERATE_TAGFILE)" ) | doxygen -
 
+help :
+	@echo -e "Makefile targets:\n"\
+		  "clean             Clean up the current build.\n"\
+		  "docs-clean        Clean up the generated documentation.\n"\
+		  "all-clean         Clean up documentation and build.\n"\
+		  "all               Rebuild (clean and buid) the software (default).\n"\
+		  "install           Publishes the library.\n"\
+		  "docs              Build the documentation tree.\n"\
+		  "docs-install      Publishes the documentation.\n"\
+		  "tags              Build a tags file in the dist directory.\n"\
+		  "help              Print these lines of knowledge.\n"
+		

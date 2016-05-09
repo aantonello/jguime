@@ -1,8 +1,0 @@
-Build: 274	Version: 2.4	Branch: Master
-
-	* res/jguime/pt/{errors,calendar}.xml: New resource files for
-	  Portuguese language other than Brazil.
-	* res/jguime/en/{errors,calendar}.xml: New resource files for
-	  English language other than US.
-	* res/jguime/{errors,calendar}.xml: New resource files in
-	  English language for locales not directly supported.
