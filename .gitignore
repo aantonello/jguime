@@ -3,6 +3,7 @@
 .commit
 changes
 jguime.tags
+ChangeLog
 
 # Exclude all these directories
 bin/
