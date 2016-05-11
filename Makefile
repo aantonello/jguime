@@ -91,7 +91,6 @@ $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 
 install: $(APKDIR) $(RSCDIR)
 	$(CP) $(CPOPTS) $(OUTPUT) $(APKDIR)
-	$(CP) $(CPOPTS) $(OUTDXT) $(PLXLIB)
 	$(CP) $(CPOPTS) $(RESDIR)/ $(RSCDIR)
 
 docs-install: $(OUTDXT)
