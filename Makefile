@@ -29,7 +29,7 @@ endif
 # -----------------------------------------------------------------------------
 # BOOT CLASS PATH AND LIBRARIES PATH
 # -----------------------------------------------------------------------------
-SDKDIR = $(ANDROID)/sdk/platforms/android-19
+SDKDIR = $(ANDROID)/platforms/android-19
 BOOTCP = -bootclasspath $(SDKDIR)/android.jar
 
 # -----------------------------------------------------------------------------

@@ -118,6 +118,7 @@ jguime="$WORKHOME/plx/src/jguime" CD=. in=onload.vim enc="utf8" {
   Makefile
   make.jse
  }
+ .gvimrc
  .gitignore
  onload.vim
  doxyfile
