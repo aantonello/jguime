@@ -4,32 +4,27 @@ JGUIME
 JGUIME is an acronym from Java Graphic User Interface for Micro Edition.
 
 Back on 2007, JGUIME was a library to build a user interface on cell phones
-supported by J2ME. Today it is a library to interface some facilities with
-Android and Java 1.5.
+supported by J2ME. Today it is a library to interface and support Android and
+Java.
 
 It carries some of my personal tastes about development and my feelings about
-Exception handling in Java (I hate them).
+Exception handling in Java (It's too much).
 
 Today all code especially built to J2ME was removed. Only the interface with
-Java 1.5 and Android remains.
-
-This library is in a transition state. It will give its place to a new version
-called **Simple Framework**, designed to be more *developer friendly* and
-targeting some common issues about Android implementation. While this doesn't
-happen the library is actively maintained.
+Java and Android remains.
 
 Directory Structure
 -------------------
 
 + **docs**: Some notes taken. This is where the documentation generated with
 [Doxygen](http://www.doxygen.org) is written. Why Doxygen? Because it is much
-more smarter than JavaDoc.
+smarter than JavaDoc.
 + **res**: Resources. It is not packed inside the `.jar` file. Instead it is
 published as is to be inserted in the `assets` directory of an Android
-project.
+project. Android lacks the implementation supporting resources inside `jar` files.
 + **src**: All source code is inside of this directory.
   + **x/android**: Root directory.
-    + **defs**: Constants declarations.
+    + **defs**: Constant declarations.
     + **utils**: A bunch of useful classes.
     + **io**: Classes to read and write streams.
     + **bt**: Bluetooth support.
@@ -73,7 +68,7 @@ The root of the library directory has these files:
     maintained any more and, if you need, change it according to your needs.
     Today I use the same `Makefile` in Mac, Linux or Windows (under MSys).
 + `.gitignore`: You should know what this file is.
-+ `onload.vim`: This is [Vim](http://www.vim.org) script thats configure this
++ `onload.vim`: This is [Vim](http://www.vim.org) script that configures this
     project in my environment.
 + `doxyfile`: The Doxygen documentation configuration.
 + `README.md`: This file.
@@ -108,9 +103,6 @@ developed by Microsoft. But, as I said, it is out of date and is not
 maintained any more. You should using [Cygwin](https://www.cygwin.com) or
 [Msys](http://www.mingw.org) instead. The `Makefile` script works under
 Cygwin pretty well.
-
-That is pretty much it. Type `make` (or `nmake -f make.jse` under Windows)
-and everything should work just fine.
 
 Building the documentation
 --------------------------
@@ -152,7 +144,7 @@ AndroidManifest file, as in the following example:
       ...
     </application>
 
-That is be enough to load an instance of the CAndroidApp class and make it
+That should be enough to load an instance of the CAndroidApp class and make it
 available to the entire application. Without that, the
 [SFAsset](@ref x.android.utils.SFAsset) class will no work properly and will
 throw exceptions in some cases.
