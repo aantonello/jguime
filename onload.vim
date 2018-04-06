@@ -13,12 +13,12 @@ endif
 let g:did_jguime = 1
 
 " ApplyTemplate variables
-let g:atpl_UsersList["@AUTHORMAIL@"] = '<aantonello@paralaxe.com.br>'
+let g:atpl_UsersList["@AUTHORMAIL@"] = '<antonello.ale@gmail.com>'
 let g:atpl_UsersList["@PROJECTNAME@"] = 'jguime'
 let g:atpl_UsersList["@PROJECT@"] = 'jguime'
 let g:atpl_UsersList["@PACKAGE@"] = 'x.android'
-let g:atpl_UsersList["@OWNER@"]   = 'Paralaxe Tecnologia'
-let g:atpl_UsersList["@VERSION@"] = '2.4'
+let g:atpl_UsersList["@OWNER@"]   = 'Alessandro Antonello'
+let g:atpl_UsersList["@VERSION@"] = '2.5'
 
 " Special highlighting configuration
 let java_highlight_java_lang_ids = 1
