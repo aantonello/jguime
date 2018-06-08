@@ -5,6 +5,7 @@ if has('win32')
 elseif has('win32unix')
     compiler javac
 endif
+set fdm=marker
 
 " Do this only once.
 if exists('g:did_jguime')
