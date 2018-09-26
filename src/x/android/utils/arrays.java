@@ -24,7 +24,7 @@ import x.android.defs.ERROR;
 public final class arrays
 {
     /** \name LENGTH PROPERTY */ //@{
-    // public static int length(byte[] array);/*{{{*/
+
     /**
      * Safely gets the length of an array.
      * \param array The array thats the length should be retrieved.
@@ -34,59 +34,59 @@ public final class arrays
     public static int length(byte[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
-    // public static int length(char[] array);/*{{{*/
+    }
+
     /**
      * \copydoc arrays#length(byte[])
      **/
     public static int length(char[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
-    // public static int length(short[] array);/*{{{*/
+    }
+
     /**
      * \copydoc arrays#length(byte[])
      **/
     public static int length(short[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
-    // public static int length(int[] array);/*{{{*/
+    }
+
     /**
      * \copydoc arrays#length(byte[])
      **/
     public static int length(int[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
-    // public static int length(long[] array);/*{{{*/
+    }
+
     /**
      * \copydoc arrays#length(byte[])
      **/
     public static int length(long[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
-    // public static int length(String[] array);/*{{{*/
+    }
+
     /**
      * \copydoc arrays#length(byte[])
      **/
     public static int length(String[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
-    // public static int length(Object[] array);/*{{{*/
+    }
+
     /**
      * \copydoc arrays#length(byte[])
      **/
     public static int length(Object[] array)
     {
         return ((array == null) ? 0 : array.length);
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE set() METHOD */ //@{
-    // public static void set(byte[] array, byte val);/*{{{*/
+
     /**
      * Fills the array with some value.
      * \param array The array to be filled. The entire array length will be
@@ -95,44 +95,44 @@ public final class arrays
      **/
     public static void set(byte[] array, byte val) {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(char[] array, char val);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],byte) */
     public static void set(char[] array, char val)
     {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(short[] array, short val);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],byte) */
     public static void set(short[] array, short val)
     {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(int[] array, int val);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],byte) */
     public static void set(int[] array, int val)
     {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(long[] array, long val);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],byte) */
     public static void set(long[] array, long val)
     {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(String[] array, String val);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],byte) */
     public static void set(String[] array, String val)
     {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(Object[] array, Object val);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],byte) */
     public static void set(Object[] array, Object val)
     {
         arrays.set(array, val, 0, arrays.length(array));
-    }/*}}}*/
-    // public static void set(byte[] array, int val, int first, int count);/*{{{*/
+    }
+
     /**
      * Fills an area of the array with some value.
      * \param array The array to be filled.
@@ -148,8 +148,8 @@ public final class arrays
         for (int i = first; i < last; i++) {
             array[i] = (byte)(val & 0x000000FF);
         }
-    }/*}}}*/
-    // public static void set(char[] array, char val, int first, int count);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],int,int,int) */
     public static void set(char[] array, char val, int first, int count)
     {
@@ -157,8 +157,8 @@ public final class arrays
         for (int i = first; i < limit; i++) {
             array[i] = val;
         }
-    }/*}}}*/
-    // public static void set(short[] array, int val, int first, int count);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],int,int,int) */
     public static void set(short[] array, int val, int first, int count)
     {
@@ -166,8 +166,8 @@ public final class arrays
         for (int i = first; i < limit; i++) {
             array[i] = (short)(val & 0x0000FFFF);
         }
-    }/*}}}*/
-    // public static void set(int[] array, int val, int first, int count);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],int,int,int) */
     public static void set(int[] array, int val, int first, int count)
     {
@@ -175,8 +175,8 @@ public final class arrays
         for (int i = first; i < limit; i++) {
             array[i] = val;
         }
-    }/*}}}*/
-    // public static void set(long[] array, long val, int first, int count);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],int,int,int) */
     public static void set(long[] array, long val, int first, int count)
     {
@@ -184,8 +184,8 @@ public final class arrays
         for (int i = first; i < limit; i++) {
             array[i] = val;
         }
-    }/*}}}*/
-    // public static void set(String[] array, String val, int first, int count);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],int,int,int) */
     public static void set(String[] array, String val, int first, int count)
     {
@@ -193,8 +193,8 @@ public final class arrays
         for (int i = first; i < limit; i++) {
             array[i] = val;
         }
-    }/*}}}*/
-    // public static void set(Object[] array, Object val, int first, int count);/*{{{*/
+    }
+
     /** \copydoc arrays#set(byte[],int,int,int) */
     public static void set(Object[] array, Object val, int first, int count)
     {
@@ -202,11 +202,11 @@ public final class arrays
         for (int i = first; i < limit; i++) {
             array[i] = val;
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE copy() METHOD */ //@{
-    // public static void copy(byte[] dst, int dstInd, byte[] src, int srcInd, int count);/*{{{*/
+
     /**
      * Copy elements from one array to another.
      * \param dst The destination array.
@@ -229,8 +229,8 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
-    // public static void copy(char[] dst, int dstInd, char[] src, int srcInd, int count);/*{{{*/
+    }
+
     /**
      * \copydoc copy(byte[],int,byte[],int,int);
      **/
@@ -240,8 +240,8 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
-    // public static void copy(short[] dst, int dstInd, short[] src, int srcInd, int count);/*{{{*/
+    }
+
     /**
      * \copydoc copy(byte[],int,byte[],int,int);
      **/
@@ -251,8 +251,8 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
-    // public static void copy(int[] dst, int dstInd, int[] src, int srcInd, int count);/*{{{*/
+    }
+
     /**
      * \copydoc copy(byte[],int,byte[],int,int);
      **/
@@ -262,8 +262,8 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
-    // public static void copy(long[] dst, int dstInd, long[] src, int srcInd, int count);/*{{{*/
+    }
+
     /**
      * \copydoc copy(byte[],int,byte[],int,int);
      **/
@@ -273,8 +273,8 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
-    // public static void copy(String[] dst, int dstInd, String[] src, int srcInd, int count);/*{{{*/
+    }
+
     /**
      * \copydoc copy(byte[],int,byte[],int,int);
      **/
@@ -284,8 +284,8 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
-    // public static void copy(Object[] dst, int dstInd, Object[] src, int srcInd, int count);/*{{{*/
+    }
+
     /**
      * \copydoc copy(byte[],int,byte[],int,int)
      **/
@@ -295,11 +295,11 @@ public final class arrays
         for (int i = 0; i < count; i++) {
             dst[i+dstInd] = src[i+srcInd];
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE move() METHOD */ //@{
-    // public static void move(byte[] dst, int dstIdx, byte[] src, int srcIdx, int count);/*{{{*/
+
     /**
      * Move data from one array to another.
      * Notice the different order of parameters compared with \c
@@ -331,8 +331,8 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
-    // public static void move(char[] dst, int dstIdx, char[] src, int srcIdx, int count);/*{{{*/
+    }
+
     /**
      * \copydoc move(byte[],int,byte[],int,int)
      **/
@@ -350,8 +350,8 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
-    // public static void move(short[] dst, int dstIdx, short[] src, int srcIdx, int count);/*{{{*/
+    }
+
     /**
      * \copydoc move(byte[],int,byte[],int,int)
      **/
@@ -369,8 +369,8 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
-    // public static void move(int[] dst, int dstIdx, int[] src, int srcIdx, int count);/*{{{*/
+    }
+
     /**
      * \copydoc move(byte[],int,byte[],int,int)
      **/
@@ -388,8 +388,8 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
-    // public static void move(long[] dst, int dstIdx, long[] src, int srcIdx, int count);/*{{{*/
+    }
+
     /**
      * \copydoc move(byte[],int,byte[],int,int)
      **/
@@ -407,8 +407,8 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
-    // public static void move(String[] dst, int dstIdx, String[] src, int srcIdx, int count);/*{{{*/
+    }
+
     /**
      * \copydoc move(byte[],int,byte[],int,int)
      **/
@@ -426,8 +426,8 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
-    // public static void move(Object[] dst, int dstIdx, Object[] src, int srcIdx, int count);/*{{{*/
+    }
+
     /**
      * \copydoc move(byte[],int,byte[],int,int)
      **/
@@ -445,11 +445,11 @@ public final class arrays
         while (--count >= 0) {
             dst[dstIdx + count] = src[srcIdx + count];
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE realloc() METHOD */ //@{
-    // public static byte[]   realloc(byte[] array, int size);/*{{{*/
+
     /**
      * Reallocate an array.
      * The function creates a new array of size \a size, copies the data from
@@ -467,8 +467,8 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
-    // public static char[]   realloc(char[] array, int size);/*{{{*/
+    }
+
     /**
      * \copydoc realloc(byte[],int)
      **/
@@ -480,8 +480,8 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
-    // public static short[]  realloc(short[] array, int size);/*{{{*/
+    }
+
     /**
      * \copydoc realloc(byte[],int)
      **/
@@ -493,8 +493,8 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
-    // public static int[]    realloc(int[] array, int size);/*{{{*/
+    }
+
     /**
      * \copydoc realloc(byte[],int)
      **/
@@ -506,8 +506,8 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
-    // public static long[]   realloc(long[] array, int size);/*{{{*/
+    }
+
     /**
      * \copydoc realloc(byte[],int)
      **/
@@ -519,8 +519,8 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
-    // public static String[] realloc(String[] array, int size);/*{{{*/
+    }
+
     /**
      * \copydoc realloc(byte[],int)
      **/
@@ -532,8 +532,8 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
-    // public static Object[] realloc(Object[] array, int size);/*{{{*/
+    }
+
     /**
      * \copydoc realloc(byte[],int)
      **/
@@ -545,11 +545,11 @@ public final class arrays
         if (array == null) return memory;
         arrays.copy(memory, 0, array, 0, ((size < count) ? size : count));
         return memory;
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE add() METHOD */ //@{
-    // public static byte[]   add(byte[] array, int pos, int val);/*{{{*/
+
     /**
      * Adds an element to the array.
      * The function increases the length of the array to insert the new value.
@@ -577,8 +577,8 @@ public final class arrays
             array[pos] = (byte)(val & 0x000000FF);
         }
         return array;
-    }/*}}}*/
-    // public static char[]   add(char[] array, int pos, char val);/*{{{*/
+    }
+
     /**
      * \copydoc add(byte[],int,int)
      **/
@@ -597,8 +597,8 @@ public final class arrays
             array[pos] = val;
         }
         return array;
-    }/*}}}*/
-    // public static short[]  add(short[] array, int pos, int val);/*{{{*/
+    }
+
     /**
      * \copydoc add(byte[],int,int)
      **/
@@ -617,8 +617,8 @@ public final class arrays
             array[pos] = (short)(val & 0x0000FFFF);
         }
         return array;
-    }/*}}}*/
-    // public static int[]    add(int[] array, int pos, int val);/*{{{*/
+    }
+
     /**
      * \copydoc add(byte[],int,int)
      **/
@@ -637,8 +637,8 @@ public final class arrays
             array[pos] = val;
         }
         return array;
-    }/*}}}*/
-    // public static long[]   add(long[] array, int pos, long val);/*{{{*/
+    }
+
     /**
      * \copydoc add(byte[],int,int)
      **/
@@ -657,8 +657,8 @@ public final class arrays
             array[pos] = val;
         }
         return array;
-    }/*}}}*/
-    // public static String[] add(String[] array, int pos, String val);/*{{{*/
+    }
+
     /**
      * \copydoc add(byte[],int,int)
      **/
@@ -677,8 +677,8 @@ public final class arrays
             array[pos] = val;
         }
         return array;
-    }/*}}}*/
-    // public static Object[] add(Object[] array, int pos, Object val);/*{{{*/
+    }
+
     /**
      * \copydoc add(byte[],int,int)
      **/
@@ -697,11 +697,11 @@ public final class arrays
             array[pos] = val;
         }
         return array;
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE rem() METHOD */ //@{
-    // public static byte[]   rem(byte[] array, int item);/*{{{*/
+
     /**
      * Removes an element from the array.
      * \param array The array. Cannot be \b null.
@@ -715,8 +715,8 @@ public final class arrays
             move(array, item, array, (item+1), (count - item));
         }
         return realloc(array, count);
-    }/*}}}*/
-    // public static char[]   rem(char[] array, int item);/*{{{*/
+    }
+
     /**
      * \copydoc rem(byte[],int)
      **/
@@ -726,8 +726,8 @@ public final class arrays
             move(array, item, array, (item+1), (count - item));
         }
         return realloc(array, count);
-    }/*}}}*/
-    // public static short[]  rem(short[] array, int item);/*{{{*/
+    }
+
     /**
      * \copydoc rem(byte[],int)
      **/
@@ -737,8 +737,8 @@ public final class arrays
             move(array, item, array, (item+1), (count - item));
         }
         return realloc(array, count);
-    }/*}}}*/
-    // public static int[]    rem(int[] array, int item);/*{{{*/
+    }
+
     /**
      * \copydoc rem(byte[],int)
      **/
@@ -748,8 +748,8 @@ public final class arrays
             move(array, item, array, (item+1), (count - item));
         }
         return realloc(array, count);
-    }/*}}}*/
-    // public static long[]   rem(long[] array, int item);/*{{{*/
+    }
+
     /**
      * \copydoc rem(byte[],int)
      **/
@@ -759,8 +759,8 @@ public final class arrays
             move(array, item, array, (item+1), (count - item));
         }
         return realloc(array, count);
-    }/*}}}*/
-    // public static String[] rem(String[] array, int item);/*{{{*/
+    }
+
     /**
      * \copydoc rem(byte[],int)
      **/
@@ -770,11 +770,11 @@ public final class arrays
             move(array, item, array, (item+1), (count - item));
         }
         return realloc(array, count);
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE append() METHOD */ //@{
-    // public static byte[]   append(byte[]   arr1, byte[]   arr2);/*{{{*/
+
     /**
      * \copydoc append(Object[],Object[])
      **/
@@ -786,8 +786,8 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
-    // public static char[]   append(char[]   arr1, char[]   arr2);/*{{{*/
+    }
+
     /**
      * \copydoc append(Object[],Object[])
      **/
@@ -799,8 +799,8 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
-    // public static short[]  append(short[]  arr1, short[]  arr2);/*{{{*/
+    }
+
     /**
      * \copydoc append(Object[],Object[])
      **/
@@ -812,8 +812,8 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
-    // public static int[]    append(int[]    arr1, int[]    arr2);/*{{{*/
+    }
+
     /**
      * \copydoc append(Object[],Object[])
      **/
@@ -825,8 +825,8 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
-    // public static long[]   append(long[]   arr1, long[]   arr2);/*{{{*/
+    }
+
     /**
      * \copydoc append(Object[],Object[])
      **/
@@ -838,8 +838,8 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
-    // public static String[] append(String[] arr1, String[] arr2);/*{{{*/
+    }
+
     /**
      * \copydoc append(Object[],Object[])
      **/
@@ -851,8 +851,8 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
-    // public static Object[] append(Object[] arr1, Object[] arr2);/*{{{*/
+    }
+
     /**
      * Append one array to another.
      * \param arr1 The main array. The second array will be appended to this
@@ -870,11 +870,11 @@ public final class arrays
         arr1     = arrays.realloc(arr1, size + arrays.length(arr2));
         arrays.copy(arr1, size, arr2, 0, arr2.length);
         return arr1;
-    }/*}}}*/
+    }
     //@}
 
     /** \name THE slice() METHOD */ //@{
-    // public static byte[]   slice(byte[] array, int first, int count);/*{{{*/
+
     /**
      * Build an array of a sliced part of anoter array.
      * \param array The original array to be slided. This array will not be
@@ -900,8 +900,8 @@ public final class arrays
         arrays.copy(result, 0, array, first, count);
 
         return result;
-    }/*}}}*/
-    // public static char[]   slice(char[] array, int first, int count);/*{{{*/
+    }
+
     /**
      * \copydoc slice(byte[],int,int)
      **/
@@ -916,8 +916,8 @@ public final class arrays
         arrays.copy(result, 0, array, first, count);
 
         return result;
-    }/*}}}*/
-    // public static short[]  slice(short[] array, int first, int count);/*{{{*/
+    }
+
     /**
      * \copydoc slice(byte[],int,int)
      **/
@@ -932,8 +932,8 @@ public final class arrays
         arrays.copy(result, 0, array, first, count);
 
         return result;
-    }/*}}}*/
-    // public static int[]    slice(int[]  array, int first, int count);/*{{{*/
+    }
+
     /**
      * \copydoc slice(byte[],int,int)
      **/
@@ -948,8 +948,8 @@ public final class arrays
         arrays.copy(result, 0, array, first, count);
 
         return result;
-    }/*}}}*/
-    // public static long[]   slice(long[] array, int first, int count);/*{{{*/
+    }
+
     /**
      * \copydoc slice(byte[],int,int)
      **/
@@ -964,8 +964,8 @@ public final class arrays
         arrays.copy(result, 0, array, first, count);
 
         return result;
-    }/*}}}*/
-    // public static String[] slice(String[] array, int first, int count);/*{{{*/
+    }
+
     /**
      * \copydoc slice(byte[],int,int)
      **/
@@ -980,11 +980,11 @@ public final class arrays
         arrays.copy(result, 0, array, first, count);
 
         return result;
-    }/*}}}*/
+    }
     //@}
 
     /** \name search() operations */ //@{
-    // public static int search(byte[] array, int start, int count, byte value);/*{{{*/
+
     /**
      * Search for a value in the array.
      * @param array The array to be searched.
@@ -1010,8 +1010,8 @@ public final class arrays
                 return (start + i);
         }
         return -1;
-    }/*}}}*/
-    // public static int search(byte[] array, int start, int count, short value);/*{{{*/
+    }
+
     /**
      * \copydoc search(byte[],int,int,byte)
      **/
@@ -1028,11 +1028,11 @@ public final class arrays
                 return (start + i);
         }
         return -1;
-    }/*}}}*/
+    }
     //@}
 
     /** \name NUMBER TO BYTE ARRAY CONVERSION */ //@{
-    // public static byte[] longAsLittleEnd(long val);/*{{{*/
+
     /**
      * Converts a long value to an array in little-endian format.
      * \param val The value to be converted.
@@ -1041,8 +1041,8 @@ public final class arrays
     public static byte[] longAsLittleEnd(long val) {
         byte[] array = new byte[8];
         return longAsLittleEnd(array, 0, val);
-    }/*}}}*/
-    // public static byte[] intAsLittleEnd(int val);/*{{{*/
+    }
+
     /**
      * Converts an int value to an array in little-endian format.
      * \param val The value to be converted.
@@ -1051,8 +1051,8 @@ public final class arrays
     public static byte[] intAsLittleEnd(int val) {
         byte[] array = new byte[4];
         return intAsLittleEnd(array, 0, val);
-    }/*}}}*/
-    // public static byte[] shortAsLittleEnd(short val);/*{{{*/
+    }
+
     /**
      * Converts a short value to an array in little-endian format.
      * \param val The value to be converted.
@@ -1061,8 +1061,8 @@ public final class arrays
     public static byte[] shortAsLittleEnd(short val) {
         byte[] array = new byte[2];
         return shortAsLittleEnd(array, 0, val);
-    }/*}}}*/
-    // public static byte[] charAsLittleEnd(char val);/*{{{*/
+    }
+
     /**
      * Converts a char value to an array in little-endian format.
      * \param val The value to be converted.
@@ -1070,8 +1070,8 @@ public final class arrays
      **/
     public static byte[] charAsLittleEnd(char val) {
         return shortAsLittleEnd((short)val);
-    }/*}}}*/
-    // public static byte[] longAsBigEnd(long val);/*{{{*/
+    }
+
     /**
      * Convert a long value into an array in big-endian format.
      * \param val The value to be converted.
@@ -1081,8 +1081,8 @@ public final class arrays
     public static byte[] longAsBigEnd(long val) {
         byte[] array = new byte[8];
         return longAsBigEnd(array, 0, val);
-    }/*}}}*/
-    // public static byte[] intAsBigEnd(int val);/*{{{*/
+    }
+
     /**
      * Convert an int value into an array in big-endian format.
      * \param val The value to be converted.
@@ -1092,8 +1092,8 @@ public final class arrays
     public static byte[] intAsBigEnd(int val) {
         byte[] array = new byte[4];
         return intAsBigEnd(array, 0, val);
-    }/*}}}*/
-    // public static byte[] shortAsBigEnd(short val);/*{{{*/
+    }
+
     /**
      * Convert a short value into an array in big-endian format.
      * \param val The value to be converted.
@@ -1103,8 +1103,8 @@ public final class arrays
     public static byte[] shortAsBigEnd(short val) {
         byte[] array = new byte[2];
         return shortAsBigEnd(array, 0, val);
-    }/*}}}*/
-    // public static byte[] charAsBigEnd(char val);/*{{{*/
+    }
+
     /**
      * Convert a char value into an array in big-endian format.
      * \param val The value to be converted.
@@ -1114,11 +1114,11 @@ public final class arrays
     public static byte[] charAsBigEnd(char val) {
         byte[] array = new byte[2];
         return charAsBigEnd(array, 0, val);
-    }/*}}}*/
+    }
     //@}
 
     /** \name NUMBER TO ARRAY COPY CONVERSION */ //@{
-    // public static byte[] longAsLittleEnd(byte[] a, int i, long v);/*{{{*/
+
     /**
      * Convert a long value into an array in little-endian format, copying the
      * result in the passed array at the point especified.
@@ -1138,8 +1138,8 @@ public final class arrays
         a[i+1] = (byte)(0xFF & (v >>  8));
         a[i+0] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] intAsLittleEnd(byte[] a, int i, int v);/*{{{*/
+    }
+
     /**
      * Convert an int value into an array in little-endian format, copying the
      * result in the passed array at the point especified.
@@ -1155,8 +1155,8 @@ public final class arrays
         a[i+1] = (byte)(0xFF & (v >> 8));
         a[i+0] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] shortAsLittleEnd(byte[] a, int i, short v);/*{{{*/
+    }
+
     /**
      * Convert a short value into an array in little-endian format, copying the
      * result in the passed array at the point especified.
@@ -1170,8 +1170,8 @@ public final class arrays
         a[i+1] = (byte)(0xFF & (v >> 8));
         a[i+0] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] charAsLittleEnd(byte[] a, int i, char v);/*{{{*/
+    }
+
     /**
      * Convert a char value into an array in little-endian format, copying the
      * result in the passed array at the point especified.
@@ -1185,8 +1185,8 @@ public final class arrays
         a[i+1] = (byte)(0xFF & (v >> 8));
         a[i+0] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] longAsBigEnd(byte[] a, int i, long v);/*{{{*/
+    }
+
     /**
      * Convert a long value into an array in big-endian format, copying the
      * result in the passed array at the point especified.
@@ -1206,8 +1206,8 @@ public final class arrays
         a[i+6] = (byte)(0xFF & (v >>  8));
         a[i+7] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] intAsBigEnd(byte[] a, int i, int v);/*{{{*/
+    }
+
     /**
      * Convert an int value into an array in big-endian format, copying the
      * result in the passed array at the point especified.
@@ -1223,8 +1223,8 @@ public final class arrays
         a[i+2] = (byte)(0xFF & (v >> 8));
         a[i+3] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] shortAsBigEnd(byte[] a, int i, short v);/*{{{*/
+    }
+
     /**
      * Convert a short value into an array in big-endian format, copying the
      * result in the passed array at the point especified.
@@ -1238,8 +1238,8 @@ public final class arrays
         a[i+0] = (byte)(0xFF & (v >> 8));
         a[i+1] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
-    // public static byte[] charAsBigEnd(byte[] a, int i, char v);/*{{{*/
+    }
+
     /**
      * Convert a char value into an array in big-endian format, copying the
      * result in the passed array at the point especified.
@@ -1253,11 +1253,11 @@ public final class arrays
         a[i+0] = (byte)(0xFF & (v >> 8));
         a[i+1] = (byte)(0xFF & v);
         return a;
-    }/*}}}*/
+    }
     //@}
 
     /** \name ARRAY TO NUMBER CONVERSION */ //@{
-    // public static long  littleEndToLong (byte[] array, int start);/*{{{*/
+
     /**
      * Convert byte array in a integral type.
      * The conversion is done in the \b little-endian format. Java uses the \b
@@ -1279,8 +1279,8 @@ public final class arrays
                 ((long)(array[start+1] & 0xFF) <<  8) |
                 ((long)(array[start+0] & 0xFF))
                );
-    }/*}}}*/
-    // public static int   littleEndToInt  (byte[] array, int start);/*{{{*/
+    }
+
     /**
      * \copydoc littleEndToLong()
      **/
@@ -1290,22 +1290,22 @@ public final class arrays
                 ((array[start+1] & 0xFF) <<  8) |
                 (array[start+0] & 0xFF)
                );
-    }/*}}}*/
-    // public static short littleEndToShort(byte[] array, int start);/*{{{*/
+    }
+
     /**
      * \copydoc littleEndToLong()
      **/
     public static short littleEndToShort(byte[] array, int start) {
         return (short)((array[start+1] << 8) | (array[start] & 0xFF));
-    }/*}}}*/
-    // public static char  littleEndToChar (byte[] array, int start);/*{{{*/
+    }
+
     /**
      * \copydoc littleEndToLong()
      **/
     public static char littleEndToChar(byte[] array, int start) {
         return (char)((array[start+1] << 8) | (array[start] & 0xFF));
-    }/*}}}*/
-    // public static long  bigEndToLong    (byte[] array, int start);/*{{{*/
+    }
+
     /**
      * Converts a byte array into long from big-endian format.
      * \param array The byte array to convert from.
@@ -1323,8 +1323,8 @@ public final class arrays
                 ((long)(array[start+6] & 0xFF) <<  8) |
                 ((long)(array[start+7] & 0xFF))
                );
-    }/*}}}*/
-    // public static int   bigEndToInt     (byte[] array, int start);/*{{{*/
+    }
+
     /**
      * Converts a byte array into int from big-endian format.
      * \param array The byte array to convert from.
@@ -1338,8 +1338,8 @@ public final class arrays
                 ((array[start+2] & 0xFF) <<  8) |
                 (array[start+3] & 0xFF)
                );
-    }/*}}}*/
-    // public static short bigEndToShort   (byte[] array, int start);/*{{{*/
+    }
+
     /**
      * Converts a byte array into short from big-endian format.
      * \param array The byte array to convert from.
@@ -1349,8 +1349,8 @@ public final class arrays
      **/
     public static short bigEndToShort(byte[] array, int start) {
         return (short)((array[start+0] << 8) | (array[start+1] & 0xFF));
-    }/*}}}*/
-    // public static char  bigEndToChar    (byte[] array, int start);/*{{{*/
+    }
+
     /**
      * Converts a byte array into char from big-endian format.
      * \param array The byte array to convert from.
@@ -1360,11 +1360,11 @@ public final class arrays
      **/
     public static char bigEndToChar(byte[] array, int start) {
         return (char)bigEndToShort(array, start);
-    }/*}}}*/
+    }
     //@}
 
     /** \name BINARY REPRESENTATION */ //@{
-    // public static String toString(byte[] array, String separator, int frequency);/*{{{*/
+
     /**
      * Covert each byte of the array in a two characters string
      * representation.
@@ -1406,8 +1406,8 @@ public final class arrays
                 sb.append(String.format("%02X", array[i]));
         }
         return sb.toString();
-    }/*}}}*/
-    // public static String toString(byte[] array);/*{{{*/
+    }
+
     /**
      * Converts a byte array into its string representation.
      * This version is similar to the default \c toString(byte[],String,int),
@@ -1417,8 +1417,8 @@ public final class arrays
      **/
     public static String toString(byte[] array) {
         return toString(array, null, 0);
-    }/*}}}*/
-    // public static byte[] fromString(String binary);/*{{{*/
+    }
+
     /**
      * Does the oposite of the function \c toString(byte[]).
      * Converts a byte array representation in a string into a real byte
@@ -1456,8 +1456,8 @@ public final class arrays
             result[x++] = (byte)(value & 0x000000FF);
         }
         return result;
-    }/*}}}*/
-    // public static String utf8String(byte[] array, int start);/*{{{*/
+    }
+
     /**
      * Convert the array into a modified UTF-8 Java string.
      * \param array Byte array with data to be parsed.
@@ -1512,11 +1512,11 @@ public final class arrays
 
         try { return new String(data, 0, c); }
         catch (Exception ex) { return null; }
-    }/*}}}*/
+    }
     //@}
 
     /** \name OTHER HELPER FUNCTIONS */ //@{
-    // public static void randomize(byte[] array);/*{{{*/
+
     /**
      * Fills an array with random values.
      * \param array The byte array to be filled. The entire array will be
@@ -1550,8 +1550,8 @@ public final class arrays
         if (rest >= 1) {
             array[index] = (byte)(rnd.nextInt() & 0x000000FF);
         }
-    }/*}}}*/
-    // public static String join(Object[] array, String separator);/*{{{*/
+    }
+
     /**
      * Join elements of an array separated by the given string.
      * \param array The array with objects to join. These objects are
@@ -1583,7 +1583,6 @@ public final class arrays
             }
         }
         return sb.toString();
-    }/*}}}*/
+    }
     //@}
 }
-// vim:syntax=java.doxygen

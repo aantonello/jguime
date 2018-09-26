@@ -17,7 +17,9 @@ OUTPUT = $(OUTDIR)/$(TARGET).jar
 OUTTAG = $(TARGET).tags
 OUTDXT = $(DOCDIR)/$(TARGET).dxt
 
-PLXLIB = $(WORKHOME)/libs/$(TARGET)-$(APPVER)
+PLXHOME = /Volumes/HD750/plx
+
+PLXLIB = $(PLXHOME)/libs/$(TARGET)-$(APPVER)
 APKDIR = $(PLXLIB)/apk
 RSCDIR = $(PLXLIB)/res
 
