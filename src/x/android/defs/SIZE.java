@@ -21,27 +21,26 @@ package x.android.defs;
  *//* --------------------------------------------------------------------- */
 public final class SIZE
 {
-    // public static final int WIDTH   = 0x0001;/*{{{*/
     /**
      * Sizes only the width of the source object.
      **/
-    public static final int WIDTH   = 0x0001;/*}}}*/
-    // public static final int HEIGHT  = 0x0002;/*{{{*/
+    public static final int WIDTH   = 0x0001;
+
     /**
      * Sizes only the height of the source object.
      **/
-    public static final int HEIGHT  = 0x0002;/*}}}*/
-    // public static final int FIT     = 0x0004;/*{{{*/
+    public static final int HEIGHT  = 0x0002;
+
     /**
      * Sizes width and height of the source object matching the size of the
      * referenced object but keep the aspect ratio.
      **/
-    public static final int FIT     = 0x0004;/*}}}*/
-    // public static final int STRETCH = (WIDTH | HEIGHT);/*{{{*/
+    public static final int FIT     = 0x0004;
+
     /**
      * Sizes width and height of the source object matching the size of the
      * referenced object.
      **/
-    public static final int STRETCH = (WIDTH | HEIGHT);/*}}}*/
+    public static final int STRETCH = (WIDTH | HEIGHT);
 }
 // vim:syntax=java.doxygen
