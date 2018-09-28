@@ -33,7 +33,6 @@ import android.os.Looper;
 public class issuer
 {
     /** \name CONSTRUCTOR */ //@{
-    // protected issuer();/*{{{*/
     /**
      * Default constructor.
      **/
@@ -44,11 +43,10 @@ public class issuer
         this.cache   = new cache_t();
         this.holder  = new cache_t();
         this.broadcastList = new subscribers();
-    }/*}}}*/
+    }
     //@}
 
     /** \name PUBLIC STATIC FUNCTIONS */ //@{
-    // public static void send(INHandler h, int id, int np, long lp, Object o);/*{{{*/
     /**
      * Sends a message to a target handler.
      * \param h The target handler instance.
@@ -62,8 +60,8 @@ public class issuer
     public static void send(INHandler h, int id, int np, long lp, Object o) {
         if (h == null) return;
         issuer.get().sendMsg(h, id, np, lp, o);
-    }/*}}}*/
-    // public static void post(INHandler h, int id, int np, long lp, Object o);/*{{{*/
+    }
+
     /**
      * Posts a message the a handler.
      * \param h The target handler instance.
@@ -77,8 +75,8 @@ public class issuer
     public static void post(INHandler h, int id, int np, long lp, Object o) {
         if (h == null) return;
         issuer.get().postMsg(h, id, np, lp, o);
-    }/*}}}*/
-    // public static void post(INHandler h, int id, int np, long lp, Object o, long delay);/*{{{*/
+    }
+
     /**
      * Posts a message to a handler after the specified delay.
      * \param h The target handler instance.
@@ -94,8 +92,8 @@ public class issuer
     public static void post(INHandler h, int id, int np, long lp, Object o, long delay) {
         if (h == null) return;
         issuer.get().postMsg(h, id, np, lp, o, delay);
-    }/*}}}*/
-    // public static boolean cancel(INHandler h);/*{{{*/
+    }
+
     /**
      * Cancel scheduled messages.
      * \param h The target handler. All messages targeting this handler will
@@ -106,8 +104,8 @@ public class issuer
         if (h == null) return false;
         issuer.get().unschedule(h);
         return true;
-    }/*}}}*/
-    // public static boolean cancel(INHandler h, int id);/*{{{*/
+    }
+
     /**
      * Cancels an scheduled message.
      * \param h The target handler instance.
@@ -119,8 +117,8 @@ public class issuer
         if (h == null) return false;
         issuer.get().unschedule(h, id);
         return true;
-    }/*}}}*/
-    // public static boolean cancel(INHandler h, int id, int np);/*{{{*/
+    }
+
     /**
      * Cancels an scheduled message.
      * \param h The target handler instance.
@@ -133,8 +131,8 @@ public class issuer
         if (h == null) return false;
         issuer.get().unschedule(h, id, np);
         return true;
-    }/*}}}*/
-    // public static void release();/*{{{*/
+    }
+
     /**
      * Releases any resources hold by this implementation.
      **/
@@ -142,11 +140,10 @@ public class issuer
         if (__self == null) return;
         __self.free();
         __self = null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name BROADCAST NOTIFICATION FUNCTIONS */ //@{
-    // public static void send(String name, int id, int np, long lp, Object o);/*{{{*/
     /**
      * Sends a broadcast notification to all its subscribers.
      * \param name Name of the broadcast notification.
@@ -160,8 +157,8 @@ public class issuer
     public static void send(String name, int id, int np, long lp, Object o) {
         if (name == null) return;
         issuer.get().sendNotify(name, id, np, lp, o);
-    }/*}}}*/
-    // public static void post(String name, int id, int np, long lp, Object o);/*{{{*/
+    }
+
     /**
      * Post a broadcast notification to all its subscribers.
      * \param name Name of the broadcast notification.
@@ -176,8 +173,8 @@ public class issuer
     public static void post(String name, int id, int np, long lp, Object o) {
         if (name == null) return;
         issuer.get().postNotify(name, id, np, lp, o, 0L);
-    }/*}}}*/
-    // public static void post(String name, int id, int np, long lp, Object o, long delay);/*{{{*/
+    }
+
     /**
      * Posts a broadcast notification after the specified delay.
      * \param name Name of the broadcast notification.
@@ -192,8 +189,8 @@ public class issuer
     public static void post(String name, int id, int np, long lp, Object o, long delay) {
         if (name == null) return;
         issuer.get().postNotify(name, id, np, lp, o, delay);
-    }/*}}}*/
-    // public static void subscribe(String name, INHandler handler);/*{{{*/
+    }
+
     /**
      * Subscribes a handler to a broadcast notification.
      * \param name Name of the broadcast notification.
@@ -203,8 +200,8 @@ public class issuer
     public static void subscribe(String name, INHandler handler) {
         if ((name == null) || (handler == null)) return;
         issuer.get().addClient(name, handler);
-    }/*}}}*/
-    // public static void unsubscribe(String name, INHandler handler);/*{{{*/
+    }
+
     /**
      * Cancels the subscription of an object to a broadcast notification.
      * \param name Name of the broadcast notification.
@@ -214,11 +211,10 @@ public class issuer
     public static void unsubscribe(String name, INHandler handler) {
         if ((name == null) || (handler == null)) return;
         issuer.get().removeClient(name, handler);
-    }/*}}}*/
+    }
     //@}
 
     /** \name LOCAL STATIC FUNCTIONS */ //@{
-    // static synchronized issuer get();/*{{{*/
     /**
      * Gets the sole instance of this issuer object.
      **/
@@ -227,11 +223,10 @@ public class issuer
             __self = new issuer();
         }
         return __self;
-    }/*}}}*/
+    }
     //@}
 
     /** \name LOCAL OPERATIONS */ //@{
-    // final void free();/*{{{*/
     /**
      * Releases any memory holded by this instance.
      **/
@@ -255,8 +250,8 @@ public class issuer
             this.holder  = null;
             this.handler = null;
         }
-    }/*}}}*/
-    // final void sendMsg(INHandler h, int id, int np, long lp, Object o);/*{{{*/
+    }
+
     /**
      * Sends a message to a target handler.
      * \param h The target handler instance.
@@ -275,8 +270,8 @@ public class issuer
             msg = this.cache.get(h, id, np, o, lp, 0L);
         }
         _handler.postAtFrontOfQueue(msg);
-    }/*}}}*/
-    // final void postMsg(INHandler h, int id, int np, long lp, Object o);/*{{{*/
+    }
+
     /**
      * Posts a message the a handler.
      * \param h The target handler instance.
@@ -296,8 +291,8 @@ public class issuer
             msg = this.cache.get(h, id, np, o, lp, 0L);
         }
         handler.post( msg );
-    }/*}}}*/
-    // final void postMsg(INHandler h, int id, int np, long lp, Object o, long delay);/*{{{*/
+    }
+
     /**
      * Posts a message to a handler after the specified delay.
      * \param h The target handler instance.
@@ -310,8 +305,7 @@ public class issuer
      * the main message queue and processed in order. Messages scheduled like
      * this can be unscheduled with the issuer#cancel() function.
      **/
-    final void postMsg(INHandler h, int id, int np, long lp, Object o, long delay)
-    {
+    final void postMsg(INHandler h, int id, int np, long lp, Object o, long delay) {
         Handler handler;
         cache_t holded;
         msg_t   msg;
@@ -323,8 +317,8 @@ public class issuer
         }
         handler.postDelayed(msg, delay);
         holded.push(msg);
-    }/*}}}*/
-    // final void unschedule(INHandler h);/*{{{*/
+    }
+
     /**
      * Cancel scheduled messages.
      * \param h The target handler. All messages targeting this handler will
@@ -348,8 +342,8 @@ public class issuer
             msg.data = null;
             cach.push(msg);
         }
-    }/*}}}*/
-    // final void unschedule(INHandler h, int id);/*{{{*/
+    }
+
     /**
      * Cancels an scheduled message.
      * \param h The target handler instance.
@@ -374,8 +368,8 @@ public class issuer
             msg.data = null;
             cach.push(msg);
         }
-    }/*}}}*/
-    // final void unschedule(INHandler h, int id, in np);/*{{{*/
+    }
+
     /**
      * Cancels an scheduled message.
      * \param h The target handler instance.
@@ -401,19 +395,18 @@ public class issuer
             msg.data = null;
             cach.push(msg);
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name LOCAL BROADCAST NOTIFICATION FUNCTIONS */ //@{
-    // final void addClient(String notificationName, INHandler client);/*{{{*/
     /**
      * Add a client to a broadcast notification.
      * \copydetails subscribers::add()
      **/
     final void addClient(String notificationName, INHandler client) {
         broadcastList.add(notificationName, client);
-    }/*}}}*/
-    // final void removeClient(String notificationName, INHandler client);/*{{{*/
+    }
+
     /**
      * Unsubscribe a client from a broadcast notification.
      * \copydetails subscribers::remove()
@@ -421,8 +414,8 @@ public class issuer
     final void removeClient(String notificationName, INHandler client) {
         broadcastList.remove(notificationName, client);
         unschedule(client);
-    }/*}}}*/
-    // final void sendNotify(String _name, int id, int np, long lp, Object o);/*{{{*/
+    }
+
     /**
      * Sends a broadcast notification to all subscribed clients.
      * \param _name Broadcast notification name.
@@ -440,8 +433,8 @@ public class issuer
         for (int i = 0; i < limit; i++) {
             sendMsg(clients[i], id, np, lp, o);
         }
-    }/*}}}*/
-    // final void postNotify(String _name, int id, int np, long lp, Object o, long t);/*{{{*/
+    }
+
     /**
      * Post a broadcast notification to all subscribed clients.
      * The message is posted immediatly, if *t* parameter is zero, or
@@ -469,7 +462,7 @@ public class issuer
                 this.holder.push(msg);
             }
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name LOCAL MEMBERS */ //@{
