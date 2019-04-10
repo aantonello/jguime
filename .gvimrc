@@ -1,6 +1,6 @@
 let g:fc_DontUseDefault = 1
 if has("macunix")
-    set guifont=Monaco:h11
+    set guifont=Monaco:h10
     set columns=156 lines=99
 elseif has("unix")
     set guifont=Monaco:h12

@@ -1,12 +1,12 @@
 /**
- * \file
+ * @file
  * Declares the SFListT class.
  *
- * \author Alessandro Antonello <aantonello@paralaxe.com.br>
- * \date   Dezembro 04, 2013
- * \since  jguime 2.4
+ * @author Alessandro Antonello <aantonello@paralaxe.com.br>
+ * @date   Dezembro 04, 2013
+ * @since  jguime 2.4
  *
- * \copyright
+ * @copyright
  * This file is provided in hope that it will be useful to someone. It is
  * offered in public domain. You may use, modify or distribute it freely.
  *
@@ -14,12 +14,12 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.utils;
-/* #imports {{{ */
+
 import java.util.*;
 import java.lang.reflect.*;
-/* #imports }}} */
+
 /**
- * \ingroup x_android_utils
+ * @ingroup x_android_utils
  * Generic class implementing a list of objects.
  * This class is, in some means, a implementation of Java List interface. The
  * goal in this class is to remove almost all exceptions that the original \c
@@ -36,26 +36,23 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
        RandomAccess
 {
     /** \name Constructors */ //@{
-    // public SFListT();/*{{{*/
     /**
      * Builds an empty list.
      **/
-    public SFListT()
-    {
+    public SFListT() {
         m_array = null;
         m_count = 0;
-    }/*}}}*/
-    // public SFListT(int capacity);/*{{{*/
+    }
+
     /**
      * Builds an instance of this class with an initial capacity.
      * @param capacity The inicial capacity for the list of objects.
      **/
-    public SFListT(int capacity)
-    {
+    public SFListT(int capacity) {
         m_array = new Object[capacity];
         m_count = 0;
-    }/*}}}*/
-    // public SFListT(SFListT<T> list);/*{{{*/
+    }
+
     /**
      * Copy constructor.
      * @param list The list to be copied.
@@ -65,8 +62,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * list is changed, the same object in this list will reproduce that
      * change as of it is the same object instance.
      **/
-    public SFListT(SFListT<T> list)
-    {
+    public SFListT(SFListT<T> list) {
         m_array = new Object[list.size()];
 
         final Object[] items = list.m_array;
@@ -76,25 +72,22 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             m_array[i] = items[i];
 
         m_count = m_array.length;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Iterable Implementation */ //@{
-    // public Iterator<T> iterator();/*{{{*/
     /**
      * Builds an Iterator for the elements in this list.
      * The same rules of the Java \c ArrayList class apply. The list can be
      * changed while this iterator are in use.
      * @returns An \c Iterator object to iterate with objects in this list.
      **/
-    public Iterator<T> iterator()
-    {
+    public Iterator<T> iterator() {
         return new __Iterator<T>(this);
-    }/*}}}*/
+    }
     //@}
 
     /** \name Collection Implementation */ //@{
-    // public int     size();/*{{{*/
     /**
      * Gets the size of the list.
      * The size of the list is the number of elements this list contains. This
@@ -103,21 +96,19 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * removed.
      * @returns An integer with the number of elements in the list.
      **/
-    public int size()
-    {
+    public int size() {
         return m_count;
-    }/*}}}*/
-    // public boolean isEmpty();/*{{{*/
+    }
+
     /**
      * Checks wether this object is or not is empty.
      * @returns \b true if there is no elements in the list. Otherwise \b
      * false.
      **/
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return (m_count == 0);
-    }/*}}}*/
-    // public boolean add(T element);/*{{{*/
+    }
+
     /**
      * Adds an element to this list.
      * @param element The element to be added.
@@ -125,8 +116,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * is a \b null reference the function returns \b false and no change is
      * made. \b null elements are not permited in this list.
      **/
-    public boolean add(T element)
-    {
+    public boolean add(T element) {
         if (element == null) return false;
 
         if (!_internal_alloc(1))
@@ -135,8 +125,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
         m_array[m_count] = element;
         m_count++;
         return true;
-    }/*}}}*/
-    // public boolean addAll(Collection<? extends E> coll);/*{{{*/
+    }
+
     /**
      * Adds all elements in the specified collection to this list.
      * @param coll \c Collection of elements of type \b T or extending the
@@ -147,8 +137,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @note The result will be \b true even when \a coll is empty or \b null.
      * This is a break in the \c Collection contract.
      **/
-    public boolean addAll(Collection<? extends T> coll)
-    {
+    public boolean addAll(Collection<? extends T> coll) {
         if ((coll == null) || coll.isEmpty()) return true;
 
         final int      limit = coll.size();
@@ -159,8 +148,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             m_array[m_count++] = items[i];
 
         return true;
-    }/*}}}*/
-    // public boolean remove(Object element);/*{{{*/
+    }
+
     /**
      * Removes an element of this list.
      * The object presence will be compared using <i>fast check</i>.
@@ -172,15 +161,14 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @note As stated, <i>fast check</i> will compare elements by
      * reference.
      **/
-    public boolean remove(Object element)
-    {
+    public boolean remove(Object element) {
         int index = indexOf(element);
 
         if (index < 0) return false;
         remove(index);
         return true;
-    }/*}}}*/
-    // public boolean removeAll(Collection<?> coll);/*{{{*/
+    }
+
     /**
      * Remove all elements from this list that are also elements in the
      * specified collection.
@@ -193,8 +181,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * between elements are made by <i>fast check</i>, so no \e cast
      * operations are made and no \c ClassCastException will be thrown.
      **/
-    public boolean removeAll(Collection<?> coll)
-    {
+    public boolean removeAll(Collection<?> coll) {
         if ((coll == null) || coll.isEmpty())
             return false;
 
@@ -210,8 +197,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             }
         }
         return result;
-    }/*}}}*/
-    // public boolean retainAll(Collection<?> coll);/*{{{*/
+    }
+
     /**
      * Retains only objects that are also contained in the specified
      * collection.
@@ -227,8 +214,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @note No memory is deallocated in this method.
      * @see contains()
      **/
-    public boolean retainAll(Collection<?> coll)
-    {
+    public boolean retainAll(Collection<?> coll) {
         if ((coll == null) || coll.isEmpty())
             return false;
 
@@ -255,8 +241,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
                 remove(i);
         }
         return true;
-    }/*}}}*/
-    // public boolean contains(Object element);/*{{{*/
+    }
+
     /**
      * Checks if this list has a reference to specified element.
      * This function does a fast check. That is, the \a element instance is
@@ -271,11 +257,10 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @remarks To check the existance of an object through an \c equals()
      * method comparison use #has() function.
      **/
-    public boolean contains(Object element)
-    {
+    public boolean contains(Object element) {
         return (indexOf(element) >= 0);
-    }/*}}}*/
-    // public boolean containsAll(Collection<?> coll);/*{{{*/
+    }
+
     /**
      * Checks if the especified collection is contained by this list.
      * The function will make a fast check in all elements contained by the
@@ -288,8 +273,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * collections are compared by reference.
      * \see contains()
      **/
-    public boolean containsAll(Collection<?> coll)
-    {
+    public boolean containsAll(Collection<?> coll) {
         if ((coll == null) || coll.isEmpty())
             return false;
 
@@ -301,22 +285,21 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
                 return false;
         }
         return true;
-    }/*}}}*/
-    // public void    clear();/*{{{*/
+    }
+
     /**
      * Clear the list of elements in this list.
      * The list will be empty after this method returns. No memory will be
      * deallocated thouth. The internal capacity will remain the same.
      **/
-    public void clear()
-    {
+    public void clear() {
         final int limit = arrays.length(m_array);
         for (int i = 0; i < limit; i++)
             m_array[i] = null;
 
         m_count = 0;
-    }/*}}}*/
-    // public <T> T[] toArray(T[] array);/*{{{*/
+    }
+
     /**
      * Returns an array with elements from this list.
      * The returned array can be freely changed without changing the internal
@@ -332,8 +315,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * the elements of this list.
      * @throw NullPointerException If \a array argument is \b null.
      **/
-    public <T> T[] toArray(T[] array) throws ClassCastException
-    {
+    public <T> T[] toArray(T[] array) throws ClassCastException {
         final int len = arrays.length(array);
 
         if (len < m_count)
@@ -354,8 +336,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             array[i] = null;
 
         return array;
-    }/*}}}*/
-    // public Object[] toArray();/*{{{*/
+    }
+
     /**
      * Builds an array with the objects in this list.
      * The returned array can be changed freely without changing the list of
@@ -363,8 +345,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @returns An \c Object array with elements from this list. If this list
      * is empty an empty array is returned.
      **/
-    public Object[] toArray()
-    {
+    public Object[] toArray() {
         Object[]  items = new Object[m_count];
         final int count = m_count;
 
@@ -372,22 +353,20 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             items[i] = m_array[i];
 
         return items;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Implementation */ //@{
-    // public int     capacity();/*{{{*/
     /**
      * Returns the current capacity of this list.
      * @return The current capacity of the list, in number of elements. This
      * can be greater than the number of elements in the list. To release the
      * unused memory one can use #trim().
      **/
-    public int capacity()
-    {
+    public int capacity() {
         return arrays.length(m_array);
-    }/*}}}*/
-    // public boolean has(Object element);/*{{{*/
+    }
+
     /**
      * Checks if this list has a reference to specified element.
      * This function does the comparison using the \c equals() Object method.
@@ -396,11 +375,10 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * \b false will be returned if the element is not present in the list or
      * if it is a \b null reference.
      **/
-    public boolean has(Object element)
-    {
+    public boolean has(Object element) {
         return (indexOfObject(element) >= 0);
-    }/*}}}*/
-    // public int     indexOf(Object element);/*{{{*/
+    }
+
     /**
      * Returns the index of the especified object.
      * @param element Element to gets its current position.
@@ -415,8 +393,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * To get the index of an element through its \c equals() method
      * comparison use the #indexOfObject() function.
      **/
-    public int indexOf(Object element)
-    {
+    public int indexOf(Object element) {
         if (element == null) return -1;
 
         final int limit = m_count;
@@ -426,8 +403,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
                 return i;
         }
         return -1;
-    }/*}}}*/
-    // public int     indexOfObject(Object element);/*{{{*/
+    }
+
     /**
      * Returns the index of the especified object.
      * @param element Element to gets its current position.
@@ -437,8 +414,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * each object implementation. So the \a element parameter doesn't need to
      * be the same reference in the list.
      **/
-    public int indexOfObject(Object element)
-    {
+    public int indexOfObject(Object element) {
         if (element == null) return -1;
 
         final int count = m_count;
@@ -448,8 +424,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
                 return i;
         }
         return -1;
-    }/*}}}*/
-    // public T       get(int index);/*{{{*/
+    }
+
     /**
      * Obtain the element at the specified index position.
      * @param index The position of the requested element. This argument can
@@ -457,16 +433,15 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * list. So, -1 will retrieve the last element in the list and so on.
      * @returns The element reference or \b null when \a index is invalid.
      **/
-    public T get(int index)
-    {
+    public T get(int index) {
         if (index < 0) index = (m_count - index);
 
         if ((index < 0) || (index >= m_count))
             return null;
 
         return (T)m_array[index];
-    }/*}}}*/
-    // public T       set(int index, T element);/*{{{*/
+    }
+
     /**
      * Replaces the element at the specified position.
      * @param index Position of the element to be replaced. This value can be
@@ -479,8 +454,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * index is equal to the length of the list. In this case the \a element
      * will be appended but the result will still be \b null.
      **/
-    public T set(int index, T element)
-    {
+    public T set(int index, T element) {
         if (index < 0) index = (m_count - index);
         if ((index < 0) || (index > m_count))
             return null;
@@ -495,8 +469,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
             m_array[index] = element;
         }
         return result;
-    }/*}}}*/
-    // public void    add(int index, T element);/*{{{*/
+    }
+
     /**
      * Inserts a new element in the specified position.
      * @param index Position where the new element must be inserted
@@ -510,16 +484,15 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @note Use #insert() method to do the same operation without worring
      * abount exceptions.
      **/
-    public void add(int index, T element) throws IllegalArgumentException
-    {
+    public void add(int index, T element) throws IllegalArgumentException {
         if ((index < 0) || (index > m_count))
             throw new IllegalArgumentException("Invalid 'index' parameter!");
 
         _internal_alloc(1);
         m_array = arrays.add(m_array, index, element);
         m_count++;
-    }/*}}}*/
-    // public boolean insert(int index, T element);/*{{{*/
+    }
+
     /**
      * Inserts an element in the specified position.
      * By differing from #add(int,T) this method doesn't throw any exceptions.
@@ -532,8 +505,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @returns \b true whem the specified element is inserted in the list.
      * Otherwise \b false.
      **/
-    public boolean insert(int index, T element)
-    {
+    public boolean insert(int index, T element) {
         if (index < 0) index = (m_count - index);
         if ((index < 0) || (index >= m_count) || (element == null))
             return false;
@@ -542,8 +514,8 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
         m_array = arrays.add(m_array, index, element);
         m_count++;
         return true;
-    }/*}}}*/
-    // public T       remove(int index);/*{{{*/
+    }
+
     /**
      * Remove one element from the list.
      * @param index Position of the element to be removed. This value can be
@@ -553,8 +525,7 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
      * @return The element removed means success. When \a index position lies
      * out of list bounds the return will be \b null.
      **/
-    public T remove(int index)
-    {
+    public T remove(int index) {
         if (index < 0) index = (m_count - index);
         if ((index < 0) || (index >= m_count))
             return null;
@@ -569,96 +540,84 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
 
         m_count--;
         return result;
-    }/*}}}*/
-    // public void    ensureCapacity(int capacity);/*{{{*/
+    }
+
     /**
      * Ensure the list will have capacity for the specified number of
      * elements.
      * @param capacity The list capacity in number of elements. If this value
      * is less than the current list capacity the list will not change.
      **/
-    public void ensureCapacity(int capacity)
-    {
+    public void ensureCapacity(int capacity) {
         if (capacity <= arrays.length(m_array))
             return;
 
         _internal_alloc(capacity - m_count);
-    }/*}}}*/
-    // public void    trim();/*{{{*/
+    }
+
     /**
      * Reduces this list capacity to the number of elements.
      * This function will free memory allocated and not used.
      **/
-    public void trim()
-    {
+    public void trim() {
         m_array = arrays.realloc(m_array, m_count);
-    }/*}}}*/
+    }
     //@}
 
     /** \name Object Overrides */ //@{
-    // public Object clone();/*{{{*/
     /**
      * Clone this list.
      * @return The result is an \c SFListT instance with the same list of
      * objects and same capacity.
      * @remarks There is a copy constructor that does the same of this method.
      **/
-    public Object clone()
-    {
+    public Object clone() {
         return new SFListT<T>(this);
-    }/*}}}*/
+    }
     //@}
 
     /** \name Internal Methods */ //@{
-    // private boolean _internal_alloc(int count);/*{{{*/
     /**
      * Allocate space in the internal array.
      * @param count Number of elements to be added in the array.
      * @returns Always \b true. Whe this function fails a not catcheable \e
      * OutOfMemoryError will be thrown.
      **/
-    private boolean _internal_alloc(int count)
-    {
+    private boolean _internal_alloc(int count) {
         if ((m_count + count) <= arrays.length(m_array))
             return true;
 
         m_array = arrays.realloc(m_array, (m_count + count));
         return true;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Internal Classes */ //@{
-    // class __Iterator<T> implements Iterator<T>;/*{{{*/
     /**
      * The internal Iterator implementation.
      **/
-    class __Iterator<T> implements Iterator<T>
-    {
+    class __Iterator<T> implements Iterator<T> {
         /** \name Constructors */ //@{
-        // public __Iterator(SFListT<T> list);/*{{{*/
         /**
          * Builds the __Iterator object.
          * @param list The list backing the elements.
          **/
-        public __Iterator(SFListT<T> list)
-        {
+        public __Iterator(SFListT<T> list) {
             m_list     = list;
             m_position = -1;
-        }/*}}}*/
+        }
         //@}
 
         /** \name Iterator Implementation */ //@{
-        // public boolean hasNext();/*{{{*/
         /**
          * Checks if there is more elements in the list.
          * @returns \b true if there is more elements to be iterated.
          * Otherwise \b false.
          **/
-        public boolean hasNext()
-        {
+        public boolean hasNext() {
             return ((m_position + 1) < m_list.size());
-        }/*}}}*/
-        // public T       next();/*{{{*/
+        }
+
         /**
          * Returns the next element in the list.
          * The first call to this method returns the first element. The second
@@ -667,15 +626,14 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
          * @throw NoSuchElementException When the list has no more elements to
          * be iterated.
          **/
-        public T next() throws NoSuchElementException
-        {
+        public T next() throws NoSuchElementException {
             if (!hasNext())
                 throw new NoSuchElementException("There are no more elements to iterate!");
 
             m_position++;
             return m_list.get(m_position);
-        }/*}}}*/
-        // public void    remove();/*{{{*/
+        }
+
         /**
          * Removes the current iterated element.
          * The current iterated element is the element returned by the last
@@ -685,17 +643,16 @@ public class SFListT<T> implements Collection<T>, Iterable<T>, Cloneable,
          * @throw UnsupportedOperationException This operation is not
          * supported.
          **/
-        public void remove() throws UnsupportedOperationException
-        {
+        public void remove() throws UnsupportedOperationException {
             throw new UnsupportedOperationException("SFListT::Iterator::remove() is not supported!");
-        }/*}}}*/
+        }
         //@}
 
         /** \name Data Members */ //@{
         SFListT<T> m_list;          /**< The list backing this Iterator. */
         int    m_position;          /**< Current iterating position.     */
         //@}
-    }/*}}}*/
+    }
     //@}
 
     /** \name Data members */ //@{
