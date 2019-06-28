@@ -12,10 +12,32 @@ color white
 
 set diffopt=filler,iwhite
 
-if filereadable(".atplrc.vim")
-  source .atplrc.vim
-endif
+" ApplyTemplate Plugin Configuration for project: Mobile Banking
 
-if filereadable(".javarc.vim")
-  source .javarc.vim
-endif
+let g:atpl_UsersList["@AUTHORMAIL@"] = '<antonello.ale@gmail.com>'
+let g:atpl_UsersList["@PROJECT@"]    = 'jguime'
+let g:atpl_UsersList["@OWNER@"]      = 'Alessandro Antonello'
+let g:atpl_UsersList["@VERSION@"]    = '2.5'
+
+" Syntastic Configuration Script for Java
+
+let project_root = getcwd()
+let project_home = project_root
+let android_home = project_home
+
+call javacomplete#AddClassPath(expand('$ANDROID_HOME').'/platforms/android-19/android.jar')
+call javacomplete#AddSourcePath(android_home.'/src/')
+call javacomplete#SetSearchdeclMethod(4)
+
+augroup JGUIME
+  au! FileType java call <SID>setupFile()
+augroup END
+
+function s:setupFile()
+  setlocal omnifunc=javacomplete#Complete
+  setlocal completefunc=javacomplete#CompleteParamsInfo
+endfunction
+
+unlet project_root
+unlet project_home
+unlet android_home
