@@ -43,7 +43,6 @@ import x.android.utils.*;
 public class stream_t implements DataInput, DataOutput
 {
     /** \name CONSTRUCTOR */ //@{
-    // public stream_t();/*{{{*/
     /**
      * Build an empty stream_t class.
      **/
@@ -53,8 +52,8 @@ public class stream_t implements DataInput, DataOutput
         m_write = 0;
         m_lastRead  = 0;
         m_lastWrite = 0;
-    }/*}}}*/
-    // public stream_t(int capacity);/*{{{*/
+    }
+
     /**
      * Builds the stream_t instance defining an initial capacity.
      * \param capacity The initial capacity for the internal buffer.
@@ -65,8 +64,8 @@ public class stream_t implements DataInput, DataOutput
         m_write     = 0;
         m_lastRead  = 0;
         m_lastWrite = 0;
-    }/*}}}*/
-    // public stream_t(byte[] data);/*{{{*/
+    }
+
     /**
      * Builds a new stream_t instance copying the passed array.
      * \param data The array which data should initializa the internal buffer.
@@ -81,8 +80,8 @@ public class stream_t implements DataInput, DataOutput
         m_lastWrite = 0;
 
         write(data);
-    }/*}}}*/
-    // public stream_t(byte[] data, int start, int count);/*{{{*/
+    }
+
     /**
      * Builds the new stream_t instance copying part of an array.
      * \param data The array whose part will initialize this stream.
@@ -100,11 +99,10 @@ public class stream_t implements DataInput, DataOutput
         m_lastWrite = 0;
 
         write(data, start, count);
-    }/*}}}*/
+    }
     //@}
 
     /** \name ATTRIBUTES */ //@{
-    // public int length();/*{{{*/
     /**
      * Returns the current length of the internal buffer.
      * The length represents the total amount of bytes that can be read
@@ -112,16 +110,16 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int length() {
         return m_write;
-    }/*}}}*/
-    // public int capacity();/*{{{*/
+    }
+
     /**
      * Gets the current buffer capacity.
      * Usually this is slitely bigger than the current length.
      **/
     public int capacity() {
         return arrays.length(m_data);
-    }/*}}}*/
-    // public int available();/*{{{*/
+    }
+
     /**
      * Gets the number of available bytes in the internal buffer.
      * The available bytes are the bytes between the read position and the
@@ -129,8 +127,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int available() {
         return (m_write - m_read);
-    }/*}}}*/
-    // public int getReadPos();/*{{{*/
+    }
+
     /**
      * Gets the current read position.
      * The returned value represents the distance between the start of the
@@ -138,8 +136,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int getReadPos() {
         return m_read;
-    }/*}}}*/
-    // public int getWritePos();/*{{{*/
+    }
+
     /**
      * Get the current write position.
      * The write position is the distance between the first byte and the next
@@ -147,8 +145,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int getWritePos() {
         return m_write;
-    }/*}}}*/
-    // public int readStatus();/*{{{*/
+    }
+
     /**
      * Gets the status of the last read operation.
      * Note that this status is updated at every read operation.
@@ -157,8 +155,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int readStatus() {
         return m_lastRead;
-    }/*}}}*/
-    // public int writeStatus();/*{{{*/
+    }
+
     /**
      * Returns the status of the last write operation.
      * Notice that this value is updated at every write.
@@ -167,11 +165,10 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int writeStatus() {
         return m_lastWrite;
-    }/*}}}*/
+    }
     //@}
 
     /** \name DataInput IMPLEMENTATION */ //@{
-    // public boolean readBoolean();/*{{{*/
     /**
      * Reads a single byte from the internal buffer.
      * \returns \b true if the byte is different from zero. Otherwise \b
@@ -188,8 +185,8 @@ public class stream_t implements DataInput, DataOutput
             return false;
         else
             return true;
-    }/*}}}*/
-    // public byte    readByte();/*{{{*/
+    }
+
     /**
      * Reads a single byte returning its value.
      * \remarks The read position is increased by 1.
@@ -201,8 +198,8 @@ public class stream_t implements DataInput, DataOutput
         }
         m_lastRead = 0;
         return m_data[m_read++];
-    }/*}}}*/
-    // public char    readChar();/*{{{*/
+    }
+
     /**
      * Reads a character from the input buffer.
      * Notice that this character is expected to be in Java UNICODE encoding
@@ -223,8 +220,8 @@ public class stream_t implements DataInput, DataOutput
         result = arrays.bigEndToChar(m_data, m_read);
         m_read += 2;
         return result;
-    }/*}}}*/
-    // public short   readShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes (big-endian) and returns a short value.
      * If you need a little-endian short value use \c getShort() instead.
@@ -242,8 +239,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 2;
 
         return result;
-    }/*}}}*/
-    // public int     readInt();/*{{{*/
+    }
+
     /**
      * Reads four bytes (big-endian) and returns an integer value.
      * If you need a little-endian integer value use \c getInt().
@@ -261,8 +258,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 4;
 
         return result;
-    }/*}}}*/
-    // public long    readLong();/*{{{*/
+    }
+
     /**
      * Reads eight bytes (big-endian) and returns a long value.
      * If you need a little-endian long value use \c getLong().
@@ -280,8 +277,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 8;
 
         return result;
-    }/*}}}*/
-    // public int     readUnsignedByte();/*{{{*/
+    }
+
     /**
      * Reads a byte from the internal buffer.
      * \returns An integer value formed by the unsigned byte value. The range
@@ -295,8 +292,8 @@ public class stream_t implements DataInput, DataOutput
         }
         m_lastRead = 0;
         return numbers.toInt(m_data[m_read++]);
-    }/*}}}*/
-    // public int     readUnsignedShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes from the internal buffer and returns a short value.
      * The result will cast to an integer so the result is named to be
@@ -309,8 +306,8 @@ public class stream_t implements DataInput, DataOutput
         short result = readShort();
         if (m_lastRead != 0) return 0;
         return numbers.toInt(result);
-    }/*}}}*/
-    // public float   readFloat();/*{{{*/
+    }
+
     /**
      * Reads four bytes from the internal buffer and returns a float value.
      * This convertion is made in big-endian notation. If you need
@@ -321,8 +318,8 @@ public class stream_t implements DataInput, DataOutput
         int result = readInt();
         if (m_lastRead != 0) return (float).0;
         return Float.intBitsToFloat(result);
-    }/*}}}*/
-    // public double  readDouble();/*{{{*/
+    }
+
     /**
      * Reads eight bytes from the internal buffer and returns a double value.
      * \remarks This conversion is made in big-endian notation. If you need
@@ -333,8 +330,8 @@ public class stream_t implements DataInput, DataOutput
         long result = readLong();
         if (m_lastRead != 0) return 0;
         return Double.longBitsToDouble(result);
-    }/*}}}*/
-    // public void    readFully(byte[] buffer);/*{{{*/
+    }
+
     /**
      * Read raw bytes from the internal buffer.
      * \param buffer Array where to copy the data. The number of bytes
@@ -350,8 +347,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void readFully(byte[] buffer) {
         read(buffer, 0, arrays.length(buffer));
-    }/*}}}*/
-    // public void    readFully(byte[] buffer, int start, int count);/*{{{*/
+    }
+
     /**
      * Reads \a count bytes from the internal buffer and copies the in the \a
      * buffer starting from the \a start index.
@@ -369,8 +366,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void readFully(byte[] buffer, int start, int count) {
         read(buffer, start, count);
-    }/*}}}*/
-    // public String  readLine();/*{{{*/
+    }
+
     /**
      * Process the internal buffer and returns a line of text.
      * The reading starts from the current read position and goes until a new
@@ -398,8 +395,8 @@ public class stream_t implements DataInput, DataOutput
         }
         m_read = index;
         return result;
-    }/*}}}*/
-    // public String  readUTF();/*{{{*/
+    }
+
     /**
      * Interprets the internal data as a modified UTF-8 sequence.
      * Read the documentation of \c DataInput interface from Java to see the
@@ -417,8 +414,8 @@ public class stream_t implements DataInput, DataOutput
         if (result == null) return null;
         m_read += uLength;      /* Updating the read position. */
         return result;
-    }/*}}}*/
-    // public int     skipBytes(int n);/*{{{*/
+    }
+
     /**
      * Jump the number of bytes.
      * \param n The number of bytes to skip.
@@ -432,11 +429,10 @@ public class stream_t implements DataInput, DataOutput
 
         m_read += n;
         return n;
-    }/*}}}*/
+    }
     //@}
 
     /** \name DataOutput IMPLEMENTATION */ //@{
-    // public void write(byte[] data, int start, int count);/*{{{*/
     /**
      * Writes \a data to the internal buffer.
      * Memory is allocated if needed.
@@ -454,8 +450,8 @@ public class stream_t implements DataInput, DataOutput
         }
         arrays.copy(m_data, m_write, data, start, count);
         m_write += count;
-    }/*}}}*/
-    // public void write(byte[] data);/*{{{*/
+    }
+
     /**
      * Writes the \a data array into the internal buffer.
      * \param data Array to be written.
@@ -466,8 +462,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void write(byte[] data) {
         write(data, 0, arrays.length(data));
-    }/*}}}*/
-    // public void write(int b);/*{{{*/
+    }
+
     /**
      * Writes a single byte to the internal buffer.
      * Only the low-order byte of the integer is written.
@@ -482,8 +478,8 @@ public class stream_t implements DataInput, DataOutput
         }
         m_data[m_write] = (byte)(b & 0x000000FF);
         m_write++;
-    }/*}}}*/
-    // public void writeBoolean(boolean value);/*{{{*/
+    }
+
     /**
      * Writes a boolean value to the internal buffer.
      * This function writes a single byte. When \a value is \b true a byte of
@@ -495,8 +491,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void writeBoolean(boolean value) {
         write((value ? 1 : 0));
-    }/*}}}*/
-    // public void writeByte(int b);/*{{{*/
+    }
+
     /**
      * Writes a single byte to the internal buffer.
      * Only the low-order byte of the integer is written.
@@ -506,8 +502,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void writeByte(int b) {
         write(b);
-    }/*}}}*/
-    // public void writeChar(int c);/*{{{*/
+    }
+
     /**
      * Writes a \b char value into the internal buffer.
      * The character write by this function can be read by the \c readChar()
@@ -520,8 +516,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void writeChar(int c) {
         write(arrays.charAsBigEnd((char)c));
-    }/*}}}*/
-    // public void writeShort(int s);/*{{{*/
+    }
+
     /**
      * Writes a \b short value to the internal buffer.
      * Two bytes are written in big-endian order. If you need little-endian
@@ -532,8 +528,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void writeShort(int s) {
         write( arrays.shortAsBigEnd((short)s) );
-    }/*}}}*/
-    // public void writeInt(int v);/*{{{*/
+    }
+
     /**
      * Writes an \b integer value to the internal buffer.
      * Four bytes in big-endian order are written. If you need little-endian
@@ -544,8 +540,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void writeInt(int v) {
         write( arrays.intAsBigEnd(v) );
-    }/*}}}*/
-    // public void writeLong(long l);/*{{{*/
+    }
+
     /**
      * Writes a \b long value to the internal buffer.
      * Eight bytes in big-endian order are written. If you need little-endian
@@ -556,8 +552,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public void writeLong(long l) {
         write( arrays.longAsBigEnd(l) );
-    }/*}}}*/
-    // public void writeFloat(float f);/*{{{*/
+    }
+
     /**
      * Writes a \b float value into the internal buffer.
      * Four bytes in big-endian order are written. If you need little-endian
@@ -569,8 +565,8 @@ public class stream_t implements DataInput, DataOutput
     public void writeFloat(float f) {
         int bits = Float.floatToIntBits(f);
         write( arrays.intAsBigEnd(bits) );
-    }/*}}}*/
-    // public void writeDouble(double d);/*{{{*/
+    }
+
     /**
      * Writes a \b double value to the internal buffer.
      * Eight bytes are written in big-endian order. If you need little-endian
@@ -582,8 +578,8 @@ public class stream_t implements DataInput, DataOutput
     public void writeDouble(double d) {
         long bits = Double.doubleToLongBits(d);
         write( arrays.longAsBigEnd(bits) );
-    }/*}}}*/
-    // public void writeBytes(String s);/*{{{*/
+    }
+
     /**
      * Write bytes to the internal buffer.
      * The characters of the string \a s are converted to bytes and written,
@@ -612,8 +608,8 @@ public class stream_t implements DataInput, DataOutput
         }
         bytes[limit] = 0x00;            /* The terminator. */
         write( bytes );
-    }/*}}}*/
-    // public void writeChars(String s);/*{{{*/
+    }
+
     /**
      * Write bytes to the internal buffer.
      * Each character in the source string \a s is written using two bytes in
@@ -647,8 +643,8 @@ public class stream_t implements DataInput, DataOutput
         bytes[limit*2+1] = 0x00;
 
         write( bytes );
-    }/*}}}*/
-    // public void writeUTF(String s);/*{{{*/
+    }
+
     /**
      * Writes a string using a modified UTF-8 encoding.
      * This encoding is specified in the Java documentation. Each character
@@ -697,11 +693,10 @@ public class stream_t implements DataInput, DataOutput
          */
         arrays.shortAsBigEnd(buffer, 0, (short)(index - 2));
         write(buffer, 0, index);
-    }/*}}}*/
+    }
     //@}
 
     /** \name READ OPERATIONS */ //@{
-    // public char   getChar();/*{{{*/
     /**
      * Reads a \b char from the internal buffer.
      * This function is the same as \c readChar(), with the difference that it
@@ -718,8 +713,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 2;
         m_lastRead = 0;
         return c;
-    }/*}}}*/
-    // public short  getShort();/*{{{*/
+    }
+
     /**
      * Read two bytes from the internal buffer and returns a \b short value.
      * This function works the same way as \c readShort(), except that this
@@ -735,8 +730,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 2;
         m_lastRead = 0;
         return s;
-    }/*}}}*/
-    // public int    getInt();/*{{{*/
+    }
+
     /**
      * Reads four bytes and returns an integer value.
      * This function works the same way as \c readInt(), except that its
@@ -752,8 +747,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 4;
         m_lastRead = 0;
         return i;
-    }/*}}}*/
-    // public long   getLong();/*{{{*/
+    }
+
     /**
      * Reads eight bytes and returns a long value.
      * This function works the same way as \c readLong(), except that its
@@ -769,8 +764,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += 8;
         m_lastRead = 0;
         return l;
-    }/*}}}*/
-    // public int    getUShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes and returns an unsigned short value casted to an int.
      * This function works in the same way as \c readUnsignedShort(), with the
@@ -780,8 +775,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public int getUShort() {
         return (0x0000FFFF | getShort());
-    }/*}}}*/
-    // public float  getFloat();/*{{{*/
+    }
+
     /**
      * Read four bytes and returns a \b float value.
      * This function works the same way as \c readFloat() with the exception
@@ -790,8 +785,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public float getFloat() {
         return Float.intBitsToFloat(getInt());
-    }/*}}}*/
-    // public double getDouble();/*{{{*/
+    }
+
     /**
      * Read eight bytes and returns a \b double value.
      * This function works the same way as \c readDouble(), with the exception
@@ -800,8 +795,8 @@ public class stream_t implements DataInput, DataOutput
      **/
     public double getDouble() {
         return Double.longBitsToDouble(getLong());
-    }/*}}}*/
-    // public String getBytes();/*{{{*/
+    }
+
     /**
      * Reads a sequence of bytes and returns a String.
      * This function reads a string, from the internal buffer, written by the
@@ -832,8 +827,8 @@ public class stream_t implements DataInput, DataOutput
             m_lastRead = ERROR.NOTFOUND;
             return null;
         }
-    }/*}}}*/
-    // public String getChars();/*{{{*/
+    }
+
     /**
      * Reads a sequence of characters and returns a String.
      * This function reads a string, from the internal buffer, written by the
@@ -869,8 +864,8 @@ public class stream_t implements DataInput, DataOutput
             m_lastRead = ERROR.NOTFOUND;
             return null;
         }
-    }/*}}}*/
-    // public int    read(byte[] buffer, int start, int count);/*{{{*/
+    }
+
     /**
      * Reads bytes from the internal buffer.
      * \param buffer Where the bytes are copied. Must have enough room to copy
@@ -899,8 +894,8 @@ public class stream_t implements DataInput, DataOutput
         m_lastRead = 0;
 
         return count;
-    }/*}}}*/
-    // public String read(String encoding, int count);/*{{{*/
+    }
+
     /**
      * Reads a string from the internal buffer.
      * The encoding especification of the string must be set to one of the
@@ -917,8 +912,7 @@ public class stream_t implements DataInput, DataOutput
      * passed. The \c readStatus() always returns 0. This function never
      * fails.
      **/
-    public String read(String encoding, int count)
-    {
+    public String read(String encoding, int count) {
         if (count > available())
             count = available();
         else if (count < 0)
@@ -960,8 +954,8 @@ public class stream_t implements DataInput, DataOutput
         m_read += count;
         m_lastRead = 0;
         return result;
-    }/*}}}*/
-    // public int    read(DataOutput output, int count);/*{{{*/
+    }
+
     /**
      * Reads the contents of this stream into a \c DataOutput object.
      * \param output The \c DataOutput instance where the data must be read.
@@ -984,11 +978,10 @@ public class stream_t implements DataInput, DataOutput
         m_lastRead = 0;
         m_read += count;
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name WRITE OPERATIONS */ //@{
-    // public int addChar(int c);/*{{{*/
     /**
      * Writes a character value into the buffer.
      * The character written by this function can be read by \c getChar()
@@ -1004,8 +997,8 @@ public class stream_t implements DataInput, DataOutput
     public int addChar(int c) {
         write(arrays.charAsLittleEnd((char)c));
         return m_lastWrite;
-    }/*}}}*/
-    // public int addShort(int s);/*{{{*/
+    }
+
     /**
      * Writes a short value into the buffer.
      * The value written by this function can be read by \c getShort()
@@ -1020,8 +1013,8 @@ public class stream_t implements DataInput, DataOutput
     public int addShort(int s) {
         write(arrays.shortAsLittleEnd((short)s));
         return m_lastWrite;
-    }/*}}}*/
-    // public int addInt(int i);/*{{{*/
+    }
+
     /**
      * Write an integer value into the buffer.
      * The value written by this function can be read by \c getInt()
@@ -1036,8 +1029,8 @@ public class stream_t implements DataInput, DataOutput
     public int addInt(int i) {
         write(arrays.intAsLittleEnd(i));
         return m_lastWrite;
-    }/*}}}*/
-    // public int addLong(long l);/*{{{*/
+    }
+
     /**
      * Write a long value into the buffer.
      * The value written by this function can be read by \c getLong()
@@ -1052,8 +1045,8 @@ public class stream_t implements DataInput, DataOutput
     public int addLong(long l) {
         write(arrays.longAsLittleEnd(l));
         return m_lastWrite;
-    }/*}}}*/
-    // public int addFloat(float f);/*{{{*/
+    }
+
     /**
      * Writes a float value into the buffer.
      * The value written by this function can be read by \c getFloat()
@@ -1068,8 +1061,8 @@ public class stream_t implements DataInput, DataOutput
     public int addFloat(float f) {
         write(arrays.intAsLittleEnd(Float.floatToIntBits(f)));
         return m_lastWrite;
-    }/*}}}*/
-    // public int addDouble(double d);/*{{{*/
+    }
+
     /**
      * Writes a double value into the buffer.
      * The value written by this function can be read by \c getDouble()
@@ -1084,8 +1077,8 @@ public class stream_t implements DataInput, DataOutput
     public int addDouble(double d) {
         write(arrays.longAsLittleEnd(Double.doubleToLongBits(d)));
         return m_lastWrite;
-    }/*}}}*/
-    // public int write(DataInput input, int count);/*{{{*/
+    }
+
     /**
      * Reads from a \c DataInput and writes the internal buffer.
      * \param input The \c DataInput to read.
@@ -1109,8 +1102,8 @@ public class stream_t implements DataInput, DataOutput
         m_write += count;
         m_lastWrite = 0;
         return count;
-    }/*}}}*/
-    // public int write(String s, String enc, int maxLen);/*{{{*/
+    }
+
     /**
      * Writes a string into the buffer.
      * The string will be encoded according to the specified encoding name.
@@ -1157,8 +1150,8 @@ public class stream_t implements DataInput, DataOutput
         }
 
         return maxLen;
-    }/*}}}*/
-    // public int write(String s, String enc);/*{{{*/
+    }
+
     /**
      * Writes a string into the buffer.
      * The string will be written in the current write position, updating the
@@ -1191,11 +1184,10 @@ public class stream_t implements DataInput, DataOutput
          */
         write( bytes );
         return bytes.length;
-    }/*}}}*/
+    }
     //@}
 
     /** \name BUFFER CONTROL OPERATIONS */ //@{
-    // public boolean setWritePos(int pos);/*{{{*/
     /**
      * Changes the write position.
      * When the write position is changed the read position is automatically
@@ -1211,8 +1203,8 @@ public class stream_t implements DataInput, DataOutput
         m_read = 0;
         m_write = pos;
         return true;
-    }/*}}}*/
-    // public boolean setReadPos(int pos);/*{{{*/
+    }
+
     /**
      * Changes the read position.
      * \param pos The new read position. This is the absolute offset between
@@ -1226,8 +1218,8 @@ public class stream_t implements DataInput, DataOutput
 
         m_read = pos;
         return true;
-    }/*}}}*/
-    // public int     purge();/*{{{*/
+    }
+
     /**
      * Remove all read data.
      * The read position will be automaticaly reseted. The write position will
@@ -1240,8 +1232,8 @@ public class stream_t implements DataInput, DataOutput
         int result = m_read;
         m_read = 0;
         return result;
-    }/*}}}*/
-    // public void    reset();/*{{{*/
+    }
+
     /**
      * Reset both read and write positions.
      * After this function return any write operation will start from the
@@ -1253,8 +1245,8 @@ public class stream_t implements DataInput, DataOutput
     public void reset() {
         m_write = 0;
         m_read  = 0;
-    }/*}}}*/
-    // public void    free();/*{{{*/
+    }
+
     /**
      * Frees the memory allocated by this object.
      * Read and write positions will be reseted.
@@ -1263,11 +1255,10 @@ public class stream_t implements DataInput, DataOutput
         m_data  = null;
         m_read  = 0;
         m_write = 0;
-    }/*}}}*/
+    }
     //@}
 
     /** \name STREAM OPERATIONS */ //@{
-    // public int writeFrom(CBinaryReader reader, int count);/*{{{*/
     /**
      * Writes data from a CBinaryReader object into the internal buffer.
      * The write position will be updated after this operation.
@@ -1290,8 +1281,8 @@ public class stream_t implements DataInput, DataOutput
         m_write += count;
         m_lastWrite = 0;
         return count;
-    }/*}}}*/
-    // public int writeFrom(CStreamReader reader, int count);/*{{{*/
+    }
+
     /**
      * Writes data from a CStreamReader object into the internal buffer.
      * The write position will be updated after this operation.
@@ -1314,8 +1305,8 @@ public class stream_t implements DataInput, DataOutput
         m_write += count;
         m_lastWrite = 0;
         return count;
-    }/*}}}*/
-    // public int readInto(CBinaryWriter writer, int count);/*{{{*/
+    }
+
     /**
      * Reads data from the internal buffer into the CBinaryWriter object.
      * The read position will be updated after this operation.
@@ -1339,8 +1330,8 @@ public class stream_t implements DataInput, DataOutput
         m_lastRead = ERROR.SUCCESS;
 
         return count;
-    }/*}}}*/
-    // public int readInto(CStreamWriter writer, int count);/*{{{*/
+    }
+
     /**
      * Reads data from the internal buffer into the CStreamWriter object.
      * The read position will be updated after this operation.
@@ -1366,11 +1357,10 @@ public class stream_t implements DataInput, DataOutput
         m_read += count;
         m_lastRead = 0;
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Input/Output Streams Support */ //@{
-    // public int writeFromInputStream(InputStream is, int count);/*{{{*/
     /**
      * Writes the internal buffer reading from the passed stream.
      * @param is The InputStream to read.
@@ -1382,8 +1372,7 @@ public class stream_t implements DataInput, DataOutput
      * function.
      * @sa ERROR
      **/
-    public int writeFromInputStream(InputStream is, int count)
-    {
+    public int writeFromInputStream(InputStream is, int count) {
         m_lastWrite = 0;
 
         if (count < 0)
@@ -1418,8 +1407,8 @@ public class stream_t implements DataInput, DataOutput
 
         m_write += count;
         return count;
-    }/*}}}*/
-    // public int readIntoOutputStream(OutputStream os, int count);/*{{{*/
+    }
+
     /**
      * Reads the internal buffer from the current position writing the
      * OutputStream passed.
@@ -1433,8 +1422,7 @@ public class stream_t implements DataInput, DataOutput
      * retrieved from #readStatus() function.
      * @sa ERROR
      **/
-    public int readIntoOutputStream(OutputStream os, int count)
-    {
+    public int readIntoOutputStream(OutputStream os, int count) {
         m_lastRead = 0;
         if ((count < 0) || (count > available()))
             count = available();
@@ -1450,11 +1438,10 @@ public class stream_t implements DataInput, DataOutput
         }
         m_read += count;
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name CYCLIC REDUNDANCY CHECK */ //@{
-    // public final short crc16(int start, int count);/*{{{*/
     /**
      * Calculate the CRC16-CCITT of this stream content.
      * \param start Position of the first byte to start calculating the CRC.
@@ -1480,11 +1467,10 @@ public class stream_t implements DataInput, DataOutput
             result ^= (((result & 0x000000FF) << 5) & 0x0000FFFF);
         }
         return (short)(result & 0x0000FFFF);
-    }/*}}}*/
+    }
     //@}
 
     /** \name DEBUGGING OPERATIONS */ //@{
-    // public final void dump();/*{{{*/
     /**
      * Writes the content of this stream in the standard ouput.
      * The writing starts at the current position and goes until the
@@ -1495,8 +1481,7 @@ public class stream_t implements DataInput, DataOutput
      * </pre>
      * Each value is space separated. The space is not part of the stream.
      **/
-    public final void dump()
-    {
+    public final void dump() {
         if (!debug.enabled) return;
         debug.w("Dumping stream_t content:\n");
         debug.w("read position.: %d\n", m_read);
@@ -1520,11 +1505,10 @@ public class stream_t implements DataInput, DataOutput
             sb.setLength(0);
         }
         debug.timestamp = true;
-    }/*}}}*/
+    }
     //@}
 
     /** \name OVERRIDES */ //@{
-    // public boolean equals(Object object);/*{{{*/
     /**
      * Checks the equality with another object.
      * \param object The object to compare to.
@@ -1536,8 +1520,8 @@ public class stream_t implements DataInput, DataOutput
         stream_t stream = (stream_t)object;
 
         return (boolean)(stream == this);
-    }/*}}}*/
-    // public String  toString();/*{{{*/
+    }
+
     /**
      * Returns a textual representation of this object.
      * The result will be a string with binary data represented as groups of
@@ -1553,11 +1537,10 @@ public class stream_t implements DataInput, DataOutput
     public String toString() {
         byte[] temp = arrays.slice(m_data, m_read, this.available());
         return arrays.toString(temp, " ", 1);
-    }/*}}}*/
+    }
     //@}
 
     /** \name INTERNAL FUNCTIONS */ //@{
-    // protected boolean _internal_checkRoom(int size);/*{{{*/
     /**
      * Checks the capacity of the internal buffer.
      * If the capacity is less than the size needed, more memory is allocated.
@@ -1568,7 +1551,7 @@ public class stream_t implements DataInput, DataOutput
         if (capacity() >= size) return true;
         m_data = arrays.realloc(m_data, size);
         return (boolean)(m_data != null);
-    }/*}}}*/
+    }
     //@}
 
     /** \name PROTECTED FIELDS */ //@{

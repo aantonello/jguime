@@ -33,28 +33,25 @@ import java.io.IOException;
 public class CStreamWriter implements DataOutput
 {
     /** \name CONSTRUCTOR */ //@{
-    // public CStreamWriter(OutputStream out);/*{{{*/
     /**
      * Default constructor.
      * \param out The output stream to be written.
      **/
     public CStreamWriter(OutputStream out) {
         m_dos = new DataOutputStream(out);
-    }/*}}}*/
+    }
     //@}
 
     /** \name ATTRIBUTES */ //@{
-    // public int length();/*{{{*/
     /**
      * Returns the number of bytes written to the stream so far.
      **/
     public int length() {
         return m_dos.size();
-    }/*}}}*/
+    }
     //@}
 
     /** \name DataOutput IMPLEMENTATION */ //@{
-    // public void write(byte[] data, int start, int count);/*{{{*/
     /**
      * Writes \a data to the internal buffer.
      * \param data The array to be written.
@@ -63,16 +60,16 @@ public class CStreamWriter implements DataOutput
      **/
     public void write(byte[] data, int start, int count) {
         this.put(data, start, count);
-    }/*}}}*/
-    // public void write(byte[] data);/*{{{*/
+    }
+
     /**
      * Writes the \a data array into the stream.
      * \param data Array to be written.
      **/
     public void write(byte[] data) {
         this.put(data);
-    }/*}}}*/
-    // public void write(int b);/*{{{*/
+    }
+
     /**
      * Writes a single byte to the stream.
      * Only the low-order byte of the integer is written.
@@ -80,8 +77,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void write(int b) {
         this.putByte(b);
-    }/*}}}*/
-    // public void writeBoolean(boolean value);/*{{{*/
+    }
+
     /**
      * Writes a boolean value to the internal buffer.
      * This function writes a single byte. When \a value is \b true a byte of
@@ -91,8 +88,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeBoolean(boolean value) {
         this.putBoolean(value);
-    }/*}}}*/
-    // public void writeByte(int b);/*{{{*/
+    }
+
     /**
      * Writes a single byte to the internal buffer.
      * Only the low-order byte of the integer is written.
@@ -100,8 +97,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeByte(int b) {
         this.putByte(b);
-    }/*}}}*/
-    // public void writeChar(int c);/*{{{*/
+    }
+
     /**
      * Writes a \b char value into the internal buffer.
      * \param c The character to be written.
@@ -109,8 +106,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeChar(int c) {
         this.putChar(c);
-    }/*}}}*/
-    // public void writeShort(int s);/*{{{*/
+    }
+
     /**
      * Writes a \b short value to the internal buffer.
      * Two bytes are written in big-endian order.
@@ -118,8 +115,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeShort(int s) {
         this.putShort(s);
-    }/*}}}*/
-    // public void writeInt(int v);/*{{{*/
+    }
+
     /**
      * Writes an \b integer value to the internal buffer.
      * Four bytes in big-endian order are written.
@@ -127,8 +124,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeInt(int v) {
         this.putInt(v);
-    }/*}}}*/
-    // public void writeLong(long l);/*{{{*/
+    }
+
     /**
      * Writes a \b long value to the internal buffer.
      * Eight bytes in big-endian order are written.
@@ -136,8 +133,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeLong(long l) {
         this.putLong(l);
-    }/*}}}*/
-    // public void writeFloat(float f);/*{{{*/
+    }
+
     /**
      * Writes a \b float value into the internal buffer.
      * Four bytes in big-endian order are written.
@@ -145,8 +142,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeFloat(float f) {
         this.putFloat(f);
-    }/*}}}*/
-    // public void writeDouble(double d);/*{{{*/
+    }
+
     /**
      * Writes a \b double value to the internal buffer.
      * Eight bytes are written in big-endian order.
@@ -154,8 +151,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeDouble(double d) {
         this.putDouble(d);
-    }/*}}}*/
-    // public void writeBytes(String s);/*{{{*/
+    }
+
     /**
      * Write bytes to the internal buffer.
      * The characters of the string \a s are converted to bytes and written,
@@ -166,8 +163,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeBytes(String s) {
         this.putBytes(s);
-    }/*}}}*/
-    // public void writeChars(String s);/*{{{*/
+    }
+
     /**
      * Write bytes to the internal buffer.
      * Each character in the source string \a s is written using two bytes in
@@ -178,8 +175,8 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeChars(String s) {
         this.putChars(s);
-    }/*}}}*/
-    // public void writeUTF(String s);/*{{{*/
+    }
+
     /**
      * Writes a string using a modified UTF-8 encoding.
      * This encoding is specified in the Java documentation. Each character
@@ -190,11 +187,10 @@ public class CStreamWriter implements DataOutput
      **/
     public void writeUTF(String s) {
         this.putUTF(s);
-    }/*}}}*/
+    }
     //@}
 
     /** \name OVERRIDES */ //@{
-    // public void flush();/*{{{*/
     /**
      * Flushes the data in the stream.
      * No exception is thrown in this operation.
@@ -204,8 +200,8 @@ public class CStreamWriter implements DataOutput
         catch (Exception ex) {
             debug.e("CStreamWriter::flush(): %s", ex);
         }
-    }/*}}}*/
-    // public void close();/*{{{*/
+    }
+
     /**
      * Closes the stream.
      * This operation does not throw any exception.
@@ -215,11 +211,10 @@ public class CStreamWriter implements DataOutput
         catch (Exception ex) {
             /* Ignored, does not metter */
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name EXTENSIONS */ //@{
-    // public int putBoolean(boolean value);/*{{{*/
     /**
      * Write a boolean value to the stream.
      * \param value The boolean value to be written. If it is \b true the
@@ -235,8 +230,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putByte(int value);/*{{{*/
+    }
+
     /**
      * Write one byte to the output stream.
      * \param value An integer which the low order byte will be written.
@@ -250,8 +245,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putBytes(String data);/*{{{*/
+    }
+
     /**
      * Write a string encoded as ASCII byte sequence.
      * \param data The string to be written. It will be followed by a zero
@@ -267,8 +262,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return length() - curr;
-    }/*}}}*/
-    // public int putChar(int value);/*{{{*/
+    }
+
     /**
      * Write a character into the output stream.
      * \param value An integer to be converted to a character for writing.
@@ -282,8 +277,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putChars(String data);/*{{{*/
+    }
+
     /**
      * Writes a string in UTF-16 encoding to the output stream.
      * \param data String to be written. The string will follow 2 bytes of an
@@ -299,8 +294,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return length() - curr;
-    }/*}}}*/
-    // public int putShort(int value);/*{{{*/
+    }
+
     /**
      * Write a short value using 2 bytes of the output stream.
      * \param value An integer which will be converted to a short for writing.
@@ -314,8 +309,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putInt(int value);/*{{{*/
+    }
+
     /**
      * Writes an integer value using four bytes of the output stream.
      * \param value The integer value to be written.
@@ -329,8 +324,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putLong(long value);/*{{{*/
+    }
+
     /**
      * Writes a long value using eight bytes from the output stream.
      * \param value The long value to be written.
@@ -344,8 +339,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putFloat(float value);/*{{{*/
+    }
+
     /**
      * Writes a float value using four bytes from the output stream.
      * \param value The float value to write.
@@ -359,8 +354,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putDouble(double value);/*{{{*/
+    }
+
     /**
      * Writes a double value in the output stream.
      * \param value The double value to write.
@@ -374,8 +369,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return ERROR.SUCCESS;
-    }/*}}}*/
-    // public int putUTF(String data);/*{{{*/
+    }
+
     /**
      * Writes a string using the modified UTF-8 encoding.
      * \param data The string to write.
@@ -390,8 +385,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.IO;
         }
         return length() - curr;
-    }/*}}}*/
-    // public int put(byte[] data);/*{{{*/
+    }
+
     /**
      * Writes data to the output stream.
      * \param data The data to be written.
@@ -400,8 +395,8 @@ public class CStreamWriter implements DataOutput
      **/
     public int put(byte[] data) {
         return put(data, 0, arrays.length(data));
-    }/*}}}*/
-    // public int put(byte[] data, int offset, int count);/*{{{*/
+    }
+
     /**
      * Writes data to the output stream.
      * \param data The data to be written.
@@ -423,8 +418,8 @@ public class CStreamWriter implements DataOutput
             return ERROR.POINTER;
         }
         return (length() - curr);
-    }/*}}}*/
-    // public int putString(String data, int minLen, String enc);/*{{{*/
+    }
+
     /**
      * Writes a string, using the specified encoding, in the stream.
      * \param data String to write.
@@ -459,8 +454,8 @@ public class CStreamWriter implements DataOutput
         if (array == null) return ERROR.FAILED;
         put(array);
         return array.length;
-    }/*}}}*/
-    // public int put(String data, String enc);/*{{{*/
+    }
+
     /**
      * Converts and writes the string to the stream.
      * \param data String to convert.
@@ -486,7 +481,7 @@ public class CStreamWriter implements DataOutput
      **/
     public int put(String data, String enc) {
         return this.put(strings.encode(data, enc));
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{

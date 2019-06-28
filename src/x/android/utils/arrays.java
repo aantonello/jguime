@@ -37,7 +37,7 @@ public final class arrays
     }
 
     /**
-     * \copydoc arrays#length(byte[])
+     * \copydoc arrays.length(byte[])
      **/
     public static int length(char[] array)
     {

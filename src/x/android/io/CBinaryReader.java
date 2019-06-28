@@ -27,7 +27,6 @@ import x.android.utils.*;
 public class CBinaryReader implements DataInput
 {
     /** \name CONSTRUCTORS */ //@{
-    // public CBinaryReader(byte[] data);/*{{{*/
     /**
      * Class constructor.
      * \param data Array to be read.
@@ -35,8 +34,8 @@ public class CBinaryReader implements DataInput
     public CBinaryReader(byte[] data) {
         m_data = data;
         m_curr = 0;
-    }/*}}}*/
-    // public CBinaryReader(byte[] data, int offset, int count);/*{{{*/
+    }
+
     /**
      * Class constructor.
      * \param data Array to be read.
@@ -50,29 +49,27 @@ public class CBinaryReader implements DataInput
         m_curr = 0;
         m_data = new byte[count];
         arrays.copy(m_data, 0, data, offset, count);
-    }/*}}}*/
+    }
     //@}
 
     /** \name ATTRIBUTES */ //@{
-    // public int length();/*{{{*/
     /**
      * Gets the length of the data in this instance.
      **/
     public int length() {
         return arrays.length(m_data);
-    }/*}}}*/
-    // public int available();/*{{{*/
+    }
+
     /**
      * Gets the number of bytes available to be read.
      * This count takes in account the number of bytes already read.
      **/
     public int available() {
         return (this.length() - m_curr);
-    }/*}}}*/
+    }
     //@}
 
     /** \name CONVERSION OPERATIONS */ //@{
-    // public boolean readBoolean();/*{{{*/
     /**
      * Reads a boolean value.
      * A single byte is read.
@@ -81,24 +78,24 @@ public class CBinaryReader implements DataInput
      **/
     public boolean readBoolean() {
         return (read() != 0);
-    }/*}}}*/
-    // public byte    readByte();/*{{{*/
+    }
+
     /**
      * Reads one byte from the array.
      * \returns The byte read.
      **/
     public byte    readByte() {
         return (byte)(read() & 0x000000FF);
-    }/*}}}*/
-    // public char    readChar();/*{{{*/
+    }
+
     /**
      * Reads two bytes of the array converting it in a char type.
      **/
     public char    readChar() {
         int result = ((read() << 8) | read());
         return (char)(result & 0x0000FFFF);
-    }/*}}}*/
-    // public short   readShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes of the array and returns a short value.
      **/
@@ -107,8 +104,8 @@ public class CBinaryReader implements DataInput
         short result = arrays.bigEndToShort(m_data, m_curr);
         m_curr += 2;
         return result;
-    }/*}}}*/
-    // public int     readInt();/*{{{*/
+    }
+
     /**
      * Reads four bytes from the array and returns an integer value.
      **/
@@ -117,8 +114,8 @@ public class CBinaryReader implements DataInput
         int result = arrays.bigEndToInt(m_data, m_curr);
         m_curr += 4;
         return result;
-    }/*}}}*/
-    // public long    readLong();/*{{{*/
+    }
+
     /**
      * Reads eight bytes from the array and returns a long value.
      **/
@@ -127,24 +124,24 @@ public class CBinaryReader implements DataInput
         long result = arrays.bigEndToLong(m_data, m_curr);
         m_curr += 8;
         return result;
-    }/*}}}*/
-    // public float   readFloat();/*{{{*/
+    }
+
     /**
      * Reads four bytes from the array and returns a float value.
      * \note This operation is not implemented.
      **/
     public float   readFloat() {
         return (float)0.0;
-    }/*}}}*/
-    // public double  readDouble();/*{{{*/
+    }
+
     /**
      * Reads eight bytes from the array and returns a double value.
      * \note This operation is not implemented.
      **/
     public double  readDouble() {
         return 0.0;
-    }/*}}}*/
-    // public String  readUTF();/*{{{*/
+    }
+
     /**
      * Returns a string in the modified UTF-8 format.
      * This function expects that the string was written using \c writeUTF()
@@ -211,8 +208,8 @@ public class CBinaryReader implements DataInput
         }
         m_curr += pos;          /* Updates the current position. */
         return result;
-    }/*}}}*/
-    // public String  readLine();/*{{{*/
+    }
+
     /**
      * Reads a line of text from the byte array.
      * The function expects that this line had be encoded in ISO-8859-1
@@ -239,24 +236,24 @@ public class CBinaryReader implements DataInput
         }
         m_curr = index;
         return result;
-    }/*}}}*/
-    // public int     readUnsignedByte();/*{{{*/
+    }
+
     /**
      * Reads one byte of the array and returns its value.
      * \returns An int value to keep the byte value unsigned.
      **/
     public int     readUnsignedByte() {
         return (int)(readByte() & 0x000000FF);
-    }/*}}}*/
-    // public int     readUnsignedShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes from the array and returns its value.
      * \returns A int value to keep the short value unsigned.
      **/
     public int     readUnsignedShort() {
         return (int)(readShort() & 0x0000FFFF);
-    }/*}}}*/
-    // public void    readFully(byte[] buffer);/*{{{*/
+    }
+
     /**
      * Reads data into the passed buffer.
      * \param buffer Array to copy the internal data. The function will copy
@@ -265,8 +262,8 @@ public class CBinaryReader implements DataInput
      **/
     public void    readFully(byte[] buffer) {
         readFully(buffer, 0, arrays.length(buffer));
-    }/*}}}*/
-    // public void    readFully(byte[] buffer, int offset, int count);/*{{{*/
+    }
+
     /**
      * Read byte from the array, storing them in the given buffer.
      * \param buffer Array to copy the read data.
@@ -276,8 +273,8 @@ public class CBinaryReader implements DataInput
      **/
     public void    readFully(byte[] buffer, int offset, int count) {
         read(buffer, offset, count);
-    }/*}}}*/
-    // public int     skipBytes(int count);/*{{{*/
+    }
+
     /**
      * Skip the amount of bytes passed.
      * \param count The number of bytes to skip.
@@ -289,11 +286,10 @@ public class CBinaryReader implements DataInput
         if (total < count) count = total;
         m_curr += count;
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name RAW READ OPERATIONS */ //@{
-    // public int     read();/*{{{*/
     /**
      * Read a single byte from the array.
      * \returns The byte value as an integer.
@@ -303,8 +299,8 @@ public class CBinaryReader implements DataInput
         int value = (int)(m_data[m_curr] & 0x000000FF);
         m_curr++;
         return value;
-    }/*}}}*/
-    // public int     read(byte[] buff);/*{{{*/
+    }
+
     /**
      * Read bytes from the array, storing them in the given buffer.
      * \param buff Buffer to copy the data read.
@@ -312,8 +308,8 @@ public class CBinaryReader implements DataInput
      **/
     public int     read(byte[] buff) {
         return read(buff, 0, arrays.length(buff));
-    }/*}}}*/
-    // public int     read(byte[] buff, int offset, int count);/*{{{*/
+    }
+
     /**
      * Read byte from the array, storing them in the given buffer.
      * \param buff Array to copy the read data.
@@ -326,8 +322,8 @@ public class CBinaryReader implements DataInput
         arrays.copy(buff, offset, m_data, m_curr, total);
         m_curr += total;
         return total;
-    }/*}}}*/
-    // public String  readString(int count, String encoding);/*{{{*/
+    }
+
     /**
      * Reads an encoded string from the array.
      * \param count The number of bytes to read. The function will read this
@@ -357,19 +353,18 @@ public class CBinaryReader implements DataInput
         m_curr += total;
 
         return text;
-    }/*}}}*/
+    }
     //@}
 
     /** \name OPERATIONS */ //@{
-    // public void reset();/*{{{*/
     /**
      * Resets the current position to the beginning.
      **/
     public void reset() {
         if (m_data == null) return;
         m_curr = 0;
-    }/*}}}*/
-    // public void assign(byte[] data);/*{{{*/
+    }
+
     /**
      * Reassigns or changes the current array.
      * \param data The new array to be used.
@@ -378,8 +373,8 @@ public class CBinaryReader implements DataInput
     public void assign(byte[] data) {
         m_data = data;
         m_curr = 0;
-    }/*}}}*/
-    // public void assign(byte[] data, int offset, int count);/*{{{*/
+    }
+
     /**
      * Replaces the internal array with a portion of the given data.
      * \param data Array to be used.
@@ -392,7 +387,7 @@ public class CBinaryReader implements DataInput
         m_data = new byte[ count ];
         m_curr = 0;
         arrays.copy(m_data, 0, data, offset, count);
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{

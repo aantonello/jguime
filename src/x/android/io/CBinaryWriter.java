@@ -25,7 +25,6 @@ import x.android.utils.*;
 public class CBinaryWriter implements DataOutput
 {
     /** \name CONSTRUCTOR */ //@{
-    // public CBinaryWriter();/*{{{*/
     /**
      * Default constructor.
      **/
@@ -33,8 +32,8 @@ public class CBinaryWriter implements DataOutput
         m_buff = null;
         m_curr = -1;
         m_grow = true;
-    }/*}}}*/
-    // public CBinaryWriter(byte[] buffer);/*{{{*/
+    }
+
     /**
      * Parametrized constructor.
      * \param buffer Array to be used as written output. Just a reference is
@@ -44,8 +43,8 @@ public class CBinaryWriter implements DataOutput
         m_buff = buffer;
         m_curr = 0;
         m_grow = false;
-    }/*}}}*/
-    // public CBinaryWriter(int capacity);/*{{{*/
+    }
+
     /**
      * Parametrized constructor.
      * \param capacity The initial capacity of the internal buffer. It will be
@@ -56,35 +55,33 @@ public class CBinaryWriter implements DataOutput
         m_buff = new byte[ capacity ];
         m_curr = 0;
         m_grow = true;
-    }/*}}}*/
+    }
     //@}
 
     /** \name ATTRIBUTES */ //@{
-    // public int length();/*{{{*/
     /**
      * Gets the current length of the internal buffer.
      **/
     public int length() {
         return arrays.length(m_buff);
-    }/*}}}*/
-    // public int available();/*{{{*/
+    }
+
     /**
      * Gets the current available space in the internal buffer.
      **/
     public int available() {
         return (arrays.length(m_buff) - m_curr);
-    }/*}}}*/
-    // public byte[] get();/*{{{*/
+    }
+
     /**
      * Gets the internal buffer.
      **/
     public byte[] get() {
         return m_buff;
-    }/*}}}*/
+    }
     //@}
 
     /** \name DataOuput IMPLEMENTATION */ //@{
-    // public void writeBoolean(boolean value);/*{{{*/
     /**
      * Writes a single byte in the array.
      * \param value The boolean value to be written. If this value is \b true
@@ -93,16 +90,16 @@ public class CBinaryWriter implements DataOutput
      **/
     public void writeBoolean(boolean value) {
         write( value ? 1 : 0 );
-    }/*}}}*/
-    // public void writeByte(int aByte);/*{{{*/
+    }
+
     /**
      * Writes one byte of the array with the given value.
      * \param aByte An integer value which will be cast to a byte.
      **/
     public void writeByte(int aByte) {
         write( aByte );
-    }/*}}}*/
-    // public void writeBytes(String data);/*{{{*/
+    }
+
     /**
      * Writes a series of bytes in the internal buffer.
      * \param data A string that will be converted to an ASCII encoded
@@ -118,8 +115,8 @@ public class CBinaryWriter implements DataOutput
 
         /* A terminator is added to the end of the data. */
         m_buff[ m_curr++ ] = 0x00;
-    }/*}}}*/
-    // public void writeChar(int aChar);/*{{{*/
+    }
+
     /**
      * Writes a character value to the array.
      * \param aChar An integer which the character value will be added.
@@ -128,8 +125,8 @@ public class CBinaryWriter implements DataOutput
         if (!grow(2)) return;
         m_buff[ m_curr++ ] = (byte)(0xFF & (aChar >> 8));
         m_buff[ m_curr++ ] = (byte)(0xFF & aChar);
-    }/*}}}*/
-    // public void writeChars(String data);/*{{{*/
+    }
+
     /**
      * Writes a string using UTF-16 character set.
      * \param data The string to be written. In the data buffer a zero value
@@ -149,8 +146,8 @@ public class CBinaryWriter implements DataOutput
         /* Add the terminator, 2 bytes for it. */
         m_buff[m_curr++] = 0x00;
         m_buff[m_curr++] = 0x00;
-    }/*}}}*/
-    // public void writeShort(int aShort);/*{{{*/
+    }
+
     /**
      * Write a short value into the array.
      * \param aShort An integer which the short value to be written.
@@ -159,8 +156,8 @@ public class CBinaryWriter implements DataOutput
         if (!grow(2)) return;
         m_buff[ m_curr++ ] = (byte)(0xFF & (aShort >> 8));
         m_buff[ m_curr++ ] = (byte)(0xFF & aShort);
-    }/*}}}*/
-    // public void writeInt(int value);/*{{{*/
+    }
+
     /**
      * Writes an integer value to the array.
      * \param value The integer value to be added.
@@ -169,8 +166,8 @@ public class CBinaryWriter implements DataOutput
         if (!grow(4)) return;
         arrays.intAsBigEnd(m_buff, m_curr, value);
         m_curr += 4;
-    }/*}}}*/
-    // public void writeLong(long value);/*{{{*/
+    }
+
     /**
      * Writes a long value to the array.
      * \param value The long value to be written.
@@ -179,8 +176,8 @@ public class CBinaryWriter implements DataOutput
         if (!grow(8)) return;
         arrays.longAsBigEnd(m_buff, m_curr, value);
         m_curr += 8;
-    }/*}}}*/
-    // public void writeFloat(float value);/*{{{*/
+    }
+
     /**
      * Writes a float value to the array.
      * \param value The float value to be written.
@@ -188,8 +185,8 @@ public class CBinaryWriter implements DataOutput
      **/
     public void writeFloat(float value) {
         return;
-    }/*}}}*/
-    // public void writeDouble(double value);/*{{{*/
+    }
+
     /**
      * Writes a double value to the array.
      * \param value The double value to be written.
@@ -197,8 +194,8 @@ public class CBinaryWriter implements DataOutput
      **/
     public void writeDouble(double value) {
         return;
-    }/*}}}*/
-    // public void writeUTF(String value);/*{{{*/
+    }
+
     /**
      * Converts a string to the modified UTF-8 encoding writing it to the
      * array.
@@ -258,8 +255,8 @@ public class CBinaryWriter implements DataOutput
         count = (m_curr - pos);
         m_buff[pos + 0] = (byte)(0xFF & (count >> 8));
         m_buff[pos + 1] = (byte)(0xFF & count);
-    }/*}}}*/
-    // public void write(int aByte);/*{{{*/
+    }
+
     /**
      * Writes one byte to the array.
      * \param aByte An integer which the byte value to be written.
@@ -267,8 +264,8 @@ public class CBinaryWriter implements DataOutput
     public void write(int aByte) {
         if (!grow(1)) return;
         m_buff[m_curr++] = (byte)(0x000000FF & aByte);
-    }/*}}}*/
-    // public void write(byte[] data);/*{{{*/
+    }
+
     /**
      * Appends a byte array to the internal array.
      * \param data The byte array to be appended. No other data is appended to
@@ -279,8 +276,8 @@ public class CBinaryWriter implements DataOutput
         if (!grow(len)) return;
         arrays.copy(m_buff, m_curr, data, 0, len);
         m_curr += len;
-    }/*}}}*/
-    // public void write(byte[] data, int offset, int count);/*{{{*/
+    }
+
     /**
      * Appends data to the end of the internal array.
      * \param data The data buffer to append.
@@ -299,11 +296,10 @@ public class CBinaryWriter implements DataOutput
         if (!grow(count)) return;
         arrays.copy(m_buff, m_curr, data, offset, count);
         m_curr += count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name OPERATIONS */ //@{
-    // public void writeString(String data, int minLen, String encoding);/*{{{*/
     /**
      * Writes a string, using the specified encoding.
      * \param data The string to be written.
@@ -329,15 +325,15 @@ public class CBinaryWriter implements DataOutput
         arrays.set(m_buff, (byte)0x00, m_curr, minLen);
         arrays.copy(m_buff, m_curr, bl, 0, bl.length);
         m_curr += minLen;
-    }/*}}}*/
-    // public void reset();/*{{{*/
+    }
+
     /**
      * Resets the current position moving it to the beginning of the array.
      **/
     public void reset() {
         m_curr = ((m_buff != null) ? 0 : -1 );
-    }/*}}}*/
-    // public void reset(byte[] buffer);/*{{{*/
+    }
+
     /**
      * Replaces the internal array to the buffer specified.
      * \param buffer The buffer to replace the internal array. Just a
@@ -349,8 +345,8 @@ public class CBinaryWriter implements DataOutput
         m_buff = buffer;
         m_curr = 0;
         m_grow = false;
-    }/*}}}*/
-    // public void reset(int capacity);/*{{{*/
+    }
+
     /**
      * Resets the internal capacity of the buffer.
      * \param capacity The total capacity of the internal buffer. This resets
@@ -361,18 +357,17 @@ public class CBinaryWriter implements DataOutput
         m_buff = new byte[ capacity ];
         m_curr = 0;
         m_grow = true;
-    }/*}}}*/
-    // public int  size();/*{{{*/
+    }
+
     /**
      * Gets the size of the buffer that is fulfill.
      **/
     public int  size() {
         return m_curr;
-    }/*}}}*/
+    }
     //@}
 
     /** \name IMPLEMENTATION */ //@{
-    // protected final boolean grow(int amount);/*{{{*/
     /**
      * Grows the array, allocating more memory, if needed.
      * \param amount The amount of space required.
@@ -386,7 +381,7 @@ public class CBinaryWriter implements DataOutput
         m_buff = arrays.realloc(m_buff, total);
         m_curr = (m_curr < 0 ? 0 : m_curr);
         return (m_buff != null);
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{

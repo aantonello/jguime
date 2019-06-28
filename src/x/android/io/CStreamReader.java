@@ -33,18 +33,16 @@ import java.io.EOFException;
 public class CStreamReader implements DataInput
 {
     /** \name CONSTRUCTOR */ //@{
-    // public CStreamReader(InputStream _is);/*{{{*/
     /**
      * Default constructor.
      * \param _is The stream to read.
      **/
     public CStreamReader(InputStream _is) {
         m_dis = new DataInputStream(_is);
-    }/*}}}*/
+    }
     //@}
 
     /** \name ATTRIBUTES */ //@{
-    // public int available();/*{{{*/
     /**
      * Returns the number of bytes ready to be read.
      * Notice that the return value is just an estimate and cannot be trusted.
@@ -59,11 +57,10 @@ public class CStreamReader implements DataInput
             debug.e("=> %s", ex);
             return ERROR.IO;
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name OVERRIDED */ //@{
-    // public boolean readBoolean();/*{{{*/
     /**
      * Reads a boolean value from the stream.
      * A single byte is read. If it is different from zero the return will be
@@ -77,8 +74,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readBoolean(): %s", ex);
         }
         return false;
-    }/*}}}*/
-    // public byte    readByte();/*{{{*/
+    }
+
     /**
      * Reads one byte from the stream.
      * \returns The byte value.
@@ -91,8 +88,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readByte(): %s", ex);
         }
         return 0x00;
-    }/*}}}*/
-    // public char    readChar();/*{{{*/
+    }
+
     /**
      * Reads a character from the stream.
      * A character is packed in two bytes.
@@ -106,8 +103,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readChar(): %s", ex);
         }
         return '\0';
-    }/*}}}*/
-    // public short   readShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes from the input stream.
      * \return A short value made up from the two bytes read.
@@ -120,8 +117,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readShort(): %s", ex);
         }
         return (short)0;
-    }/*}}}*/
-    // public int     readInt();/*{{{*/
+    }
+
     /**
      * Reads four bytes from the input stream.
      * \returns An integer made up from the four bytes read.
@@ -134,8 +131,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readInt(): %s", ex);
         }
         return 0;
-    }/*}}}*/
-    // public long    readLong();/*{{{*/
+    }
+
     /**
      * Reads eight bytes from the input stream.
      * \returns A long value made up from the eight bytes read.
@@ -148,8 +145,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readLong(): %s", ex);
         }
         return 0L;
-    }/*}}}*/
-    // public float   readFloat();/*{{{*/
+    }
+
     /**
      * Reads four bytes from the input stream.
      * \returns A float value made up from the four bytes read.
@@ -162,8 +159,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readFloat(): %s", ex);
         }
         return (float)0.0;
-    }/*}}}*/
-    // public double  readDouble();/*{{{*/
+    }
+
     /**
      * Reads eight bytes from the input stream.
      * \returns A double value made up from the eight bytes read.
@@ -176,8 +173,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readDouble(): %s", ex);
         }
         return 0.0;
-    }/*}}}*/
-    // public String  readUTF();/*{{{*/
+    }
+
     /**
      * Reads a string encoded in modified UTF-8.
      * \returns the string read.
@@ -190,8 +187,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readUTF(): %s", ex);
         }
         return null;
-    }/*}}}*/
-    // public int     readUnsignedByte();/*{{{*/
+    }
+
     /**
      * Reads a single byte from the input stream.
      * \returns An integer made up from the byte read. The result is always
@@ -209,8 +206,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readUnsignedByte(): %s", _io);
             return ERROR.IO;
         }
-    }/*}}}*/
-    // public int     readUnsignedShort();/*{{{*/
+    }
+
     /**
      * Reads two bytes from the input stream.
      * \returns An integer value made up from the two bytes read. The result
@@ -228,16 +225,16 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::readUnsignedShort(): %s", _io);
             return ERROR.IO;
         }
-    }/*}}}*/
-    // public String  readLine();/*{{{*/
+    }
+
     /**
      * This method is deprecated and cannot be supported.
      * \returns A \b null string, always.
      **/
     public String  readLine() {
         return null;
-    }/*}}}*/
-    // public void    readFully(byte[] buffer);/*{{{*/
+    }
+
     /**
      * Read bytes from the input stream.
      * \param buffer Array where the data should be copied. The operation will
@@ -247,8 +244,8 @@ public class CStreamReader implements DataInput
      **/
     public void    readFully(byte[] buffer) {
         read(buffer);
-    }/*}}}*/
-    // public void    readFully(byte[] buffer, int offset, int length);/*{{{*/
+    }
+
     /**
      * Read bytes from the input stream.
      * \param buffer Buffer where the read bytes should be copied.
@@ -260,8 +257,8 @@ public class CStreamReader implements DataInput
      **/
     public void    readFully(byte[] buffer, int offset, int length) {
         read(buffer, offset, length);
-    }/*}}}*/
-    // public int     skipBytes(int count);/*{{{*/
+    }
+
     /**
      * Skip bytes from the input stream.
      * \param count Number of bytes to skip.
@@ -275,11 +272,10 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::skipBytes(): %s", _io);
             return ERROR.IO;
         }
-    }/*}}}*/
+    }
     //@}
 
     /** \name RAW METHODS */ //@{
-    // public int read();/*{{{*/
     /**
      * Reads one byte and returns its value as an integer.
      * \returns The byte value or an error value. Error values are always
@@ -294,8 +290,8 @@ public class CStreamReader implements DataInput
         }
         if (result == -1) result = ERROR.EOF;
         return result;
-    }/*}}}*/
-    // public int read(byte[] buffer);/*{{{*/
+    }
+
     /**
      * Read bytes from the input stream.
      * \param buffer Buffer to store the bytes read. The operation will block
@@ -306,8 +302,8 @@ public class CStreamReader implements DataInput
      **/
     public int read(byte[] buffer) {
         return read(buffer, 0, buffer.length);
-    }/*}}}*/
-    // public int read(byte[] buffer, int offset, int length);/*{{{*/
+    }
+
     /**
      * Read bytes from the input stream.
      * \param buffer Buffer to store the bytes read. The operation will block
@@ -325,8 +321,8 @@ public class CStreamReader implements DataInput
             debug.e("CStreamReader::read(): %s", _io);
             return ERROR.IO;
         }
-    }/*}}}*/
-    // public void close();/*{{{*/
+    }
+
     /**
      * Closes the stream.
      * This overrode implementation does not throw any exception.
@@ -337,11 +333,10 @@ public class CStreamReader implements DataInput
             /* We do nothing. */
         }
         m_dis = null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name EXTENSIONS */ //@{
-    // public String readString(int count, String enc);/*{{{*/
     /**
      * Reads a zero terminated string using the specified encoding.
      * \param count The minimum length of the string field.
@@ -392,7 +387,7 @@ public class CStreamReader implements DataInput
             return strings.decode(str, 0, count+1, ENC.LATIN1);
         }
         return null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{

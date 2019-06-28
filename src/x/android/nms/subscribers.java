@@ -39,17 +39,15 @@ import x.android.utils.*;
 class subscribers
 {
     /** \name CONSTRUCTOR */ //@{
-    // public subscribers();/*{{{*/
     /**
      * Default constructor.
      **/
     public subscribers() {
         m_table = new Hashtable<String, Vector<INHandler>>(1);
-    }/*}}}*/
+    }
     //@}
 
     /** \name OPERATIONS */ //@{
-    // final synchronized subscribers add(String notificationName, INHandler client);/*{{{*/
     /**
      * Add a subscription of the *client* to a *broadcast notification*.
      * If the notification doesn't exist in the list, a new entry will be
@@ -82,8 +80,8 @@ class subscribers
         clients.add( client );
 
         return this;
-    }/*}}}*/
-    // final synchronized subscribers remove(String notificationName, INHandler client);/*{{{*/
+    }
+
     /**
      * Remove a *client* from receiving a *notification*.
      * Removing clients from this list also prevents for they to received
@@ -118,8 +116,8 @@ class subscribers
             }
         }
         return this;
-    }/*}}}*/
-    // final Vector<INHandler> getList(String notificationName);/*{{{*/
+    }
+
     /**
      * Gets all clients subscribed to a particular notification.
      * \param notificationName Name of the notification to get the list of
@@ -146,8 +144,8 @@ class subscribers
 //            }
 //            return null;
 //        }
-    }/*}}}*/
-    // final INHandler[] get(String notificationName);/*{{{*/
+    }
+
     /**
      * Gets a snapshot of the clients subscribed a notification.
      * A snapshot is an array of objects contained in the specified list in
@@ -174,15 +172,14 @@ class subscribers
             return null;
         }
         return handlers;
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{
-    // Hashtable<String, Vector<INHandler>> m_table;/*{{{*/
     /**
      * Holds the list of broadcast notifications and its subscribers.
      **/
-    Hashtable<String, Vector<INHandler>> m_table;/*}}}*/
+    Hashtable<String, Vector<INHandler>> m_table;
     //@}
 }
 // vim:syntax=java.doxygen

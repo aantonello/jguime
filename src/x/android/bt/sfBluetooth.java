@@ -11,7 +11,7 @@
  * Paralaxe Tecnologia, 2013. All rights reserved.
  */
 package x.android.bt;
-/* #imports {{{ */
+
 import java.util.*;
 
 import android.os.Build;
@@ -22,7 +22,7 @@ import x.android.defs.ENC;
 import x.android.utils.debug;
 import x.android.utils.strings;
 import x.android.ui.CAndroidApp;
-/* #imports }}} */
+
 /**
  * \ingroup x_android_bt
  * Static class with helper methods for bluetooth management.
@@ -30,7 +30,6 @@ import x.android.ui.CAndroidApp;
 public final class sfBluetooth
 {
     /** \name Adapter Operations */ //@{
-    // public static BluetoothAdapter getAdapter();/*{{{*/
     /**
      * Retrives the single BluetoothAdapter instance of the system.
      * The function queries the system version to choose the right method for
@@ -38,8 +37,7 @@ public final class sfBluetooth
      * @return The single BluetoothAdapter instance. If this function returns
      * \b null, there is no bluetooth adapter in this device.
      **/
-    public static BluetoothAdapter getAdapter()
-    {
+    public static BluetoothAdapter getAdapter() {
         if (Build.VERSION.SDK_INT <= 17 /*Build.VERSION_CODES.JELLY_BEANS_MR1*/)
             return BluetoothAdapter.getDefaultAdapter();
         else
@@ -52,23 +50,22 @@ public final class sfBluetooth
 
             return bluetoothManager.getAdapter();
         }
-    }/*}}}*/
-    // public static String           getAdapterName(BluetoothAdapter adapter);/*{{{*/
+    }
+
     /**
      * Gets the friendly name of the local bluetooth adapter.
      * @param adapter The system adapter. Can be \b null.
      * @return A string with the system adapter friendly name. If the system
      * doesn't have a bluetooth adapter, the result will be an empty string.
      **/
-    public static String getAdapterName(BluetoothAdapter adapter)
-    {
+    public static String getAdapterName(BluetoothAdapter adapter) {
         if (adapter == null) adapter = getAdapter();
         if (adapter == null)
             return strings.EMPTY;
 
         return adapter.getName();
-    }/*}}}*/
-    // public static SFBluetoothSocket listen(String name, UUID uuid);/*{{{*/
+    }
+
     /**
      * Starts listen to a remote connection using the specified service record
      * UUID.
@@ -82,8 +79,7 @@ public final class sfBluetooth
      * this function returns \b null, the system doesn't have a bluetooth
      * adapter or it is not enabled.
      **/
-    public static SFBluetoothSocket listen(String name, UUID uuid)
-    {
+    public static SFBluetoothSocket listen(String name, UUID uuid) {
         BluetoothAdapter adapter = getAdapter();
 
         if (adapter == null) return null;
@@ -98,8 +94,8 @@ public final class sfBluetooth
         }
 
         return new SFBluetoothSocket(server);
-    }/*}}}*/
-    // public static SFBluetoothSocket listen(String name, String uuid);/*{{{*/
+    }
+
     /**
      * Starts listen to a remote connection using the specified service record
      * UUID.
@@ -114,17 +110,15 @@ public final class sfBluetooth
      * this function returns \b null, the system doesn't have a bluetooth
      * adapter or it is not enabled.
      **/
-    public static SFBluetoothSocket listen(String name, String uuid)
-    {
+    public static SFBluetoothSocket listen(String name, String uuid) {
         byte[] namespace = strings.encode(uuid, ENC.UTF8);
         UUID   realUUID  = UUID.nameUUIDFromBytes(namespace);
 
         return listen(name, realUUID);
-    }/*}}}*/
+    }
     //@}
 
     /** \name Device Operations */ //@{
-    // public static SFBluetoothSocket openSocket(BluetoothDevice device, UUID serviceUUID);/*{{{*/
     /**
      * Opens a socket to an specific service in a device.
      * The function will create and return a \c SFBluetoothSocket for the
@@ -139,8 +133,7 @@ public final class sfBluetooth
      * specified service was not found, the channel is already in use or one
      * of the arguments is invalid.
      **/
-    public static SFBluetoothSocket openSocket(BluetoothDevice device, UUID serviceUUID)
-    {
+    public static SFBluetoothSocket openSocket(BluetoothDevice device, UUID serviceUUID) {
         if ((device == null) || (serviceUUID == null)) return null;
 
         BluetoothSocket socket;
@@ -151,8 +144,8 @@ public final class sfBluetooth
             return null;
         }
         return new SFBluetoothSocket(socket);
-    }/*}}}*/
-    // public static SFBluetoothSocket openSocket(BluetoothDevice device, String stringUUID);/*{{{*/
+    }
+
     /**
      * Opens a socket to an specific service in a device.
      * The function will create and return a \c SFBluetoothSocket for the
@@ -168,13 +161,12 @@ public final class sfBluetooth
      * specified service was not found, the channel is already in use or one
      * of the arguments is invalid.
      **/
-    public static SFBluetoothSocket openSocket(BluetoothDevice device, String stringUUID)
-    {
+    public static SFBluetoothSocket openSocket(BluetoothDevice device, String stringUUID) {
         byte[] byteUUID = strings.encode(stringUUID, ENC.UTF8);
         UUID   realUUID = UUID.nameUUIDFromBytes(byteUUID);
 
         return openSocket(device, realUUID);
-    }/*}}}*/
+    }
     //@}
 }
 // vim:syntax=java.doxygen

@@ -31,7 +31,6 @@ package x.android.nms;
 class msg_t implements Runnable
 {
     /** \name CONSTRUCTOR */ //@{
-    // public msg_t();/*{{{*/
     /**
      * Default constructor.
      **/
@@ -42,8 +41,8 @@ class msg_t implements Runnable
         this.data   = null;
         this.lParam = 0L;
         this.delay  = 0L;
-    }/*}}}*/
-    // public msg_t(INHandler h, int id, int np, Object o, long lp, long t);/*{{{*/
+    }
+
     /**
      * Parametrized constructor.
      * Constructs the class setting the common parameters.
@@ -51,11 +50,10 @@ class msg_t implements Runnable
      **/
     public msg_t(INHandler h, int id, int np, Object o, long lp, long t) {
         this.set(h, id, np, o, lp, t);
-    }/*}}}*/
+    }
     //@}
 
     /** \name OPERATIONS */ //@{
-    // final void set(INHandler h, int id, int np, Object o, long lp, long t);/*{{{*/
     /**
      * Sets the properties of this object.
      * \param h The target handler.
@@ -72,11 +70,10 @@ class msg_t implements Runnable
         this.data   = o;
         this.lParam = lp;
         this.delay  = t;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Runnable IMPLEMENTATION */ //@{
-    // public void run();/*{{{*/
     /**
      * Called when the system process the main thread loop stack.
      * Calls the target handler function to process the message data.
@@ -94,7 +91,7 @@ class msg_t implements Runnable
 
         /* Put back this instance in the available cache. */
         iss.cache.push(this);
-    }/*}}}*/
+    }
     //@}
 
     /** \name FIELDS */ //@{

@@ -29,16 +29,14 @@ import java.util.*;
 class cache_t extends Vector<msg_t>
 {
     /** \name CONSTRUCTOR */ //@{
-    // public cache_t();/*{{{*/
     /**
      * Default constructor.
      **/
     public cache_t() {
-    }/*}}}*/
+    }
     //@}
 
     /** \name PUBLIC INTERFACE */ //@{
-    // final void  push(msg_t m);/*{{{*/
     /**
      * Adds a \c msg_t instance in this list.
      * The object will be added at the end of the list.
@@ -46,8 +44,8 @@ class cache_t extends Vector<msg_t>
      **/
     final void  push(msg_t m) {
         super.add(m);
-    }/*}}}*/
-    // final msg_t get(INHandler h, int id, int np, Object o, long lp, long t);/*{{{*/
+    }
+
     /**
      * Get the first available \c msg_t instance from this list.
      * If there is no objects available the function will create a new one.
@@ -68,8 +66,8 @@ class cache_t extends Vector<msg_t>
             msg.set(h, id, np, o, lp, t);
         }
         return msg;
-    }/*}}}*/
-    // final msg_t remove(msg_t msg);/*{{{*/
+    }
+
     /**
      * Finds and removes the specified object from this list and remove it.
      * \param msg Object to be removed.
@@ -78,8 +76,8 @@ class cache_t extends Vector<msg_t>
      **/
     final msg_t remove(msg_t msg) {
         return (super.remove(msg) ? msg : null);
-    }/*}}}*/
-    // final msg_t remove(INHandler h);/*{{{*/
+    }
+
     /**
      * Finds and removes a \c msg_t object having the specified target.
      * \param h The target handler of the messages to be removed.
@@ -93,8 +91,8 @@ class cache_t extends Vector<msg_t>
             }
         }
         return null;
-    }/*}}}*/
-    // final msg_t remove(INHandler h, int id);/*{{{*/
+    }
+
     /**
      * Search and remove a \c msg_t object having the specified arguments.
      * \param h Target handler of the \c msg_t object.
@@ -109,8 +107,8 @@ class cache_t extends Vector<msg_t>
             }
         }
         return null;
-    }/*}}}*/
-    // final msg_t remove(INHandler h, int id, int np);/*{{{*/
+    }
+
     /**
      * Search and remove a \c msg_t object having the specified arguments.
      * \param h Target handler of the \c msg_t object.
@@ -126,7 +124,7 @@ class cache_t extends Vector<msg_t>
             }
         }
         return null;
-    }/*}}}*/
+    }
     //@}
 }
 // vim:syntax=java.doxygen

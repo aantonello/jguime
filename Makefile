@@ -24,6 +24,7 @@ JL = jar
 RC = jar
 CP = rsync
 ANDROID := $(ANDROID_HOME)
+HTDOCS := $(HOME)/Sites/docs/ale/$(TARGET)-$(APPVER)
 endif
 
 # -----------------------------------------------------------------------------
@@ -92,10 +93,6 @@ $(OUTPUT) : $(TMPDIR) $(OUTDIR)
 install: $(APKDIR) $(RSCDIR)
 	$(CP) $(CPOPTS) $(OUTPUT) $(APKDIR)
 	$(CP) $(CPOPTS) $(RESDIR)/ $(RSCDIR)
-
-docs-install: $(OUTDXT)
-	$(CP) $(CPOPTS) $(DOCDIR)/html/ $(HTDOCS)/
-	$(CP) $(CPOPTS) $(OUTDXT) $(PLXLIB)
 
 tags:
 	ctags $(CTAGS) -f $(OUTTAG) $(PWD)/$(SRCDIR)/*

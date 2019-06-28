@@ -11,7 +11,7 @@
  * Paralaxe Tecnologia, 2013. All rights reserved.
  */
 package x.android.bt;
-/* #imports {{{ */
+
 import java.io.Closeable;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,7 +25,7 @@ import x.android.utils.arrays;
 import x.android.io.CStreamReader;
 import x.android.io.CStreamWriter;
 import x.android.io.stream_t;
-/* #imports }}} */
+
 /**
  * \ingroup x_android_bt
  * Wrapper class for BluetoothSocket.
@@ -33,42 +33,37 @@ import x.android.io.stream_t;
 public class SFBluetoothSocket implements Closeable
 {
     /** \name Constructors */ //@{
-    // SFBluetoothSocket(BluetoothSocket socket);/*{{{*/
     /**
      * Default constructor.
      * @param socket The raw socket implementation for this class to wrap.
      **/
-    SFBluetoothSocket(BluetoothSocket socket)
-    {
+    SFBluetoothSocket(BluetoothSocket socket) {
         m_socket = socket;
         m_server = null;
         m_connected = false;
-    }/*}}}*/
-    // SFBluetoothSocket(BluetoothServerSocket server);/*{{{*/
+    }
+
     /**
      * Builds a socket as a server.
      * @param server The server socket to be used.
      **/
-    SFBluetoothSocket(BluetoothServerSocket server)
-    {
+    SFBluetoothSocket(BluetoothServerSocket server) {
         m_socket = null;
         m_server = server;
         m_connected = false;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Attributes */ //@{
-    // public final boolean isConnected();/*{{{*/
     /**
      * Checks whether this socket is already connected or not.
      * @returns \b true when the socket is already connected with the device.
      * Otherwise \b false.
      **/
-    public final boolean isConnected()
-    {
+    public final boolean isConnected() {
         return m_connected;
-    }/*}}}*/
-    // public final int queryDataAvailable();/*{{{*/
+    }
+
     /**
      * Queries how much data is available to read in the InputStream.
      * The function will retrieve the InputStream associated with this socket
@@ -78,8 +73,7 @@ public class SFBluetoothSocket implements Closeable
      * Error codes can be returned when the socket is not connected yet or was
      * already closed.
      **/
-    public final int queryDataAvailable()
-    {
+    public final int queryDataAvailable() {
         InputStream is = this.getInputStream();
 
         if (is == null) return ERROR.NOCONN;
@@ -91,11 +85,10 @@ public class SFBluetoothSocket implements Closeable
             count = ERROR.READ;
         }
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Operations */ //@{
-    // public final boolean connect();/*{{{*/
     /**
      * Starts a connection with the device that created this socket.
      * This is a blocking operation. It must be called from a thread that is
@@ -103,11 +96,10 @@ public class SFBluetoothSocket implements Closeable
      * made or when an error occurs, like a timeout interval or calling
      * SFBluetoothSocket#close() from another thread.
      * @return \b true if the connection was made. Otherwise \b false.
-     * @remarks Don't use this method on server sockets. Instead, use the 
+     * @remarks Don't use this method on server sockets. Instead, use the
      * SFBluetoothSocket#accept() to accept a connection from a client device.
      **/
-    public final boolean connect()
-    {
+    public final boolean connect() {
         if (m_socket == null) return false;
 
         try { m_socket.connect(); }
@@ -115,11 +107,11 @@ public class SFBluetoothSocket implements Closeable
             debug.e(ex, "$n in SFBluetoothSocket::connect(): '$s'\n");
             return false;
         }
-        
+
         m_connected = true;
         return true;
-    }/*}}}*/
-    // public final boolean accept(int timeout);/*{{{*/
+    }
+
     /**
      * Waits a client connection.
      * This function will wait for a client connection when this socket is
@@ -134,8 +126,7 @@ public class SFBluetoothSocket implements Closeable
      * @return \b true if a connection was made. \b false when the timeout
      * period ellapses without a connection or \c cancel() was called.
      **/
-    public final boolean accept(int timeout)
-    {
+    public final boolean accept(int timeout) {
         if (m_server == null) return false;
 
         try {
@@ -151,16 +142,15 @@ public class SFBluetoothSocket implements Closeable
         m_server = null;
         m_connected = (m_socket != null);
         return m_connected;
-    }/*}}}*/
-    // public final void    cancel();/*{{{*/
+    }
+
     /**
      * Cancel the listen state for a remote connection.
      * This function should be used in another thread to cancel a call to
      * #accept(). If there is no call to \c accept() or this socket was not
      * created with  sfBluetooth#listen(), this function does nothing.
      **/
-    public final void cancel()
-    {
+    public final void cancel() {
         if (m_server != null)
         {
             try { m_server.close(); }
@@ -169,8 +159,8 @@ public class SFBluetoothSocket implements Closeable
             }
         }
         m_server = null;
-    }/*}}}*/
-    // public final InputStream getInputStream();/*{{{*/
+    }
+
     /**
      * Retrieves the InputStream associated with this socket.
      * This will retrieve an InputStream even if the connection was not
@@ -179,8 +169,7 @@ public class SFBluetoothSocket implements Closeable
      * @return The InputStream implementation associated with this socket.
      * Returns \b null if the socket was closed.
      **/
-    public final InputStream getInputStream()
-    {
+    public final InputStream getInputStream() {
         if (m_socket == null) return null;
 
         try { return m_socket.getInputStream(); }
@@ -188,8 +177,8 @@ public class SFBluetoothSocket implements Closeable
             debug.e(ex, "$n in SFBluetoothSocket::getInputStream(): '$s'\n");
         }
         return null;
-    }/*}}}*/
-    // public final OutputStream getOutputStream();/*{{{*/
+    }
+
     /**
      * Retrieves the OutputStream associated with this socket.
      * As of the #getInputStream() function, the output stream will be
@@ -199,8 +188,7 @@ public class SFBluetoothSocket implements Closeable
      * @return The OutputStream implementation of this socket. \b null if
      * the socket was closed.
      **/
-    public final OutputStream getOutputStream()
-    {
+    public final OutputStream getOutputStream() {
         if (m_socket == null) return null;
 
         try { return m_socket.getOutputStream(); }
@@ -208,11 +196,10 @@ public class SFBluetoothSocket implements Closeable
             debug.e(ex, "$n in SFBluetoothSocket::getOutputStream(): '$s'\n");
         }
         return null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Closeable Implementation */ //@{
-    // public void close();/*{{{*/
     /**
      * Closes the current connection.
      * Also, this function can be used while #connect() is blocking a
@@ -220,8 +207,7 @@ public class SFBluetoothSocket implements Closeable
      * No exceptions are thrown. This is the only way to abort a #connect()
      * operation.
      **/
-    public void close()
-    {
+    public void close() {
         if (m_socket == null) return;
 
         try { m_socket.close(); }
@@ -229,40 +215,36 @@ public class SFBluetoothSocket implements Closeable
             debug.e(ex, "$n in SFBluetoothSocket::close(): '$s'\n");
         }
         m_connected = false;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Reader/Writer Wrappers */ //@{
-    // public final CStreamReader getStreamReader();/*{{{*/
     /**
      * Wrap the InputStream of this socket in a CStreamReader class.
      * @return A CStreamReader class wrapping the InputStream associated with
      * this socket or \b null if this socket was already closed.
      **/
-    public final CStreamReader getStreamReader()
-    {
+    public final CStreamReader getStreamReader() {
         InputStream is = getInputStream();
         if (is == null) return null;
 
         return new CStreamReader(is);
-    }/*}}}*/
-    // public final CStreamWriter getStreamWriter();/*{{{*/
+    }
+
     /**
      * Wrap the OutputStream into a CStreamWriter class.
      * @return A CStreamWriter objeto wrapping the OutputStream associated
      * with this socket or \b null if the socket was already closed.
      **/
-    public final CStreamWriter getStreamWriter()
-    {
+    public final CStreamWriter getStreamWriter() {
         OutputStream os = getOutputStream();
         if (os == null) return null;
 
         return new CStreamWriter(os);
-    }/*}}}*/
+    }
     //@}
 
     /** \name Read/Write Operations */ //@{
-    // public final int read(byte[] buffer, int offset, int count);/*{{{*/
     /**
      * Reads data into the buffer.
      * @param buffer Array of bytes where the function will put the read data.
@@ -284,8 +266,7 @@ public class SFBluetoothSocket implements Closeable
      * - \c ERROR.EOF: When we detect the end of the stream.
      * .
      **/
-    public final int read(byte[] buffer, int offset, int count)
-    {
+    public final int read(byte[] buffer, int offset, int count) {
         final int space = arrays.length(buffer);
 
         if ((space == 0) || (offset < 0) || (offset >= space))
@@ -312,8 +293,8 @@ public class SFBluetoothSocket implements Closeable
             result = ERROR.READ;
         }
         return ((result == -1) ? ERROR.EOF : result);
-    }/*}}}*/
-    // public final int send(byte[] buffer, int offset, int count);/*{{{*/
+    }
+
     /**
      * Sends data to the connected peer.
      * @param buffer Byte array with data to send.
@@ -333,8 +314,7 @@ public class SFBluetoothSocket implements Closeable
      * - \c ERROR.WRITE: When an I/O error occurs.
      * .
      **/
-    public final int send(byte[] buffer, int offset, int count)
-    {
+    public final int send(byte[] buffer, int offset, int count) {
         final int amount = arrays.length(buffer);
 
         if ((offset < 0) || (offset > amount))
@@ -357,8 +337,8 @@ public class SFBluetoothSocket implements Closeable
             result = ERROR.WRITE;
         }
         return result;
-    }/*}}}*/
-    // public final int read();/*{{{*/
+    }
+
     /**
      * Reads one byte from the InputStream.
      * The function blocks until at least one byte is available to be read.
@@ -366,8 +346,7 @@ public class SFBluetoothSocket implements Closeable
      * return value will be less than zero indicating an error condition. \c
      * ERROR.EOF will be returned if the end of the stream is reached.
      **/
-    public final int read()
-    {
+    public final int read() {
         InputStream is = this.getInputStream();
         if (is == null) return ERROR.NOCONN;
 
@@ -378,8 +357,8 @@ public class SFBluetoothSocket implements Closeable
             return ERROR.READ;
         }
         return ((result == -1) ? ERROR.EOF : result);
-    }/*}}}*/
-    // public final int send(int aByte);/*{{{*/
+    }
+
     /**
      * Sends a single byte to the connected peer.
      * @param aByte The byte value to send. Only the least significant byte of
@@ -387,8 +366,7 @@ public class SFBluetoothSocket implements Closeable
      * @return The number of bytes sent (one) or an error value if the
      * returned value is less than zero.
      **/
-    public final int send(int aByte)
-    {
+    public final int send(int aByte) {
         OutputStream os = this.getOutputStream();
         if (os == null) return ERROR.NOCONN;
 
@@ -400,8 +378,8 @@ public class SFBluetoothSocket implements Closeable
             return ERROR.WRITE;
         }
         return 1;
-    }/*}}}*/
-    // public final int read(stream_t stream, int count);/*{{{*/
+    }
+
     /**
      * Reads the InputStream writing the passed stream_t.
      * @param stream \c stream_t to write to.
@@ -413,13 +391,12 @@ public class SFBluetoothSocket implements Closeable
      * this operation when there is no data in the InputStream. If an error
      * occurr, the result will be less than zero (an error code).
      **/
-    public final int read(stream_t stream, int count)
-    {
+    public final int read(stream_t stream, int count) {
         InputStream is = this.getInputStream();
         if (is == null) return ERROR.NOCONN;
         return stream.writeFromInputStream(is, count);
-    }/*}}}*/
-    // public final int send(stream_t stream, int count);/*{{{*/
+    }
+
     /**
      * Writes the OutputStream with data passed from an stream_t.
      * @param stream Data to be written.
@@ -428,8 +405,7 @@ public class SFBluetoothSocket implements Closeable
      * @return The number of bytes actually written. If the result value is
      * less than zero, it represents an error condition.
      **/
-    public final int send(stream_t stream, int count)
-    {
+    public final int send(stream_t stream, int count) {
         OutputStream os = this.getOutputStream();
         if (os == null) return ERROR.NOCONN;
         if ((count = stream.readIntoOutputStream(os, count)) > 0)
@@ -441,7 +417,7 @@ public class SFBluetoothSocket implements Closeable
             }
         }
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Data Members */ //@{

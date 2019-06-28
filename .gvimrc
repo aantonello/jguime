@@ -9,3 +9,13 @@ else
     set columns=150 lines=99
 endif
 color white
+
+set diffopt=filler,iwhite
+
+if filereadable(".atplrc.vim")
+  source .atplrc.vim
+endif
+
+if filereadable(".javarc.vim")
+  source .javarc.vim
+endif

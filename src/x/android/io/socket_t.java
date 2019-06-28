@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.io;
-/* #imports {{{ */
+
 import x.android.defs.ERROR;
 import x.android.utils.debug;
 import x.android.utils.strings;
@@ -28,7 +28,6 @@ import java.net.SocketTimeoutException;
 import java.io.IOException;
 import java.nio.channels.IllegalBlockingModeException;
 
-/* }}} #imports */
 /**
  * \ingroup x_android_io
  * Implements the base socket communication.
@@ -39,32 +38,29 @@ import java.nio.channels.IllegalBlockingModeException;
 public class socket_t
 {
     /** \name CONSTRUCTOR */ //@{
-    // public socket_t();/*{{{*/
     /**
      * Default constructor.
      * Create an unconnected socket. This is the only constructor available.
      **/
     public socket_t() {
         m_socket = null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name STREAMS */ //@{
-    // public final InputStream  getInputStream();/*{{{*/
     /**
      * Gets the stream for reading the socket.
      * \returns The InputStream or **null** if there is no current connection.
      **/
-    public final InputStream getInputStream()
-    {
+    public final InputStream getInputStream() {
         if (m_socket == null) return null;
         try { return m_socket.getInputStream(); }
         catch (Exception ex) {
             debug.w("Exception at socket_t::getInputStream(): '%s'\n", ex.getMessage());
         }
         return null;
-    }/*}}}*/
-    // public final OutputStream getOutputStream();/*{{{*/
+    }
+
     /**
      * Gets the OutputStream to write the socket.
      * \returns The OutputStream implementation or **null** if there is no
@@ -77,11 +73,10 @@ public class socket_t
             debug.w("Exception at socket_t::getOutputStream(): '%s'\n", ex.getMessage());
         }
         return null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name ATTRIBUTES */ //@{
-    // public final String getPeerAddress();/*{{{*/
     /**
      * Gets the address of the connected host.
      * \return A string with the textual representation of the address of the
@@ -92,8 +87,8 @@ public class socket_t
         InetAddress ia = m_socket.getInetAddress();
         if (ia == null) return null;
         return ia.getHostAddress();
-    }/*}}}*/
-    // public final String getLocalAddress();/*{{{*/
+    }
+
     /**
      * Gets the local address of this socket connection.
      * return A string with the local address or \b null if the socket is not
@@ -104,8 +99,8 @@ public class socket_t
         InetAddress ia = m_socket.getLocalAddress();
         if (ia == null) return null;
         return ia.getHostAddress();
-    }/*}}}*/
-    // public final int    getPeerPort();/*{{{*/
+    }
+
     /**
      * Gets the port of the connected host.
      * \returns The port number of the current connection or \c ERROR#NOTFOUND
@@ -115,8 +110,8 @@ public class socket_t
         if (m_socket == null) return ERROR.NOTFOUND;
         int port = m_socket.getPort();
         return (port > 0 ? port : ERROR.NOTFOUND);
-    }/*}}}*/
-    // public final int    getLocalPort();/*{{{*/
+    }
+
     /**
      * Gets the local port number where this socket is bound to.
      * \returns The local port number or \c ERROR#NOTFOUND if the socket is
@@ -126,8 +121,8 @@ public class socket_t
         if (m_socket == null) return ERROR.NOTFOUND;
         int port = m_socket.getLocalPort();
         return ((port > 0) ? port : ERROR.NOTFOUND);
-    }/*}}}*/
-    // public final int    queryDataAvailable();/*{{{*/
+    }
+
     /**
      * Queries the input stream for the current available data to read.
      * \returns An integer with the number of bytes available to read or an
@@ -149,11 +144,10 @@ public class socket_t
             count = ERROR.IO;
         }
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name OPERATIONS */ //@{
-    // public final int  open(String address, int port);/*{{{*/
     /**
      * Opens a connection with a host in the specified address.
      * The operation blocks until the socket is connected or an error occurs.
@@ -232,15 +226,14 @@ public class socket_t
         /* Only gets here on an error. */
         close();
         return result;
-    }/*}}}*/
-    // public final synchronized void close();/*{{{*/
+    }
+
     /**
      * Disconnects and closes the current connection, if any.
      * This operation will invalidate both members \c input and \c output. No
      * exception will be thrown by this function.
      **/
-    public final synchronized void close()
-    {
+    public final synchronized void close() {
         if (m_socket != null)
         {
             try { m_socket.shutdownInput(); }
@@ -253,8 +246,8 @@ public class socket_t
             catch (Exception ex) { /* We will ignore this either. */ }
         }
         m_socket = null;
-    }/*}}}*/
-    // public final int  read(byte[] buffer, int offset, int count);/*{{{*/
+    }
+
     /**
      * Reads bytes from the input stream.
      * The function queries the amount of available data before the reading
@@ -271,8 +264,7 @@ public class socket_t
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::EOF No more data to be read.
      **/
-    public final int  read(byte[] buffer, int offset, int count)
-    {
+    public final int  read(byte[] buffer, int offset, int count) {
         InputStream input = this.getInputStream();
 
         if (input == null) return ERROR.NOCONN;
@@ -294,8 +286,8 @@ public class socket_t
         }
         
         return ((result == -1) ? ERROR.EOF : result);
-    }/*}}}*/
-    // public final int  send(byte[] data, int offset, int count);/*{{{*/
+    }
+
     /**
      * Writes data in the output stream.
      * The data is automatically flushed in the stream. If the automatic flush
@@ -326,8 +318,8 @@ public class socket_t
             result = ERROR.IO;
         }
         return result;
-    }/*}}}*/
-    // public final int  read(stream_t stream, int count);/*{{{*/
+    }
+
     /**
      * Reads the input stream and writes the data into the *stream* object.
      * \param stream Object to store the data. The current write position will
@@ -342,13 +334,12 @@ public class socket_t
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::EOF No more data to be read.
      **/
-    public final int read(stream_t stream, int count)
-    {
+    public final int read(stream_t stream, int count) {
         InputStream is = this.getInputStream();
         if (is == null) return ERROR.NOCONN;
         return stream.writeFromInputStream(is, count);
-    }/*}}}*/
-    // public final int  send(stream_t stream, int count);/*{{{*/
+    }
+
     /**
      * Reads data from the *stream_t* object sending it to this socket output
      * stream.
@@ -362,8 +353,7 @@ public class socket_t
      * \retval ERROR::NOCONN The connection was reset.
      * \retval ERROR::IO The connection was closed by the peer.
      **/
-    public final int send(stream_t stream, int count)
-    {
+    public final int send(stream_t stream, int count) {
         OutputStream os = this.getOutputStream();
         if (os == null) return ERROR.NOCONN;
         if ((count = stream.readIntoOutputStream(os, count)) > 0)
@@ -374,11 +364,10 @@ public class socket_t
             }
         }
         return count;
-    }/*}}}*/
+    }
     //@}
 
     /** \name OVERRIDABLES */ //@{
-    // public int read(byte[] buffer);/*{{{*/
     /**
      * Reads bytes from the input stream.
      * The function queries the amount of available data before the reading
@@ -390,8 +379,8 @@ public class socket_t
      **/
     public int read(byte[] buffer) {
         return read(buffer, 0, buffer.length);
-    }/*}}}*/
-    // public int send(byte[] data);/*{{{*/
+    }
+
     /**
      * Writes data in the output stream.
      * The data is automatically flushed in the stream. If the automatic flush
@@ -401,7 +390,7 @@ public class socket_t
      **/
     public int send(byte[] data) {
         return send(data, 0, data.length);
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{
