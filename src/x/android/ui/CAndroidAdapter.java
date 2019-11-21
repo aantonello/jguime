@@ -13,14 +13,13 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-/* #imports {{{ */
+
 import java.util.*;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-/* }}} #imports */
 /**
  * An adapter used to populate the CAndroidListView class.
  * This adapter has the difference that is does not need a list. The developer
@@ -33,26 +32,24 @@ import android.widget.*;
 class CAndroidAdapter implements IAndroidListAdapter
 {
     /** \name CONSTRUCTOR */ //@{
-    // public CAndroidAdapter();/*{{{*/
     /**
      * Default constructor.
      **/
     public CAndroidAdapter() {
         m_target = null;
         m_lists  = null;
-    }/*}}}*/
+    }
     //@}
 
     /** \name ListAdapter IMPLEMENTATION */ //@{
-    // public boolean areAllItemsEnabled();/*{{{*/
     /**
      * Indicates whether all the items in this adapter are enabled.
      * This implementation always returns \b true.
      **/
     public boolean areAllItemsEnabled() {
         return true;
-    }/*}}}*/
-    // public boolean isEnabled(int position);/*{{{*/
+    }
+
     /**
      * Returns true if the item at the specified position is not a separator.
      * This simple adapter doesn't support separators so, all items must be
@@ -60,11 +57,10 @@ class CAndroidAdapter implements IAndroidListAdapter
      **/
     public boolean isEnabled(int position) {
         return true;
-    }/*}}}*/
+    }
     //@}
 
     /** \name Adapter IMPLEMENTATION */ //@{
-    // public int    getCount();/*{{{*/
     /**
      * How many items are in the data set represented by this Adapter.
      * This will query the \c numberOfRows() delegate function.
@@ -72,8 +68,8 @@ class CAndroidAdapter implements IAndroidListAdapter
     public int getCount() {
         if (m_target == null) return 0;
         return m_target.numberOfRows();
-    }/*}}}*/
-    // public Object getItem(int position);/*{{{*/
+    }
+
     /**
      * Get the data item associated with the specified position in the data
      * set.
@@ -82,8 +78,8 @@ class CAndroidAdapter implements IAndroidListAdapter
     public Object getItem(int position) {
         if (m_target == null) return null;
         return m_target.objectForRow(position);
-    }/*}}}*/
-    // public long   getItemId(int position);/*{{{*/
+    }
+
     /**
      * Get the row id associated with the specified position in the list.
      * This ID must be unique. This operation will call \c idForRow() in the
@@ -92,8 +88,8 @@ class CAndroidAdapter implements IAndroidListAdapter
     public long getItemId(int position) {
         if (m_target == null) return 0L;
         return m_target.idForRow(position);
-    }/*}}}*/
-    // public int    getItemViewType(int position);/*{{{*/
+    }
+
     /**
      * Get the type of View that will be created by \c
      * getView(int,View,ViewGroup) for the specified item.
@@ -102,8 +98,8 @@ class CAndroidAdapter implements IAndroidListAdapter
      **/
     public int getItemViewType(int position) {
         return 0;
-    }/*}}}*/
-    // public View   getView(int position, View convertView, ViewGroup parent);/*{{{*/
+    }
+
     /**
      * Get a View that displays the data at the specified position in the data
      * set.
@@ -118,8 +114,8 @@ class CAndroidAdapter implements IAndroidListAdapter
     public View getView(int position, View convertView, ViewGroup parent) {
         if (m_target == null) return convertView;
         return m_target.viewForRow(position, convertView, parent);
-    }/*}}}*/
-    // public int    getViewTypeCount();/*{{{*/
+    }
+
     /**
      * Returns the number of types of Views that will be created by \c
      * getView(int,View,ViewGroup).
@@ -128,8 +124,8 @@ class CAndroidAdapter implements IAndroidListAdapter
      **/
     public int getViewTypeCount() {
         return 1;
-    }/*}}}*/
-    // public boolean hasStableIds();/*{{{*/
+    }
+
     /**
      * Indicates whether the item ids are stable across changes to the
      * underlying data.
@@ -139,8 +135,8 @@ class CAndroidAdapter implements IAndroidListAdapter
      **/
     public boolean hasStableIds() {
         return true;
-    }/*}}}*/
-    // public boolean isEmpty();/*{{{*/
+    }
+
     /**
      * Checks if the list is empty.
      * This function calls #getCount() that will ask the delegate about how
@@ -148,8 +144,8 @@ class CAndroidAdapter implements IAndroidListAdapter
      **/
     public boolean isEmpty() {
         return (this.getCount() == 0);
-    }/*}}}*/
-    // public void   registerDataSetObserver(DataSetObserver observer);/*{{{*/
+    }
+
     /**
      * Register an observer that is called when changes happen to the data
      * used by this adapter.
@@ -159,8 +155,8 @@ class CAndroidAdapter implements IAndroidListAdapter
             m_lists = new ArrayList<DataSetObserver>(1);
         }
         m_lists.add(observer);
-    }/*}}}*/
-    // public void   unregisterDataSetObserver(DataSetObserver observer);/*{{{*/
+    }
+
     /**
      * Unregister an observer that has previously been registered with this
      * adapter via #registerDataSetObserver(DataSetObserver).
@@ -168,19 +164,18 @@ class CAndroidAdapter implements IAndroidListAdapter
     public void unregisterDataSetObserver(DataSetObserver observer) {
         if (m_lists == null) return;
         m_lists.remove(observer);
-    }/*}}}*/
+    }
     //@}
 
     /** \name IAndroidListAdapter IMPLEMENTATION */ //@{
-    // public void setDelegate(IAndroidListDelegate delegate);/*{{{*/
     /**
      * Sets or changes the delegate to be called from this adapter.
      * \param delegate IAndroidListDelegate implementation. Can be \b null.
      **/
     public void setDelegate(IAndroidListDelegate delegate) {
         m_target = delegate;
-    }/*}}}*/
-    // public void reloadData();/*{{{*/
+    }
+
     /**
      * Tell to reload the list data.
      * This will notify all observers that the underlined data was changed.
@@ -190,7 +185,7 @@ class CAndroidAdapter implements IAndroidListAdapter
 
         for (DataSetObserver observer : m_lists)
             observer.onChanged();
-    }/*}}}*/
+    }
     //@}
 
     /** \name DATA MEMBERS */ //@{
@@ -198,4 +193,3 @@ class CAndroidAdapter implements IAndroidListAdapter
     protected IAndroidListDelegate       m_target;  /**< Delegate implementation. */
     //@}
 }
-// vim:syntax=java.doxygen

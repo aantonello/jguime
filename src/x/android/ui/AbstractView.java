@@ -13,7 +13,7 @@
  * may change it if you like. Or just use it as it is.
  */
 package x.android.ui;
-/* #imports {{{ */
+
 import android.app.Activity;
 import android.content.Context;
 
@@ -27,7 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.*;
 
 import x.android.utils.*;
-/* }}} #imports */
+
 /**
  * \ingroup x_android_ui
  * Abstracts a Androi View class.
@@ -1252,4 +1252,3 @@ public abstract class AbstractView<T extends AbstractView<T>>
     protected View     m_root;          /**< The self root view.            */
     //@}
 }
-// vim:syntax=java.doxygen

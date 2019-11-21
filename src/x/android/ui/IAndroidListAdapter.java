@@ -25,18 +25,16 @@ import android.widget.*;
  *//* --------------------------------------------------------------------- */
 public interface IAndroidListAdapter extends ListAdapter
 {
-    // public void setDelegate(IAndroidListDelegate delegate);/*{{{*/
     /**
      * Set the delegate implementation.
      * \param delegate Object that implements IAndroidListDelegate. This
      * object will be queried every time the list needs information.
      **/
-    public void setDelegate(IAndroidListDelegate delegate);/*}}}*/
-    // public void reloadData();/*{{{*/
+    public void setDelegate(IAndroidListDelegate delegate);
+
     /**
      * Called when the list of data shown was changed.
      * The result will cause the list to be reloaded in the ListView.
      **/
-    public void reloadData();/*}}}*/
+    public void reloadData();
 }
-// vim:syntax=java.doxygen
