@@ -31,4 +31,3 @@ package x.android.nms;
  * application. Parallel threads should never need them.
  * @{ *//* ---------------------------------------------------------------- */
 ///@} x_android_nms
-// vim:syntax=java.doxygen

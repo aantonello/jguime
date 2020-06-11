@@ -26,14 +26,12 @@ import java.util.*;
  * The cache is totally controlled by the \c issuer class and the cache_t
  * class cannot be accessed out side of this package.
  *//* --------------------------------------------------------------------- */
-class cache_t extends Vector<msg_t>
-{
+class cache_t extends Vector<msg_t> {
     /** \name CONSTRUCTOR */ //@{
     /**
      * Default constructor.
      **/
-    public cache_t() {
-    }
+    public cache_t() { }
     //@}
 
     /** \name PUBLIC INTERFACE */ //@{
@@ -127,4 +125,3 @@ class cache_t extends Vector<msg_t>
     }
     //@}
 }
-// vim:syntax=java.doxygen

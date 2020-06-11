@@ -28,8 +28,7 @@ package x.android.nms;
  * interface. Not the instance of this class. This class is only accessible
  * from inside this package.
  *//* --------------------------------------------------------------------- */
-class msg_t implements Runnable
-{
+class msg_t implements Runnable {
     /** \name CONSTRUCTOR */ //@{
     /**
      * Default constructor.
@@ -103,4 +102,3 @@ class msg_t implements Runnable
     long      delay;            /**< Message delay, if any.             */
     //@}
 }
-// vim:syntax=java.doxygen

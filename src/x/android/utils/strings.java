@@ -24,7 +24,6 @@ import x.android.xml.*;
  *//* --------------------------------------------------------------------- */
 public final class strings
 {
-    // public static String substr(String str, int start, int len);/*{{{*/
     /**
      * Gets a sub-string of the given string.
      * \param str String to extract the sub-string.
@@ -44,8 +43,8 @@ public final class strings
         catch (IndexOutOfBoundsException ex) {
             return null;
         }
-    }/*}}}*/
-    // public static String replace(String str, String rem, String add);/*{{{*/
+    }
+
     /**
      * Replaces a sub-string with another string value.
      * \param str The original string, where the substitution must be done.
@@ -72,8 +71,38 @@ public final class strings
             index = str.indexOf(rem);
         }
         return str;
-    }/*}}}*/
-    // public static int    ncasecmp(String str, String...list);/*{{{*/
+    }
+
+    /**
+     * Removes a sub-string from a main string.
+     * @param str The main string, with the substring should me removed of.
+     * @param sub The substring to be removed.
+     * @param at Start index to search for \a sub.
+     * @returns The remaining string parte. If \a sub was not found, the
+     * \a str string will be returned unchanged.
+     * @since Novembro 13, 2019
+     **/
+    public static String remove(String str, String sub, int at) {
+        if ((at < 0) || (at >= length(str)) || empty(sub))
+            return str;
+
+        int index = str.indexOf(sub, at);
+        int count = length(sub);
+        if (index < 0) return str;
+
+        StringBuilder sb = new StringBuilder(str);
+        try {
+            while (index >= 0) {
+                sb.replace(index, (index+count), EMPTY);
+                index = sb.indexOf(sub, index);
+            }
+        } catch (Exception ex) {
+            logger.w("strings::remove('%s', '%s') => '%s'", str, sub, ex.getMessage());
+            return str;
+        }
+        return sb.toString();
+    }
+
     /**
      * Compares a string against a list of options.
      * \param str String to compare with the list.
@@ -94,8 +123,8 @@ public final class strings
                 return i;
         }
         return -1;
-    }/*}}}*/
-    // public static String sanitize(String str);/*{{{*/
+    }
+
     /**
      * Sanitizes the passed in String object.
      * Sanitize means make it as valid as possible. The function checks for a
@@ -122,8 +151,8 @@ public final class strings
 
         if (counter == 0) return EMPTY;
         return new String(letters, 0, counter);
-    }/*}}}*/
-    // public static String repeat(char c, int times);/*{{{*/
+    }
+
     /**
      * Build a string by repeating a char some times.
      * \param c Character to use to build the string.
@@ -135,8 +164,8 @@ public final class strings
         char[] array = new char[times];
         arrays.set(array, c);
         return new String(array);
-    }/*}}}*/
-    // public static String upper(String str);/*{{{*/
+    }
+
     /**
      * Converts a string to upper case.
      * @param str String to convert.
@@ -144,11 +173,10 @@ public final class strings
      * default locale. When \a str is \b null \c string.EMPTY will be
      * returned.
      **/
-    public static String upper(String str)
-    {
+    public static String upper(String str) {
         return ((str == null) ? EMPTY : str.toUpperCase());
-    }/*}}}*/
-    // public static String lower(String str);/*{{{*/
+    }
+
     /**
      * Converts a string to lower case.
      * @param str String to convert.
@@ -156,11 +184,44 @@ public final class strings
      * default locale. When \a str is \b null \c string.EMPTY will be
      * returned.
      **/
-    public static String lower(String str)
-    {
+    public static String lower(String str) {
         return ((str == null) ? EMPTY : str.toLowerCase());
-    }/*}}}*/
-    // public static int    toInt(String num, int radix);/*{{{*/
+    }
+
+    /**
+     * Checks wheter as string has only valid numeric characters.
+     * @param str String value to be checked.
+     * @param radix The radix expected.
+     * @returns \b true when the string has only valid numbers (or letters)
+     * according to the specified radix. \b false otherwise.
+     * @since Julho 22, 2019
+     **/
+    public static boolean isNumeric(final String str, final int radix) {
+        char[] array = str.toCharArray();
+        int index = 0, count = length(str);
+
+        if (index == count) return false;       /* str is empty. */
+
+        while (index < count) {
+            if (Character.digit(array[index], radix) < 0)
+                return false;
+
+            index++;
+        }
+        return true;
+    }
+
+    /**
+     * Checks wheter as string has only valid numeric characters.
+     * @param str String value to be checked.
+     * @returns \b true when the string has only valid numbers in base 10.
+     * \b false otherwise.
+     * @since Julho 22, 2019
+     **/
+    public static boolean isNumeric(final String str) {
+        return isNumeric(str, 10);
+    }
+
     /**
      * Converts a string to a number using the given radix.
      * \param num The string with the number.
@@ -178,19 +239,19 @@ public final class strings
      **/
     public static int toInt(String num, int radix) {
         return (int)(strings.toLong(num, radix) & 0xFFFFFFFF);
-    }/*}}}*/
-    // public static long   toLong(String num, int radix);/*{{{*/
+    }
+
     /**
      * Converts a string to a number using the given radix.
-     * \param num The string with the number.
-     * \param radix The radix to do the conversion. This must be 0 or in range
-     *      2-36. If this value is 0 the function will try to recognize the
-     *      radix from the string. If the string starts with '0x' or '0X' radix
-     *      16 will be used (hex number). If the string starts with '0' radix 8
-     *      will be used (octal number). If the string starts with a character
-     *      from '1' to '9' radix 10 will be used (decimal number).
-     * \return The \b long value result of the string conversion.
-     * \remarks The function supports that the string has a signal. That is,
+     * @param num The string with the number.
+     * @param radix The radix to do the conversion. This must be 0 or in range
+     * 2-36. If this value is 0 the function will try to recognize the radix
+     * from the string. If the string starts with '0x' or '0X' radix 16 will
+     * be used (hex number). If the string starts with '0' radix 8 will be
+     * used (octal number). If the string starts with a character from '1' to
+     * '9' radix 10 will be used (decimal number).
+     * @return The \b long value result of the string conversion.
+     * @remarks The function supports that the string has a signal. That is,
      * the value can have a minus '-' or plus '+' signal in front of it. The
      * conversion will stop in the first invalid character. No error or
      * exception will be thrown.
@@ -204,9 +265,9 @@ public final class strings
 
         char[] arr = num.toCharArray();
         char c;
-        int   pos = 0;
-        int count = arr.length;
-        int   val = 0;
+        int  pos = 0;
+        int  count = arr.length;
+        int  val = 0;
         boolean negative = false;
 
         while ((pos < count) && Character.isWhitespace(arr[pos])) {
@@ -256,8 +317,8 @@ public final class strings
 
             if (Character.isDigit(c))
                 val = Character.digit(c, 10);
-            else if (Character.isLetter(c))
-                val = Character.digit(c, 16);
+            else if (Character.isLetter(c) && (radix > 10))
+                val = Character.digit(c, radix);
             else
                 break;                  /* Invalid char. */
 
@@ -267,8 +328,8 @@ public final class strings
 
         /* End of the conversion. Negate the number if we found a sign. */
         return (negative ? -result : result);
-    }/*}}}*/
-    // public static float  toFloat(String num);/*{{{*/
+    }
+
     /**
      * Converts a string to a float value.
      * \param num The string to be converted.
@@ -279,8 +340,8 @@ public final class strings
         try { return Float.parseFloat(num); }
         catch (Exception ex) { /* we will ignore this for while. */ }
         return .0F;
-    }/*}}}*/
-    // public static char[] getChars(String s);/*{{{*/
+    }
+
     /**
      * Gets an array of characters for this string.
      * \param s The string to convert in a character array.
@@ -289,8 +350,8 @@ public final class strings
      **/
     public static char[] getChars(String s) {
         return strings.getChars(s, 0, -1);
-    }/*}}}*/
-    // public static char[] getChars(String s, int start, int count);/*{{{*/
+    }
+
     /**
      * Gets an array of characters from a substring of \a s.
      * \param s The string to get the characters.
@@ -315,16 +376,16 @@ public final class strings
         try { s.getChars(start, count, result, 0); }
         catch (Exception ex) { result = null; }
         return result;
-    }/*}}}*/
-    // public static String toString(byte[] array, int start, int count, String enc);/*{{{*/
+    }
+
     /**
      * Convert a byte array in a string using the specified encoding.
      * \copydetails strings#decode()
      **/
     public static String toString(byte[] array, int start, int count, String enc) {
         return decode(array, start, count, enc);
-    }/*}}}*/
-    // public static String toString(byte[] array, int start, int count);/*{{{*/
+    }
+
     /**
      * Converts a byte array to a string object.
      * This function recognizes the character encoding through the BOM at the
@@ -356,8 +417,8 @@ public final class strings
             return strings.decode(array, (start + 4), (count - 4), ENC.UTF32LE);
         else
             return strings.decode(array, start, count, ENC.LATIN1);
-    }/*}}}*/
-    // public static String toString(char[] array, int start, int count);/*{{{*/
+    }
+
     /**
      * Converts a char array into a String object.
      * @param array The array to convert in String object.
@@ -369,8 +430,7 @@ public final class strings
      * @return The String object result of the conversion or an empty string
      * if some error occured.
      **/
-    public static String toString(char[] array, int start, int count)
-    {
+    public static String toString(char[] array, int start, int count) {
         if ((start < 0) || (start >= arrays.length(array)))
             return EMPTY;
 
@@ -381,8 +441,8 @@ public final class strings
             debug.e(ex, "$n in strings::toString(char[]): $s\n");
         }
         return EMPTY;
-    }/*}}}*/
-    // public static String format(String fmt, Object... args);/*{{{*/
+    }
+
     /**
      * Returns a localized formatted string, using the supplied format and
      * arguments, using the user's default locale.
@@ -397,8 +457,8 @@ public final class strings
         try { result = String.format(java.util.Locale.US, fmt, args); }
         catch (Exception ex) { /* Nothing need to be done. */ }
         return result;
-    }/*}}}*/
-    // public static int    length(String s);/*{{{*/
+    }
+
     /**
      * Safely gets the length of a string.
      * \param s The string to get the length of.
@@ -407,8 +467,8 @@ public final class strings
      **/
     public static int length(String s) {
         return ((s == null) ? 0 : s.length());
-    }/*}}}*/
-    // public static String decode(byte[] array, int start, int count, String enc);/*{{{*/
+    }
+
     /**
      * Decodes a byte array into a String value.
      * \param array The byte array holding the string value.
@@ -428,24 +488,21 @@ public final class strings
          */
         byte[] temp;
         int length = 0;
-        if (enc.equals(ENC.ASCII) || enc.equals(ENC.LATIN1) || enc.equals(ENC.UTF8))
-        {
+        if (enc.equals(ENC.ASCII) || enc.equals(ENC.LATIN1) || enc.equals(ENC.UTF8)) {
             for (int i = 0; i < count; i++) {
                 if (array[i+start] == 0x00)
                     break;
                 length++;
             }
         }
-        else if (enc.equals(ENC.UTF16) || enc.equals(ENC.UTF16LE) || enc.equals(ENC.UTF16BE))
-        {
+        else if (enc.equals(ENC.UTF16) || enc.equals(ENC.UTF16LE) || enc.equals(ENC.UTF16BE)) {
             for (int i = 0; i < count; i+=2) {
                 if ((array[i+start] == 0x00) && (array[i+start+1] == 0x00))
                     break;
                 length+=2;
             }
         }
-        else
-        {
+        else {
             for (int i = 0; i < count; i+=4) {
                 if (arrays.littleEndToInt(array, i+start) == 0)
                     break;
@@ -458,8 +515,8 @@ public final class strings
 
         try { return new String(temp, 0, temp.length, enc); }
         catch (Exception ex) { return null; }
-    }/*}}}*/
-    // public static byte[] encode(String text, String enc);/*{{{*/
+    }
+
     /**
      * Encode a string into a byte array using the specified encoding.
      * \param text The string to convert in a byte array.
@@ -470,16 +527,15 @@ public final class strings
      * exception will be thrown. When the convertion cannot be done, a \b null
      * array will be returned.
      **/
-    public static byte[] encode(String text, String enc)
-    {
+    public static byte[] encode(String text, String enc) {
         byte[] array;
         try { array = text.getBytes(enc); }
         catch (Exception ex) {
             return null;
         }
         return array;
-    }/*}}}*/
-    // public static byte[] encode(String text, String enc, int len);/*{{{*/
+    }
+
     /**
      * Encode a string into a byte array using the specified encoding.
      * \param text The string to convert in a byte array.
@@ -492,8 +548,7 @@ public final class strings
      * \return The result array on success. If an error occurs the resulting
      * array will be filled with zeroes.
      **/
-    public static byte[] encode(String text, String enc, int len)
-    {
+    public static byte[] encode(String text, String enc, int len) {
         byte[] result = new byte[len];
         byte[] array  = encode(text, enc);
 
@@ -503,9 +558,8 @@ public final class strings
         int limit = Math.min(len, array.length);
         arrays.copy(result, 0, array, 0, limit);
         return result;
-    }/*}}}*/
+    }
 
-    // public static boolean empty(String str);/*{{{*/
     /**
      * Just check if the object exists and is empty.
      * @param str The String object to check.
@@ -513,11 +567,10 @@ public final class strings
      * false otherwise.
      * @since 2.4
      **/
-    public static boolean empty(String str)
-    {
+    public static boolean empty(String str) {
         return (strings.length(str) == 0);
-    }/*}}}*/
-    // public static boolean isHexChar(char c);/*{{{*/
+    }
+
     /**
      * Checks if a character can represent an hexadecimal number.
      * \param c The character to check.
@@ -526,8 +579,8 @@ public final class strings
      **/
     public static boolean isHexChar(char c) {
         return ("0123456789ABCDEFabcdef".indexOf(c) >= 0);
-    }/*}}}*/
-    // public static boolean startsWith(String str, char prefix);/*{{{*/
+    }
+
     /**
      * Checks if a string has the specified prefix.
      * @param str String to be checked. If \b null or empty \b false will be
@@ -536,16 +589,15 @@ public final class strings
      * @return \b true if the \a str string starts with \a prefix. \b false
      * otherwise.
      **/
-    public static boolean startsWith(String str, char prefix)
-    {
+    public static boolean startsWith(String str, char prefix) {
         if (strings.empty(str)) return false;
 
         try { return (prefix == str.charAt(0)); }
         catch (Exception ex) { /* Ignored excepcion. */ }
 
         return false;
-    }/*}}}*/
-    // public static boolean startsWith(String str, String prefix);/*{{{*/
+    }
+
     /**
      * Checks if a string has the specified prefix.
      * @param str String to be checked. If \b null or empty \b false will be
@@ -555,15 +607,14 @@ public final class strings
      * @return \b true if the \a str string starts with \a prefix. \b false
      * otherwise.
      **/
-    public static boolean startsWith(String str, String prefix)
-    {
+    public static boolean startsWith(String str, String prefix) {
         if (str == null) return false;
         try { return str.startsWith(prefix); }
         catch (Exception ex) { /* Ignored excepcion. */ }
 
         return false;
-    }/*}}}*/
-    // public static boolean endsWith(String str, char suffix);/*{{{*/
+    }
+
     /**
      * Checks if a string has the specified suffix.
      * @param str String to be checked. If \b null or empty \b false will be
@@ -572,16 +623,15 @@ public final class strings
      * @return \b true if the \a str string ends with \a suffix. \b false
      * otherwise.
      **/
-    public static boolean endsWith(String str, char suffix)
-    {
+    public static boolean endsWith(String str, char suffix) {
         if (strings.empty(str)) return false;
 
         try { return (suffix == str.charAt(str.length() - 1)); }
         catch (Exception ex) { /* Ignored excepcion. */ }
 
         return false;
-    }/*}}}*/
-    // public static boolean endsWith(String str, String suffix);/*{{{*/
+    }
+
     /**
      * Checks if a string has the specified suffix.
      * @param str String to be checked. If \b null or empty \b false will be
@@ -591,14 +641,13 @@ public final class strings
      * @return \b true if the \a str string ends with \a suffix. \b false
      * otherwise.
      **/
-    public static boolean endsWith(String str, String suffix)
-    {
+    public static boolean endsWith(String str, String suffix) {
         if (str == null) return false;
         try { return str.endsWith(suffix); }
         catch (Exception ex) { /* Ignored excepcion. */ }
 
         return false;
-    }/*}}}*/
+    }
 
     // public static String  lastPathItem(String path);/*{{{*/
     /**
@@ -617,18 +666,16 @@ public final class strings
      * // item = "directory"
      * </pre>
      **/
-    public static String  lastPathItem(String path)
-    {
+    public static String  lastPathItem(String path) {
         if (path == null) return strings.EMPTY;
 
         int index = path.lastIndexOf('/', (path.length() - 2));
         if (index < 0) return path;
 
         return strings.substr(path, (index + 1), -1);
-    }/*}}}*/
+    }
 
     /** \name StringBuilder Support */ //@{
-    // public static boolean empty(StringBuilder sb);/*{{{*/
     /**
      * Checks if the object exists and is empty.
      * @param sb The StringBuilder object to check.
@@ -636,12 +683,10 @@ public final class strings
      * false otherwise.
      * @since 2.4
      **/
-    public static boolean empty(StringBuilder sb)
-    {
+    public static boolean empty(StringBuilder sb) {
         return ((sb == null) || (sb.length() == 0));
     }
-    /*}}}*/
-    // public static boolean startsWith(StringBuilder sb, char c);/*{{{*/
+
     /**
      * Checks whether the StringBuilder object contents starts with the passed
      * character.
@@ -652,8 +697,7 @@ public final class strings
      * its first character. Otherwise \b false.
      * @since 2.4
      **/
-    public static boolean startsWith(StringBuilder sb, char c)
-    {
+    public static boolean startsWith(StringBuilder sb, char c) {
         if ((sb == null) || (sb.length() == 0))
             return false;
 
@@ -663,8 +707,7 @@ public final class strings
         }
         return false;
     }
-    /*}}}*/
-    // public static boolean startsWith(StringBuilder sb, String str);/*{{{*/
+
     /**
      * Checks whether the StringBuilder object contents starts with the passed
      * string.
@@ -675,8 +718,7 @@ public final class strings
      * its first substring. Otherwise \b false.
      * @since 2.4
      **/
-    public static boolean startsWith(StringBuilder sb, String str)
-    {
+    public static boolean startsWith(StringBuilder sb, String str) {
         if (strings.empty(str) || strings.empty(sb))
             return false;
 
@@ -689,8 +731,7 @@ public final class strings
         }
         return false;
     }
-    /*}}}*/
-    // public static boolean endsWith(StringBuilder sb, char c);/*{{{*/
+
     /**
      * Checks if a StringBuilder has the specified character suffix.
      * @param sb StringBuilder object to check. If \b null or empty the result
@@ -700,8 +741,7 @@ public final class strings
      * otherwise.
      * @since 2.4
      **/
-    public static boolean endsWith(StringBuilder sb, char c)
-    {
+    public static boolean endsWith(StringBuilder sb, char c) {
         if (strings.empty(sb)) return false;
 
         try { return (c == sb.charAt(sb.length() - 1)); }
@@ -710,8 +750,7 @@ public final class strings
         }
         return false;
     }
-    /*}}}*/
-    // public static boolean endsWith(StringBuilder sb, String str);/*{{{*/
+
     /**
      * Checks if a StringBuilder ends with the specified string.
      * @param sb StringBuilder to check. When \b null or empty, \b false will
@@ -722,8 +761,7 @@ public final class strings
      * Otherwise \b false.
      * @since 2.4
      **/
-    public static boolean endsWith(StringBuilder sb, String str)
-    {
+    public static boolean endsWith(StringBuilder sb, String str) {
         if (strings.empty(sb) || strings.empty(str))
             return false;
 
@@ -736,8 +774,7 @@ public final class strings
         }
         return false;
     }
-    /*}}}*/
-    // public static int     indexOf(String str, StringBuilder sb);/*{{{*/
+
     /**
      * Gets index of a string or character in a StringBuilder object.
      * @param str String to check. If \b null or empty the result will be \b
@@ -748,8 +785,7 @@ public final class strings
      * in \a sb will be returned. Otherwise the function returns \b -1.
      * @since 2.4
      **/
-    public static int indexOf(String str, StringBuilder sb)
-    {
+    public static int indexOf(String str, StringBuilder sb) {
         if (strings.empty(sb)) return -1;
 
         try { return sb.indexOf(str); }
@@ -757,9 +793,7 @@ public final class strings
 
         return -1;
     }
-    /*}}}*/
     //@}
 
     public static final String EMPTY = "";      /**< Empty string object. */
 }
-// vim:syntax=java.doxygen
